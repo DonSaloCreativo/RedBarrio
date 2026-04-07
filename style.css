@@ -26,35 +26,35 @@ body {
 }
 
 .logo {
-  width: 150px; /* tamaño base */
-  max-width: 200px;
-}
-
-.main-title {
-  font-size: 2.2rem;
-  font-weight: 700;
-  margin: 10px 0 5px;
+  width: 180px;
+  max-width: 220px;
 }
 
 .subtitle {
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   font-weight: 600;
   margin-top: 5px;
   text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
 }
 
-/* MEDIA QUERY PC */
+/* ======================= */
+/* MEDIA QUERY PARA PC */
+/* ======================= */
 @media screen and (min-width: 1024px) {
-  .logo { width: 240px; }
-  .subtitle { font-size: 1.5rem; }
+  .logo {
+    width: 260px; /* logo más grande en PC */
+  }
+  .subtitle {
+    font-size: 1.6rem; /* subtítulo más grande */
+  }
 }
 
 /* ======================= */
 /* CAJA DE BÚSQUEDA */
 /* ======================= */
 .search-box {
-  background: #f3c13a;
-  margin: 20px auto 30px;
+  background: #f3c13a; /* igual al banner */
+  margin: 25px auto 30px;
   padding: 20px;
   border-radius: 20px;
   max-width: 500px;
@@ -63,7 +63,9 @@ body {
   text-align: left;
 }
 
-.search-box label { font-weight: 600; }
+.search-box label {
+  font-weight: 600;
+}
 
 .search-box input,
 .search-box select {
@@ -86,9 +88,27 @@ body {
 }
 
 /* ======================= */
+/* SECCIONES DE PROMOCIONES */
+/* ======================= */
+.section-title {
+  margin-top: 20px;
+  padding: 8px 15px;
+  display: inline-block;
+  border-radius: 12px;
+  color: white;
+  font-weight: 600;
+}
+
+/* Fondos específicos */
+.purple-bg { background-color: #5a0080; } /* Lo más barato hoy */
+.blue-bg   { background-color: #00bcd4; } /* Destacados de tu comuna */
+.yellow-bg { background-color: #f3c13a; } /* Todas las promociones */
+
+/* ======================= */
 /* SCROLL HORIZONTAL */
 /* ======================= */
-#cheap-scroll, #featured-scroll {
+#featured-scroll,
+#cheap-scroll {
   display: flex;
   overflow-x: auto;
   gap: 12px;
@@ -96,91 +116,104 @@ body {
   width: 100%;
   max-width: 900px;
   margin-bottom: 20px;
-  position: relative;
-  scroll-behavior: smooth;
 }
 
-/* SOMBRA LATERAL */
-#cheap-scroll::after,
-#featured-scroll::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 40px;
-  height: 100%;
-  pointer-events: none;
-  background: linear-gradient(to left, rgba(255,255,255,0.8), rgba(255,255,255,0));
-  border-radius: 16px;
-}
-
-/* ======================= */
-/* INDICADOR DE SCROLL */
-.scroll-hint {
-  font-size: 0.9rem;
-  color: #555;
-  margin-bottom: 5px;
-  text-align: right;
-  font-weight: 500;
+/* Indicador de que se puede scrollear */
+#featured-scroll::after,
+#cheap-scroll::after {
+  content: '➡';
+  font-size: 2rem;
+  margin-left: 10px;
+  color: #666;
 }
 
 /* ======================= */
 /* TARJETAS */
 /* ======================= */
-.cheap-card { background: #fff7e6; border: 2px solid #ff9800; min-width: 200px; max-width: 220px; border-radius: 16px; }
-.featured-card { background: #f0fbff; border: 2px solid #00bcd4; min-width: 260px; border-radius: 16px; }
+.cheap-card {
+  background: #fff7e6;
+  border: 2px solid #ff9800;
+  min-width: 200px;
+  max-width: 220px;
+  border-radius: 16px;
+}
 
-.cheap-card img, .featured-card img { width: 100%; height: 140px; object-fit: cover; border-radius: 16px 16px 0 0; }
+.featured-card {
+  background: #f0fbff;
+  border: 2px solid #00bcd4;
+  min-width: 260px;
+  border-radius: 16px;
+}
 
-.info { padding: 10px; text-align: left; }
+.featured-card img,
+.cheap-card img {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px; /* para que la imagen no sobresalga */
+}
 
-.contact-business { background: #00bcd4; color: white; border: none; padding: 8px; width: 100%; cursor: pointer; }
+.info {
+  padding: 10px;
+  text-align: left;
+}
 
 /* ======================= */
 /* LISTA NORMAL */
-#product-list { width: 100%; max-width: 900px; list-style: none; padding: 15px; }
-#product-list li { background: #f3c13a; border-radius: 16px; margin-bottom: 15px; overflow: hidden; }
-.product-img { width: 100%; height: 180px; object-fit: cover; }
-.product-info { padding: 10px; }
+/* ======================= */
+#product-list {
+  width: 100%;
+  max-width: 900px;
+  list-style: none;
+  padding: 15px;
+}
+
+#product-list li {
+  background: #f3c13a; /* color mostaza */
+  border-radius: 16px;
+  margin-bottom: 15px;
+  overflow: hidden;
+}
+
+.product-img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+}
+
+.product-info {
+  padding: 10px;
+}
 
 /* ======================= */
 /* BOTONES FIJOS */
+/* ======================= */
 #whatsapp-btn {
-  position: fixed; bottom: 20px; right: 20px;
-  background: #25D366; color: white; border: none; padding: 14px; border-radius: 30px;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #25D366;
+  color: white;
+  border: none;
+  padding: 14px;
+  border-radius: 30px;
+  cursor: pointer;
 }
+
+#contact-btn { display: none; }
 
 /* ======================= */
 /* FOOTER */
-footer { width: 100%; background-color: black; color: white; padding: 15px 10px; font-size: 12px; text-align: center; }
-
 /* ======================= */
-/* ANIMACIÓN INICIAL PARA TARJETAS */
-@keyframes scrollHintAnim {
-  0% { transform: translateX(0); }
-  50% { transform: translateX(-15px); }
-  100% { transform: translateX(0); }
-}
-#cheap-scroll .cheap-card:first-child,
-#featured-scroll .featured-card:first-child {
-  animation: scrollHintAnim 1s ease-in-out 1;
-}
-/* Indicador de scroll */
-.scroll-hint {
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  background: rgba(0,0,0,0.4);
+footer {
+  width: 100%;
+  background-color: black;
   color: white;
-  padding: 4px 8px;
-  border-radius: 12px;
+  padding: 15px 10px;
   font-size: 12px;
-  pointer-events: none;
-  transition: opacity 0.3s;
-}
-
-/* Para que el contenedor de scroll sea relativo y el hint se posicione */
-#cheap-scroll, #featured-scroll {
-  position: relative;
+  text-align: center;
+  line-height: 1.5;
 }
