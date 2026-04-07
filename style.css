@@ -38,9 +38,9 @@ body {
 }
 
 /* Responsive para móviles */
-@media (max-width: 500px) {
-  .subtitle {
-    font-size: 32px;     /* cómodo en celulares */
+@media (max-width: 480px) {
+  .logo {
+    width: 120px; /* se reduce en pantallas pequeñas */
   }
 }
 
