@@ -8,10 +8,10 @@ const cheapList = document.getElementById("cheap-scroll");
 const searchInput = document.getElementById("search-input");
 const locationFilter = document.getElementById("location-filter");
 const whatsappButton = document.getElementById("whatsapp-btn");
-const contactFooterBtn = document.getElementById("contact-footer-btn");
+const contactBtnFooter = document.getElementById("contact-btn-footer");
 
 // CONTACTO GENERAL
-contactFooterBtn.addEventListener("click", () => {
+contactBtnFooter.addEventListener("click", () => {
   window.open("https://wa.me/56984368260?text=Hola, quiero saber más sobre RedBarrio");
 });
 
