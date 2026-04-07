@@ -9,29 +9,28 @@
 </head>
 <body>
 
+<!-- HEADER -->
 <header class="hero">
   <img src="logo.png" class="logo">
-  <h1>RedBarrio</h1>
-  <p class="tagline">Encuentra picadas y ofertas cerca de ti 🔥</p>
-  <p class="sub">Promociones reales de tu comuna, sin delivery</p>
+  <p class="subtitle">Conectamos vecinos con promociones reales en su comuna</p>
 </header>
 
+<!-- CAJA DE BÚSQUEDA -->
 <div class="search-box">
   <label>📍 ¿En qué comuna estás?</label>
   <select id="location-filter"></select>
 
   <label>🍔 ¿Qué estás buscando?</label>
   <input type="text" id="search-input" placeholder="Ej: pizza, sushi, gasfiter...">
+  <button id="search-btn" class="search-btn">Buscar</button>
 </div>
 
+<!-- ALERTA -->
 <p class="info-text">
   ⚠️ RedBarrio no vende productos. Solo conecta promociones locales.
 </p>
 
-<p class="about">
-RedBarrio conecta vecinos con promociones reales de su comuna 🏡
-</p>
-
+<!-- SECCIONES DE PROMOCIONES -->
 <h2 class="section-title">💸 Lo más barato hoy</h2>
 <div id="cheap-scroll"></div>
 
@@ -41,9 +40,21 @@ RedBarrio conecta vecinos con promociones reales de su comuna 🏡
 <h2 class="section-title">📍 Todas las promociones</h2>
 <ul id="product-list"></ul>
 
+<!-- BOTONES -->
 <button id="whatsapp-btn">📝 Publicar promoción</button>
 <button id="contact-btn">📩 Contacto</button>
 
+<!-- SCRIPT -->
 <script src="script.js"></script>
+
+<script>
+// FUNCIONALIDAD DEL BOTÓN BUSCAR
+const searchBtn = document.getElementById("search-btn");
+searchBtn.addEventListener("click", () => {
+  const inputEvent = new Event('input', { bubbles: true });
+  document.getElementById("search-input").dispatchEvent(inputEvent);
+});
+</script>
+
 </body>
 </html>

@@ -104,11 +104,33 @@ fetch(apiUrl)
     displayProducts(allProducts);
   });
 
-// EVENTOS
+// EVENTOS INPUT / SELECT
 searchInput.addEventListener("input", () => displayProducts(allProducts));
 locationFilter.addEventListener("change", () => displayProducts(allProducts));
 
 // BOTÓN FORMULARIO
 whatsappButton.addEventListener("click", () => {
   window.open("https://forms.gle/yNVktkjKFGuWC7MP8");
+});
+
+// FUNCION BOTÓN BUSCAR
+function buscar() {
+  const valor = searchInput.value.toLowerCase();
+  const loc = locationFilter.value;
+
+  const filtrados = allProducts.filter(p => {
+    const nombre = (p.nombre || "").toLowerCase();
+    const comuna = p.comuna || "";
+    return nombre.includes(valor) && (loc === "Todas" || comuna === loc);
+  });
+
+  displayProducts(filtrados);
+}
+
+// ENTER DISPARA BÚSQUEDA
+searchInput.addEventListener("keypress", function(e) {
+  if (e.key === "Enter") {
+    e.preventDefault();
+    buscar();
+  }
 });

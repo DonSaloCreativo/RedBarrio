@@ -1,3 +1,4 @@
+/* BODY GENERAL */
 body {
   font-family: 'Poppins', sans-serif;
   background: linear-gradient(180deg, #f5f7fb, #e8ecf3);
@@ -8,24 +9,44 @@ body {
   align-items: center;
 }
 
+/* HEADER */
 .hero {
   background: linear-gradient(135deg, #6a0dad, #00bcd4);
   color: white;
-  padding: 20px;
+  padding: 40px 20px 30px 20px;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .logo {
-  width: 80px;
+  width: 120px; /* más visible */
+  max-width: 80%;
 }
 
-.sub {
-  font-size: 13px;
+/* FRASE DEBAJO DEL LOGO */
+.subtitle {
+  font-size: 44px;       /* potente en PC */
+  font-weight: 700;      /* bold */
+  color: white;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+  margin-top: 20px;
+  line-height: 1.2;
+  text-align: center;
 }
 
+/* Responsive para móviles */
+@media (max-width: 500px) {
+  .subtitle {
+    font-size: 32px;     /* cómodo en celulares */
+  }
+}
+
+/* CAJA DE BÚSQUEDA */
 .search-box {
   background: white;
-  margin: -20px auto 10px;
+  margin: -20px auto 20px;
   padding: 20px;
   border-radius: 20px;
   max-width: 500px;
@@ -43,17 +64,26 @@ body {
   margin-top: 5px;
 }
 
+.search-btn {
+  margin-top: 10px;
+  width: 100%;
+  background: #25D366;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+/* ALERTA */
 .info-text {
   font-size: 13px;
   color: #666;
+  margin-bottom: 20px;
 }
 
-.about {
-  font-size: 12px;
-  color: #888;
-  max-width: 500px;
-}
-
+/* SECCIONES */
 .section-title {
   margin-top: 20px;
 }
@@ -134,7 +164,7 @@ body {
   padding: 10px;
 }
 
-/* BOTONES */
+/* BOTONES FIJOS */
 #whatsapp-btn {
   position: fixed;
   bottom: 20px;
@@ -144,6 +174,7 @@ body {
   border: none;
   padding: 14px;
   border-radius: 30px;
+  cursor: pointer;
 }
 
 #contact-btn {
@@ -155,4 +186,5 @@ body {
   border: none;
   padding: 12px;
   border-radius: 30px;
+  cursor: pointer;
 }
