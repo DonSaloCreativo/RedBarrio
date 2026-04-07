@@ -1,212 +1,50 @@
 /* ======================= */
-/* ESTILO GENERAL DEL BODY */
+/* TARJETAS AJUSTADAS */
 /* ======================= */
-body {
-  font-family: 'Poppins', sans-serif;
-  background: linear-gradient(180deg, #f5f7fb, #e8ecf3);
-  margin: 0;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-/* ======================= */
-/* HEADER / BANNER PRINCIPAL */
-/* ======================= */
-.hero {
-  background-color: #f3c13a; /* amarillo mostaza */
-  color: white;
-  padding: 20px 10px;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
-
-.logo {
-  width: 180px;
-  max-width: 250px;
-}
-
-.subtitle {
-  font-size: 1.1rem;
-  font-weight: 600;
-  margin-top: 5px;
-  text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
-}
-
-.search-btn-banner {
-  margin-top: 10px;
-  padding: 10px 20px;
-  background-color: #25D366;
-  color: white;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-}
-
-/* ======================= */
-/* MEDIA QUERY PARA PC */
-/* ======================= */
-@media screen and (min-width: 1024px) {
-  .logo {
-    width: 250px; /* logo más grande en PC */
-  }
-  .subtitle {
-    font-size: 1.5rem; /* subtítulo más grande */
-  }
-}
-
-/* ======================= */
-/* CAJA DE BÚSQUEDA */
-/* ======================= */
-.search-box {
-  background: #f3c13a;
-  margin: 20px auto 30px;
-  padding: 20px;
-  border-radius: 20px;
-  max-width: 500px;
-  width: 90%;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  text-align: left;
-}
-
-.search-box label {
-  font-weight: 600;
-}
-
-.search-box input,
-.search-box select {
-  width: 100%;
-  padding: 8px;
-  border-radius: 10px;
-  border: 1px solid #ccc;
-  margin-top: 5px;
-}
-
-.search-btn {
-  margin-top: 10px;
-  padding: 10px;
-  background-color: #25D366;
-  color: white;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  width: 100%;
-}
-
-/* ======================= */
-/* SECCIONES DE PROMOCIONES */
-/* ======================= */
-.section-title {
-  margin-top: 20px;
-  padding: 8px 15px;
-  display: inline-block;
-  border-radius: 12px;
-  color: white;
-  font-weight: 600;
-}
-
-/* Fondos */
-.purple-bg { background-color: #5a0080; } /* Lo más barato hoy */
-.blue-bg { background-color: #00bcd4; }    /* Destacados de tu comuna */
-.yellow-bg { background-color: #f3c13a; }  /* Todas las promociones */
-
-/* ======================= */
-/* SCROLL HORIZONTAL */
-/* ======================= */
-#featured-scroll,
-#cheap-scroll {
-  display: flex;
-  overflow-x: auto;
-  gap: 12px;
-  padding: 15px;
-  width: 100%;
-  max-width: 900px;
-  margin-bottom: 20px;
-}
-
-/* ======================= */
-/* TARJETAS */
-/* ======================= */
-.cheap-card {
-  background: #fff7e6;
-  border: 2px solid #ff9800;
-  min-width: 200px; /* más pequeñas que las featured */
-  max-width: 220px;
-  border-radius: 16px;
-}
-
+.cheap-card,
 .featured-card {
-  background: #f0fbff;
-  border: 2px solid #00bcd4;
-  min-width: 260px;
-  border-radius: 16px;
+  border-radius: 16px; /* mantiene las curvas */
+  overflow: hidden;    /* asegura que las imágenes no sobresalgan */
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
-.featured-card img,
-.cheap-card img {
+.cheap-card img,
+.featured-card img {
   width: 100%;
   height: 140px;
   object-fit: cover;
-}
-
-.info {
-  padding: 10px;
-  text-align: left;
+  border-top-left-radius: 16px;   /* curva superior igual que la tarjeta */
+  border-top-right-radius: 16px;  /* curva superior igual que la tarjeta */
 }
 
 /* ======================= */
-/* LISTA NORMAL */
+/* HOVER EFECTO TARJETAS */
 /* ======================= */
-#product-list {
-  width: 100%;
-  max-width: 900px;
-  list-style: none;
-  padding: 15px;
-}
-
-#product-list li {
-  background: white;
-  border-radius: 16px;
-  margin-bottom: 15px;
-  overflow: hidden;
-}
-
-.product-img {
-  width: 100%;
-  height: 180px;
-  object-fit: cover;
-}
-
-.product-info {
-  padding: 10px;
+.cheap-card:hover,
+.featured-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
 }
 
 /* ======================= */
-/* BOTONES FIJOS */
+/* AJUSTES RESPONSIVE MOVIL */
 /* ======================= */
-#whatsapp-btn {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background: #25D366;
-  color: white;
-  border: none;
-  padding: 14px;
-  border-radius: 30px;
-}
+@media screen and (max-width: 768px) {
+  .cheap-card,
+  .featured-card {
+    min-width: 180px; /* reduce un poco para móviles */
+    max-width: 200px;
+  }
 
-/* ======================= */
-/* FOOTER */
-/* ======================= */
-footer {
-  width: 100%;
-  background-color: black;
-  color: white;
-  padding: 15px 10px;
-  font-size: 12px;
-  text-align: center;
+  .search-box {
+    padding: 15px;
+  }
+
+  .subtitle {
+    font-size: 1.2rem;
+  }
+
+  .logo {
+    width: 180px; /* un poco más pequeño en móvil */
+  }
 }
