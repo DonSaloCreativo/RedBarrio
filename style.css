@@ -1,11 +1,156 @@
 /* ======================= */
-/* TARJETAS AJUSTADAS */
+/* ESTILO GENERAL DEL BODY */
 /* ======================= */
-.cheap-card,
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(180deg, #f5f7fb, #e8ecf3);
+  margin: 0;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ======================= */
+/* HEADER / BANNER PRINCIPAL */
+/* ======================= */
+.hero {
+  background-color: #f3c13a; /* amarillo mostaza */
+  color: white;
+  padding: 20px 10px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.logo {
+  width: 180px;
+  max-width: 220px;
+}
+
+.subtitle {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-top: 8px;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+}
+
+/* ======================= */
+/* MEDIA QUERY PARA PC */
+/* ======================= */
+@media screen and (min-width: 1024px) {
+  .logo {
+    width: 250px; /* logo más grande en PC */
+  }
+  .subtitle {
+    font-size: 1.7rem; /* subtítulo más grande */
+  }
+}
+
+/* ======================= */
+/* CAJA DE BÚSQUEDA */
+/* ======================= */
+.search-box {
+  background: #f3c13a; /* igual al banner */
+  margin: 25px auto 30px; /* más espacio arriba y abajo */
+  padding: 20px;
+  border-radius: 20px;
+  max-width: 500px;
+  width: 90%;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  text-align: left;
+}
+
+.search-box label {
+  font-weight: 600;
+}
+
+.search-box input,
+.search-box select {
+  width: 100%;
+  padding: 8px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  margin-top: 5px;
+}
+
+.search-btn {
+  margin-top: 10px;
+  padding: 10px;
+  background-color: #25D366;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  width: 100%;
+}
+
+/* ======================= */
+/* ALERTA INFO TEXT */
+/* ======================= */
+.info-text {
+  font-size: 13px;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+/* ======================= */
+/* SECCIONES DE PROMOCIONES */
+/* ======================= */
+.section-title {
+  margin-top: 20px;
+  padding: 8px 15px;
+  display: inline-block; /* solo rodea el texto */
+  border-radius: 12px; /* bordes redondeados */
+  color: white;
+  font-weight: 600;
+}
+
+/* Fondos específicos */
+.section-title.purple-bg {
+  background-color: #5a0080; /* morado para "Lo más barato hoy" */
+}
+
+.section-title.blue-bg {
+  background-color: #00bcd4; /* celeste para "Destacados de tu comuna" */
+}
+
+.section-title.yellow-bg {
+  background-color: #f3c13a; /* mostaza para "Todas las promociones" */
+}
+
+/* ======================= */
+/* SCROLL HORIZONTAL */
+/* ======================= */
+#featured-scroll,
+#cheap-scroll {
+  display: flex;
+  overflow-x: auto;
+  gap: 12px;
+  padding: 15px;
+  width: 100%;
+  max-width: 900px;
+  margin-bottom: 20px;
+}
+
+/* ======================= */
+/* TARJETAS */
+/* ======================= */
+.cheap-card {
+  background: #fff7e6;
+  border: 2px solid #ff9800;
+  min-width: 200px;
+  max-width: 220px;
+  border-radius: 16px;
+}
+
 .featured-card {
-  border-radius: 16px; /* mantiene las curvas */
-  overflow: hidden;    /* asegura que las imágenes no sobresalgan */
-  transition: transform 0.2s, box-shadow 0.2s;
+  background: #f0fbff;
+  border: 2px solid #00bcd4;
+  min-width: 260px;
+  border-radius: 16px;
 }
 
 .cheap-card img,
@@ -13,38 +158,91 @@
   width: 100%;
   height: 140px;
   object-fit: cover;
-  border-top-left-radius: 16px;   /* curva superior igual que la tarjeta */
-  border-top-right-radius: 16px;  /* curva superior igual que la tarjeta */
+  border-radius: 16px 16px 0 0; /* redondea solo las esquinas superiores */
+}
+
+.info {
+  padding: 10px;
+  text-align: left;
+}
+
+.contact-business {
+  background: #00bcd4;
+  color: white;
+  border: none;
+  padding: 8px;
+  width: 100%;
+  cursor: pointer;
 }
 
 /* ======================= */
-/* HOVER EFECTO TARJETAS */
+/* TODAS LAS PROMOCIONES - LISTA NORMAL */
 /* ======================= */
-.cheap-card:hover,
-.featured-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+#product-list {
+  width: 100%;
+  max-width: 900px;
+  list-style: none;
+  padding: 15px;
+}
+
+#product-list li {
+  background: white;
+  border-radius: 16px;
+  margin-bottom: 15px;
+  overflow: hidden;
+  border: 2px solid #f3c13a; /* borde mostaza */
+}
+
+.product-img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 16px 16px 0 0; /* solo esquinas superiores */
+}
+
+.product-info {
+  padding: 10px;
 }
 
 /* ======================= */
-/* AJUSTES RESPONSIVE MOVIL */
+/* BOTONES FIJOS */
 /* ======================= */
-@media screen and (max-width: 768px) {
-  .cheap-card,
-  .featured-card {
-    min-width: 180px; /* reduce un poco para móviles */
-    max-width: 200px;
-  }
+#whatsapp-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #25D366;
+  color: white;
+  border: none;
+  padding: 14px;
+  border-radius: 30px;
+  cursor: pointer;
+}
 
-  .search-box {
-    padding: 15px;
-  }
+#contact-btn {
+  display: none;
+}
 
-  .subtitle {
-    font-size: 1.2rem;
-  }
+/* ======================= */
+/* FOOTER AJUSTADO */
+/* ======================= */
+footer {
+  width: 100%;
+  background-color: black;
+  color: white;
+  padding: 15px 10px;
+  font-size: 12px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 5px; /* espacio entre los párrafos */
+}
 
-  .logo {
-    width: 180px; /* un poco más pequeño en móvil */
-  }
+footer a {
+  color: #25D366; /* verde WhatsApp */
+  text-decoration: none;
+}
+
+footer a:hover {
+  text-decoration: underline;
 }
