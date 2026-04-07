@@ -26,35 +26,51 @@ body {
 }
 
 .logo {
-  width: 180px;
-  max-width: 220px;
+  width: 150px;
+  max-width: 200px;
+}
+
+.main-title {
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin: 10px 0 5px;
 }
 
 .subtitle {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   font-weight: 600;
   margin-top: 5px;
   text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
 }
 
 /* ======================= */
-/* MEDIA QUERY PARA PC */
+/* AVISO EN BANNER */
+.hero .info-text {
+  font-size: 0.95rem;
+  color: #fff;
+  background-color: rgba(0,0,0,0.2);
+  padding: 4px 10px;
+  border-radius: 12px;
+  margin-top: 8px;
+  display: inline-block;
+}
+
 /* ======================= */
+/* MEDIA QUERY PARA PC */
 @media screen and (min-width: 1024px) {
   .logo {
-    width: 260px; /* logo más grande en PC */
+    width: 220px;
   }
   .subtitle {
-    font-size: 1.6rem; /* subtítulo más grande */
+    font-size: 1.5rem;
   }
 }
 
 /* ======================= */
 /* CAJA DE BÚSQUEDA */
-/* ======================= */
 .search-box {
-  background: #f3c13a; /* igual al banner */
-  margin: 25px auto 30px;
+  background: #f3c13a;
+  margin: 20px auto 30px;
   padding: 20px;
   border-radius: 20px;
   max-width: 500px;
@@ -89,7 +105,6 @@ body {
 
 /* ======================= */
 /* SECCIONES DE PROMOCIONES */
-/* ======================= */
 .section-title {
   margin-top: 20px;
   padding: 8px 15px;
@@ -101,12 +116,11 @@ body {
 
 /* Fondos específicos */
 .purple-bg { background-color: #5a0080; } /* Lo más barato hoy */
-.blue-bg   { background-color: #00bcd4; } /* Destacados de tu comuna */
+.blue-bg { background-color: #00bcd4; }   /* Destacados de tu comuna */
 .yellow-bg { background-color: #f3c13a; } /* Todas las promociones */
 
 /* ======================= */
 /* SCROLL HORIZONTAL */
-/* ======================= */
 #featured-scroll,
 #cheap-scroll {
   display: flex;
@@ -118,18 +132,8 @@ body {
   margin-bottom: 20px;
 }
 
-/* Indicador de que se puede scrollear */
-#featured-scroll::after,
-#cheap-scroll::after {
-  content: '➡';
-  font-size: 2rem;
-  margin-left: 10px;
-  color: #666;
-}
-
 /* ======================= */
 /* TARJETAS */
-/* ======================= */
 .cheap-card {
   background: #fff7e6;
   border: 2px solid #ff9800;
@@ -151,17 +155,11 @@ body {
   height: 140px;
   object-fit: cover;
   border-top-left-radius: 16px;
-  border-top-right-radius: 16px; /* para que la imagen no sobresalga */
-}
-
-.info {
-  padding: 10px;
-  text-align: left;
+  border-top-right-radius: 16px;
 }
 
 /* ======================= */
 /* LISTA NORMAL */
-/* ======================= */
 #product-list {
   width: 100%;
   max-width: 900px;
@@ -170,7 +168,7 @@ body {
 }
 
 #product-list li {
-  background: #f3c13a; /* color mostaza */
+  background: #f3c13a;
   border-radius: 16px;
   margin-bottom: 15px;
   overflow: hidden;
@@ -190,7 +188,6 @@ body {
 
 /* ======================= */
 /* BOTONES FIJOS */
-/* ======================= */
 #whatsapp-btn {
   position: fixed;
   bottom: 20px;
@@ -200,14 +197,10 @@ body {
   border: none;
   padding: 14px;
   border-radius: 30px;
-  cursor: pointer;
 }
-
-#contact-btn { display: none; }
 
 /* ======================= */
 /* FOOTER */
-/* ======================= */
 footer {
   width: 100%;
   background-color: black;
@@ -215,5 +208,4 @@ footer {
   padding: 15px 10px;
   font-size: 12px;
   text-align: center;
-  line-height: 1.5;
 }

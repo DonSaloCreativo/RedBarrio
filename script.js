@@ -19,13 +19,13 @@ function displayProducts(products) {
     // Lo más barato
     const cheapCard = document.createElement("div");
     cheapCard.className = "cheap-card";
-    cheapCard.innerHTML = `<img src="${p.image}"><div class="info"><strong>${p.name}</strong><br>$${p.price}</div>`;
+    cheapCard.innerHTML = `<img src="${p.image}"><div class="info"><strong>${p.name}</strong><br> $${p.price}</div>`;
     cheapScroll.appendChild(cheapCard);
 
     // Destacados
     const featuredCard = document.createElement("div");
     featuredCard.className = "featured-card";
-    featuredCard.innerHTML = `<img src="${p.image}"><div class="info"><strong>${p.name}</strong><br>$${p.price}</div>`;
+    featuredCard.innerHTML = `<img src="${p.image}"><div class="info"><strong>${p.name}</strong><br> $${p.price}</div>`;
     featuredScroll.appendChild(featuredCard);
 
     // Todas las promociones
