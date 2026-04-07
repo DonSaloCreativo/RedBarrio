@@ -31,7 +31,7 @@ body {
 }
 
 .subtitle {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   font-weight: 600;
   margin-top: 5px;
   text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
@@ -42,10 +42,10 @@ body {
 /* ======================= */
 @media screen and (min-width: 1024px) {
   .logo {
-    width: 250px; /* logo más grande en PC */
+    width: 260px; /* logo más grande en PC */
   }
   .subtitle {
-    font-size: 1.5rem; /* subtítulo más grande */
+    font-size: 1.6rem; /* subtítulo más grande */
   }
 }
 
@@ -54,7 +54,7 @@ body {
 /* ======================= */
 .search-box {
   background: #f3c13a; /* igual al banner */
-  margin: 20px auto 30px;
+  margin: 30px auto 40px; /* más espacio arriba y abajo */
   padding: 20px;
   border-radius: 20px;
   max-width: 500px;
@@ -88,34 +88,21 @@ body {
 }
 
 /* ======================= */
-/* ALERTA INFO TEXT */
-/* ======================= */
-.info-text {
-  font-size: 13px;
-  color: #666;
-  margin-bottom: 10px;
-}
-
-/* ======================= */
 /* SECCIONES DE PROMOCIONES */
 /* ======================= */
 .section-title {
   margin-top: 20px;
   padding: 8px 15px;
-  display: inline-block;
-  border-radius: 20px;
+  display: inline-block; 
+  border-radius: 12px; /* bordes redondeados */
   color: white;
   font-weight: 600;
 }
 
-/* Fondos específicos */
-.section-title.purple-bg {
-  background-color: #5a0080 !important; /* morado oscuro */
-}
-
-.section-title.blue-bg {
-  background-color: #00bcd4 !important; /* celeste */
-}
+/* Fondo específico para cada sección */
+.purple-bg { background-color: #5a0080; } /* Lo más barato hoy */
+.blue-bg { background-color: #00bcd4; } /* Destacados de tu comuna */
+.yellow-bg { background-color: #f3c13a; } /* Todas las promociones */
 
 /* ======================= */
 /* SCROLL HORIZONTAL */
@@ -137,8 +124,8 @@ body {
 .cheap-card {
   background: #fff7e6;
   border: 2px solid #ff9800;
-  min-width: 160px;
-  max-width: 180px;
+  min-width: 200px; 
+  max-width: 220px;
   border-radius: 16px;
 }
 

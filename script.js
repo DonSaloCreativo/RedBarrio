@@ -1,102 +1,39 @@
-const apiUrl = "https://api.sheetbest.com/sheets/caf4ae8d-2b11-42a4-bf34-c2b68a0b921a";
+// EJEMPLO DE PRODUCTOS
+const allProducts = [
+  {name: 'Pizza Pepperoni', comuna: 'Providencia', type: 'cheap', img:'img1.jpg'},
+  {name: 'Sushi Roll', comuna: 'Ñuñoa', type: 'cheap', img:'img2.jpg'},
+  {name: 'Pastel de choclo', comuna: 'Providencia', type: 'featured', img:'img3.jpg'},
+  {name: 'Café Latte', comuna: 'Ñuñoa', type: 'featured', img:'img4.jpg'}
+];
 
-let allProducts = [];
+// FUNCION MOSTRAR PRODUCTOS
+function displayProducts(products){
+  const cheapContainer = document.getElementById('cheap-scroll');
+  const featuredContainer = document.getElementById('featured-scroll');
+  const productList = document.getElementById('product-list');
 
-const productList = document.getElementById("product-list");
-const featuredList = document.getElementById("featured-scroll");
-const cheapList = document.getElementById("cheap-scroll");
-const searchInput = document.getElementById("search-input");
-const locationFilter = document.getElementById("location-filter");
-const whatsappButton = document.getElementById("whatsapp-btn");
+  cheapContainer.innerHTML = '';
+  featuredContainer.innerHTML = '';
+  productList.innerHTML = '';
 
-// MOSTRAR PRODUCTOS
-function displayProducts(products) {
-  productList.innerHTML = "";
-  featuredList.innerHTML = "";
-  cheapList.innerHTML = "";
-
-  const loc = locationFilter.value;
-
-  const filtrados = products.filter(p =>
-    loc === "Todas" || p.comuna === loc
-  );
-
-  // 💸 BARATOS
-  filtrados
-    .sort((a, b) => (parseInt(a.precio) || 999999) - (parseInt(b.precio) || 999999))
-    .slice(0, 5)
-    .forEach(p => {
-      cheapList.innerHTML += `
-        <div class="cheap-card">
-          <img src="${p.imagen}">
-          <div class="info">
-            <h3>${p.nombre}</h3>
-            <p>${p.precio}</p>
-            ${botonNegocio(p)}
-          </div>
-        </div>
-      `;
-    });
-
-  // 🔥 DESTACADOS
-  filtrados
-    .filter(p => (p.nombre || "").toLowerCase().includes("promo"))
-    .slice(0, 5)
-    .forEach(p => {
-      featuredList.innerHTML += `
-        <div class="featured-card">
-          <img src="${p.imagen}">
-          <div class="info">
-            <h3>${p.nombre}</h3>
-            <p>${p.precio}</p>
-            ${botonNegocio(p)}
-          </div>
-        </div>
-      `;
-    });
-
-  // 📍 TODOS
-  filtrados.forEach(p => {
-    productList.innerHTML += `
-      <li>
-        <img src="${p.imagen}" class="product-img">
-        <div class="product-info">
-          <h3>${p.nombre}</h3>
-          <p>${p.precio}</p>
-          ${botonNegocio(p)}
-        </div>
-      </li>
-    `;
+  products.forEach(p => {
+    const card = document.createElement('div');
+    card.classList.add(p.type === 'cheap' ? 'cheap-card' : 'featured-card');
+    card.innerHTML = `<img src="${p.img}" alt="${p.name}">
+                      <div class="info"><h4>${p.name}</h4><button class="contact-business">Contactar</button></div>`;
+    if(p.type === 'cheap') cheapContainer.appendChild(card);
+    if(p.type === 'featured') featuredContainer.appendChild(card);
+    // Todos los productos
+    const li = document.createElement('li');
+    li.innerHTML = `<img class="product-img" src="${p.img}" alt="${p.name}"><div class="product-info"><h4>${p.name}</h4></div>`;
+    productList.appendChild(li);
   });
 }
-
-// BOTÓN NEGOCIO
-function botonNegocio(p) {
-  const telefono = (p.telefono || "").trim();
-  if (!telefono) return `<button class="contact-business" disabled>Sin contacto</button>`;
-  return `<button class="contact-business" onclick="window.open('https://wa.me/${telefono}?text=Hola, te hablo por ${encodeURIComponent(p.nombre)}')">Contactar negocio</button>`;
-}
-
-// CARGAR DATOS
-fetch(apiUrl)
-  .then(res => res.json())
-  .then(data => {
-    allProducts = data;
-    const comunas = ["Todas", ...new Set(data.map(p => p.comuna))];
-    locationFilter.innerHTML = comunas.map(c => `<option>${c}</option>`);
-    displayProducts(allProducts);
-  });
-
-// EVENTOS
-searchInput.addEventListener("input", () => displayProducts(allProducts));
-locationFilter.addEventListener("change", () => displayProducts(allProducts));
 
 // FUNCIÓN BUSCAR
 function buscar() {
   displayProducts(allProducts);
 }
 
-// BOTÓN WHATSAPP
-whatsappButton.addEventListener("click", () => {
-  window.open("https://forms.gle/yNVktkjKFGuWC7MP8");
-});
+// CARGAR INICIAL
+displayProducts(allProducts);
