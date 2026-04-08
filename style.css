@@ -88,6 +88,7 @@ body {
   background: #fff;
   transition: transform 0.2s, box-shadow 0.2s;
   position: relative;
+  cursor: pointer;
 }
 .cheap-card:hover, .featured-card:hover {
   transform: scale(1.05);
@@ -140,7 +141,9 @@ body {
   height: 180px;
   object-fit: cover;
 }
-.product-info { padding: 10px; }
+.product-info {
+  padding: 10px;
+}
 
 /* BOTÓN WHATSAPP FIJO */
 #whatsapp-btn {
@@ -166,16 +169,28 @@ footer {
   text-align: center;
 }
 
-/* CENTRAR SCROLL EN ESCRITORIO */
-@media screen and (min-width: 768px) {
-  #cheap-scroll, #featured-scroll {
-    max-width: 900px;
-    margin: 0 auto 20px auto;
-  }
+/* MODAL */
+#modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#modal span {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  cursor: pointer;
+  font-size: 22px;
+  font-weight: 700;
+  color: red;
+}
+#modal span:hover {
+  transform: scale(1.2);
+  transition: transform 0.2s;
+}
 
-  .section-title {
-    font-size: 1rem;
-    margin-left: auto;
-    margin-right: auto;
-  }
+/* AJUSTES EN ESCRITORIO */
+@media screen and (min-width: 1024px) {
+  .logo { width: 260px; }
+  .subtitle { font-size: 2.2rem; font-weight: 600; }
 }
