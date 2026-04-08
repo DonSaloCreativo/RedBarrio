@@ -1,58 +1,79 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RedBarrio</title>
-  <link rel="stylesheet" href="style.css?v=3">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-</head>
-<body>
+const allProducts = [
+  { name: "Casera", image: "images/casera.jpg", price: 5000, comuna: "Providencia" },
+  { name: "Completo", image: "images/completo.jpg", price: 6000, comuna: "Las Condes" },
+  { name: "Empanadas", image: "images/empanadas.jpg", price: 2000, comuna: "Ñuñoa" },
+  { name: "Pizza", image: "images/pizza.jpg", price: 8000, comuna: "Providencia" },
+  { name: "Sushi", image: "images/sushi.jpg", price: 9000, comuna: "Las Condes" }
+];
 
-<!-- SECCIÓN PRINCIPAL -->
-<header class="hero">
-  <img src="images/logo.png" class="logo">
-  <p class="subtitle">Conectando vecinos con promociones reales</p>
-</header>
+const cheapScroll = document.getElementById("cheap-scroll");
+const featuredScroll = document.getElementById("featured-scroll");
+const productList = document.getElementById("product-list");
+const locationFilter = document.getElementById("location-filter");
+const searchInput = document.getElementById("search-input");
 
-<!-- SECCIÓN LO MÁS BARATO -->
-<h2 class="section-title purple-bg">💸 Lo más barato hoy</h2>
-<div id="cheap-scroll"></div>
-<p class="info-text">⚠️ RedBarrio no vende productos. Solo conecta promociones locales.</p>
+// Función para normalizar texto (quita tildes y lo pasa a minúsculas)
+const normalizeText = (text) => {
+  return text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+};
 
-<!-- CAJA DE BÚSQUEDA -->
-<div class="search-box">
-  <label>📍 ¿En qué comuna estás?</label>
-  <select id="location-filter">
-    <option value="">Todas</option>
-    <option value="Providencia">Providencia</option>
-    <option value="Las Condes">Las Condes</option>
-    <option value="Ñuñoa">Ñuñoa</option>
-  </select>
+function displayProducts(products) {
+  // Limpiar contenedores
+  cheapScroll.innerHTML = "";
+  featuredScroll.innerHTML = "";
+  productList.innerHTML = "";
 
-  <label>🍔 ¿Qué estás buscando?</label>
-  <input type="text" id="search-input" placeholder="Ej: pizza, sushi, gasfiter...">
-  <button onclick="buscar()" class="search-btn">Buscar</button>
-</div>
-  
+  // Si no hay resultados
+  if (products.length === 0) {
+    const noResults = `<p style="grid-column: 1/-1; padding: 20px; color: #666;">
+      No encontramos promociones con esos filtros. ¡Prueba otra búsqueda!
+    </p>`;
+    productList.innerHTML = noResults;
+    return;
+  }
 
-<!-- SECCIÓN DESTACADOS -->
-<h2 class="section-title blue-bg">🔥 Destacados de tu comuna</h2>
-<div id="featured-scroll"></div>
+  products.forEach(p => {
+    // Tarjetas para Scroll Horizontal (Barato y Destacado)
+    const cardHTML = `
+      <div class="cheap-card" style="position: relative;"> 
+        <img src="${p.image}" alt="${p.name}">
+        <div class="info">
+          <strong>${p.name}</strong><br>
+          <small>${p.comuna}</small>
+          <div class="price-tag">$${p.price.toLocaleString('es-CL')}</div>
+        </div>
+      </div>
+    `;
+    
+    // Insertamos la misma estructura en ambos scrolls para el Beta
+    cheapScroll.innerHTML += cardHTML;
+    featuredScroll.innerHTML += cardHTML.replace("cheap-card", "featured-card");
 
-<!-- TODAS LAS PROMOCIONES -->
-<h2 class="section-title yellow-bg">📍 Todas las promociones</h2>
-<ul id="product-list"></ul>
+    // Lista vertical completa
+    const li = document.createElement("li");
+    li.innerHTML = `
+      <img class="product-img" src="${p.image}">
+      <div class="product-info">
+        <strong>${p.name}</strong> - <small>${p.comuna}</small><br>
+        <strong>$${p.price.toLocaleString('es-CL')}</strong>
+      </div>
+    `;
+    productList.appendChild(li);
+  });
+}
 
-<!-- BOTÓN PUBLICAR -->
-<button id="whatsapp-btn">📝 Publicar promoción</button>
+function buscar() {
+  const comuna = locationFilter.value;
+  const query = normalizeText(searchInput.value);
 
-<!-- FOOTER -->
-<footer>
-  <p>📩 Contacto: <a href="https://wa.me/56984368260">Envíanos un mensaje</a></p>
-  <p>© 2025 RedBarrio. All rights reserved.</p>
-</footer>
+  const filtered = allProducts.filter(p => {
+    const matchComuna = comuna ? p.comuna === comuna : true;
+    const matchName = query ? normalizeText(p.name).includes(query) : true;
+    return matchComuna && matchName;
+  });
 
-<script src="script.js"></script>
-</body>
-</html>
+  displayProducts(filtered);
+}
+
+// Inicializar la carga de productos
+displayProducts(allProducts);

@@ -1,237 +1,253 @@
-/* ======================= */
-/* ESTILO GENERAL DEL BODY */
-/* ======================= */
+/* ============================================================
+   SISTEMA DE DISEÑO - REDBARRIO (BETA)
+   ============================================================ */
+:root {
+  --neon-green: #25D366;
+  --dark-bg: #121212;
+  --card-bg: #ffffff;
+  --text-main: #333333;
+  --purple-accent: #5a0080;
+  --yellow-main: #f3c13a;
+  --bg-gradient: linear-gradient(180deg, #f5f7fb, #e8ecf3);
+}
+
+/* ============================================================
+   ESTILO GENERAL
+   ============================================================ */
 body {
   font-family: 'Poppins', sans-serif;
-  background: linear-gradient(180deg, #f5f7fb, #e8ecf3);
+  background: var(--bg-gradient);
   margin: 0;
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
+  color: var(--text-main);
+  min-height: 100vh;
 }
 
-/* ======================= */
-/* HEADER / BANNER PRINCIPAL */
-/* ======================= */
+/* ============================================================
+   HEADER / BANNER PRINCIPAL
+   ============================================================ */
 .hero {
-  background-color: #f3c13a;
+  background-color: var(--yellow-main);
   color: white;
-  padding: 20px 10px;
+  padding: 30px 10px;
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  text-align: center;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
 
 .logo {
   width: 150px;
   max-width: 200px;
+  transition: transform 0.3s ease;
 }
 
 .subtitle {
   font-size: 1.1rem;
   font-weight: 600;
-  margin-top: 5px;
-  text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+  margin-top: 10px;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+}
+
+/* Ajuste para PC */
+@media screen and (min-width: 1024px) {
+  .logo { width: 220px; }
+  .subtitle { font-size: 1.5rem; }
 }
 
 .info-text {
   font-size: 13px;
-  color: #333;
-  margin-top: 5px;
+  color: #555;
+  margin: 15px 0;
+  font-style: italic;
 }
 
-/* ======================= */
-/* MEDIA QUERY PARA PC */
-/* ======================= */
-@media screen and (min-width: 1024px) {
-  .logo {
-    width: 220px;
-  }
-  .subtitle {
-    font-size: 1.5rem;
-  }
-}
-
-/* ======================= */
-/* CAJA DE BÚSQUEDA */
-/* ======================= */
+/* ============================================================
+   CAJA DE BÚSQUEDA
+   ============================================================ */
 .search-box {
-  background: #f3c13a;
-  margin: 20px auto 30px;
-  padding: 20px;
-  border-radius: 20px;
+  background: var(--yellow-main);
+  margin: -20px auto 30px; /* Sube un poco para solaparse con el hero */
+  padding: 25px;
+  border-radius: 24px;
   max-width: 500px;
   width: 90%;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
   text-align: left;
+  z-index: 10;
 }
 
 .search-box label {
   font-weight: 600;
+  display: block;
+  margin-bottom: 8px;
+  color: #333;
 }
 
 .search-box input,
 .search-box select {
   width: 100%;
-  padding: 8px;
-  border-radius: 10px;
-  border: 1px solid #ccc;
-  margin-top: 5px;
+  padding: 12px;
+  border-radius: 12px;
+  border: 2px solid transparent;
+  margin-bottom: 15px;
+  font-family: inherit;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+}
+
+.search-box input:focus, 
+.search-box select:focus {
+  outline: none;
+  border-color: var(--purple-accent);
 }
 
 .search-btn {
-  margin-top: 10px;
-  padding: 10px;
-  background-color: #25D366;
+  margin-top: 5px;
+  padding: 12px;
+  background-color: var(--dark-bg);
   color: white;
   border: none;
-  border-radius: 10px;
+  border-radius: 12px;
   cursor: pointer;
   width: 100%;
+  font-weight: 600;
+  transition: opacity 0.3s;
 }
 
-/* ======================= */
-/* SECCIONES DE PROMOCIONES */
-/* ======================= */
+.search-btn:hover { opacity: 0.9; }
+
+/* ============================================================
+   SECCIONES Y TÍTULOS
+   ============================================================ */
 .section-title {
-  margin-top: 20px;
-  padding: 8px 15px;
+  margin: 30px 0 10px;
+  padding: 8px 20px;
   display: inline-block;
-  border-radius: 12px;
+  border-radius: 50px;
   color: white;
   font-weight: 600;
+  font-size: 1.1rem;
 }
 
-.purple-bg { background-color: #5a0080; }
+.purple-bg { background-color: var(--purple-accent); }
 .blue-bg { background-color: #00bcd4; }
-.yellow-bg { background-color: #f3c13a; }
+.yellow-bg { background-color: var(--yellow-main); color: #333; }
 
-/* ======================= */
-/* SCROLL HORIZONTAL */
-/* ======================= */
+/* ============================================================
+   CONTENEDORES DE SCROLL
+   ============================================================ */
 #featured-scroll,
 #cheap-scroll {
   display: flex;
   overflow-x: auto;
-  gap: 12px;
-  padding: 15px;
+  gap: 15px;
+  padding: 20px;
   width: 100%;
-  max-width: 900px;
-  margin-bottom: 20px;
-  position: relative;
+  max-width: 1000px;
+  scrollbar-width: none; /* Oculta scroll en Firefox */
 }
 
-/* Flechas indicadoras de scroll */
-#featured-scroll::after,
-#cheap-scroll::after {
-  content: "→";
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 2rem;
-  color: rgba(0,0,0,0.2);
-  pointer-events: none;
+#featured-scroll::-webkit-scrollbar,
+#cheap-scroll::-webkit-scrollbar {
+  display: none; /* Oculta scroll en Chrome/Safari */
 }
 
-/* ======================= */
-/* TARJETAS */
-/* ======================= */
+/* ============================================================
+   TARJETAS (CARDS)
+   ============================================================ */
 .cheap-card, .featured-card {
-  border-radius: 16px;
+  background: var(--card-bg);
+  border-radius: 20px;
   overflow: hidden;
+  min-width: 220px;
+  position: relative;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: fadeIn 0.5s ease forwards;
 }
 
-.cheap-card {
-  background: #fff7e6;
-  border: 2px solid #ff9800;
-  min-width: 200px;
-  max-width: 220px;
+.featured-card { min-width: 280px; }
+
+.cheap-card:hover, .featured-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 25px rgba(0,0,0,0.15);
 }
 
-.featured-card {
-  background: #f0fbff;
-  border: 2px solid #00bcd4;
-  min-width: 260px;
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .cheap-card img, .featured-card img {
   width: 100%;
-  height: 140px;
+  height: 150px;
   object-fit: cover;
-  border-top-left-radius: 16px;
-  border-top-right-radius: 16px;
 }
 
 .info {
-  padding: 10px;
+  padding: 15px;
   text-align: left;
 }
 
+.info strong { font-size: 1.1rem; color: #111; }
+.info small { color: #777; font-weight: 400; }
+
 .price-tag {
   position: absolute;
-  top: 8px;
-  right: 8px;
-  background: #25D366;
-  color: white;
-  padding: 3px 8px;
+  top: 12px;
+  right: 12px;
+  background: var(--neon-green);
+  color: #000;
+  padding: 5px 12px;
   border-radius: 10px;
-  font-weight: 600;
+  font-weight: 700;
   font-size: 0.9rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
 }
 
-/* ======================= */
-/* TODAS LAS PROMOCIONES */
-/* ======================= */
+/* ============================================================
+   LISTADO VERTICAL (TODAS LAS PROMOS)
+   ============================================================ */
 #product-list {
   width: 100%;
-  max-width: 900px;
+  max-width: 600px;
   list-style: none;
-  padding: 15px;
+  padding: 20px;
+  margin: 0;
 }
 
 #product-list li {
-  background: #f3c13a;
-  border-radius: 16px;
-  margin-bottom: 15px;
+  background: white;
+  border-radius: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  animation: fadeIn 0.5s ease forwards;
 }
 
 .product-img {
   width: 100%;
-  height: 180px;
+  height: 200px;
   object-fit: cover;
 }
 
 .product-info {
-  padding: 10px;
+  padding: 15px;
+  text-align: left;
 }
 
-/* ======================= */
-/* BOTONES FIJOS */
-/* ======================= */
+/* ============================================================
+   BOTÓN FLOTANTE WHATSAPP
+   ============================================================ */
 #whatsapp-btn {
   position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background: #25D366;
-  color: white;
-  border: none;
-  padding: 14px;
-  border-radius: 30px;
-}
-
-/* ======================= */
-/* FOOTER */
-/* ======================= */
-footer {
-  width: 100%;
-  background-color: black;
-  color: white;
-  padding: 15px 10px;
-  font-size: 12px;
-  text-align: center;
-}
+  bottom: 25px;
+  right: 25px;
+  background: var(--neon-green
