@@ -17,47 +17,40 @@ const normalizeText = (text) => {
 };
 
 function displayProducts(products) {
-  // Limpiar antes de mostrar
   cheapScroll.innerHTML = "";
   featuredScroll.innerHTML = "";
   productList.innerHTML = "";
 
   if (products.length === 0) {
-    productList.innerHTML = "<p style='color:gray; padding:20px;'>No se encontraron resultados.</p>";
+    const noResults = `<p style="grid-column: 1/-1; padding: 20px; color: #666;">
+      No encontramos promociones con esos filtros. ¡Prueba otra búsqueda!
+    </p>`;
+    productList.innerHTML = noResults;
     return;
   }
 
   products.forEach(p => {
-    const priceText = "$" + p.price.toLocaleString('es-CL');
-
-    // 1. Tarjetas para los Scrolls (Diseño compacto)
-    const card = `
-      <div class="cheap-card" style="min-width:200px; position:relative;">
-        <img src="${p.image}" style="width:100%; height:140px; object-fit:cover;">
-        <div class="price-tag" style="position:absolute; top:10px; right:10px; background:#25D366; color:black; padding:4px 8px; border-radius:8px; font-weight:bold;">${priceText}</div>
-        <div style="padding:10px; text-align:left;">
+    const cardHTML = `
+      <div class="cheap-card"> 
+        <img src="${p.image}" alt="${p.name}">
+        <div class="info">
           <strong>${p.name}</strong><br>
-          <small style="color:gray;">${p.comuna}</small>
+          <small>${p.comuna}</small>
+          <div class="price-tag">$${p.price.toLocaleString('es-CL')}</div>
         </div>
-      </div>`;
-    
-    cheapScroll.innerHTML += card;
-    featuredScroll.innerHTML += card.replace("cheap-card", "featured-card");
+      </div>
+    `;
+    cheapScroll.innerHTML += cardHTML;
+    featuredScroll.innerHTML += cardHTML.replace("cheap-card", "featured-card");
 
-    // 2. Lista Vertical (Diseño estirado)
     const li = document.createElement("li");
-    li.style.listStyle = "none";
     li.innerHTML = `
-      <div style="background:white; margin-bottom:15px; border-radius:15px; overflow:hidden; box-shadow:0 2px 8px rgba(0,0,0,0.1);">
-        <img src="${p.image}" style="width:100%; height:180px; object-fit:cover;">
-        <div style="padding:15px; text-align:left; display:flex; justify-content:space-between; align-items:center;">
-          <div>
-            <strong>${p.name}</strong><br>
-            <small>${p.comuna}</small>
-          </div>
-          <span style="background:#25D366; padding:5px 10px; border-radius:10px; font-weight:bold;">${priceText}</span>
-        </div>
-      </div>`;
+      <img class="product-img" src="${p.image}">
+      <div class="product-info">
+        <strong>${p.name}</strong> - <small>${p.comuna}</small><br>
+        <strong>$${p.price.toLocaleString('es-CL')}</strong>
+      </div>
+    `;
     productList.appendChild(li);
   });
 }
@@ -75,5 +68,4 @@ function buscar() {
   displayProducts(filtered);
 }
 
-// Iniciar aplicación
 displayProducts(allProducts);
