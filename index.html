@@ -4,34 +4,48 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>RedBarrio</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="style.css?v=5">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-  <header>
-    <h1>RedBarrio</h1>
-    <p>Encuentra picadas y ofertas cerca de ti</p>
-    <div class="search-bar">
-      <input type="text" id="search-input" placeholder="Buscar...">
-      <select id="location-filter">
-        <option value="">Todas</option>
-        <option value="Providencia">Providencia</option>
-        <option value="Las Condes">Las Condes</option>
-        <option value="Ñuñoa">Ñuñoa</option>
-      </select>
-      <button onclick="buscar()">Buscar</button>
-    </div>
-  </header>
+<!-- HEADER -->
+<header class="hero">
+  <img src="images/logo.png" class="logo">
+  <p class="subtitle">Conectando vecinos con promociones reales</p>
+</header>
 
-  <h2>Ofertas Baratas</h2>
-  <div id="cheap-scroll" class="scroll-container"></div>
+<!-- BUSCADOR -->
+<div class="search-box">
+  <label>📍 ¿En qué comuna estás?</label>
+  <select id="location-filter"></select>
 
-  <h2>Productos Destacados</h2>
-  <div id="featured-scroll" class="scroll-container"></div>
+  <label>🍔 ¿Qué estás buscando?</label>
+  <input type="text" id="search-input" placeholder="Ej: pizza, sushi, gasfiter...">
+  <button onclick="buscar()" class="search-btn">Buscar</button>
+</div>
 
-  <h2>Todos los Productos</h2>
-  <ul id="product-list"></ul>
+<!-- LO MÁS BARATO -->
+<h2 class="section-title purple-bg">💸 Lo más barato hoy</h2>
+<div id="cheap-scroll"></div>
 
-  <script src="script.js"></script>
+<!-- DESTACADOS -->
+<h2 class="section-title blue-bg">🔥 Destacados de tu comuna</h2>
+<div id="featured-scroll"></div>
+
+<!-- TODAS LAS PROMOCIONES -->
+<h2 class="section-title yellow-bg">📍 Todas las promociones</h2>
+<ul id="product-list"></ul>
+
+<!-- BOTÓN WHATSAPP -->
+<button id="whatsapp-btn">📝 Publicar promoción</button>
+
+<!-- FOOTER -->
+<footer>
+  <p>📩 Contacto: <a href="https://wa.me/56984368260">Envíanos un mensaje</a></p>
+  <p>© 2025 RedBarrio. All rights reserved.</p>
+</footer>
+
+<script src="script.js"></script>
 </body>
 </html>
