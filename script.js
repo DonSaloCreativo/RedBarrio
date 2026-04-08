@@ -24,9 +24,12 @@ comunas.forEach(c => {
 });
 
 // FUNCIÓN PARA MOSTRAR PRODUCTOS
-function displayProducts(products, filterDestacados = false) {
-  // "Lo más barato" siempre intacto
+function displayProducts(products, filteredComuna = null) {
   cheapScroll.innerHTML = "";
+  featuredScroll.innerHTML = "";
+  productList.innerHTML = "";
+
+  // LO MÁS BARATO (siempre intacto)
   allProducts.forEach(p => {
     const cheapCard = document.createElement("div");
     cheapCard.className = "cheap-card";
@@ -42,13 +45,15 @@ function displayProducts(products, filterDestacados = false) {
     cheapScroll.appendChild(cheapCard);
   });
 
-  // Destacados filtrados
-  featuredScroll.innerHTML = "";
-  const destacados = products.filter(p => p.destacado);
-  if(destacados.length === 0){
-    featuredScroll.innerHTML = `<p class="no-results">No hay destacados en tu comuna.</p>`;
+  // DESTACADOS DE LA COMUNA FILTRADA
+  let featuredProducts = filteredComuna ? products.filter(p => p.destacado) : allProducts.filter(p => p.destacado);
+  
+  if(featuredProducts.length === 0){
+    featuredScroll.innerHTML = `<p style="padding:20px; color:#666; width:100%; text-align:center;">
+      No hay destacados en esta comuna 😔
+    </p>`;
   } else {
-    destacados.forEach(p => {
+    featuredProducts.forEach(p => {
       const featuredCard = document.createElement("div");
       featuredCard.className = "featured-card";
       featuredCard.innerHTML = `
@@ -64,10 +69,11 @@ function displayProducts(products, filterDestacados = false) {
     });
   }
 
-  // Lista vertical
-  productList.innerHTML = "";
+  // LISTA VERTICAL
   if(products.length === 0){
-    productList.innerHTML = `<p class="no-results">No encontramos promociones con esos filtros. ¡Prueba otra búsqueda!</p>`;
+    productList.innerHTML = `<p style="grid-column:1/-1; padding:20px; color:#666; text-align:center;">
+      No encontramos promociones con esos filtros. ¡Prueba otra búsqueda!
+    </p>`;
   } else {
     products.forEach(p => {
       const li = document.createElement("li");
@@ -94,7 +100,7 @@ function buscar() {
     return matchComuna && matchName;
   });
 
-  displayProducts(filtered);
+  displayProducts(filtered, comuna);
 }
 
 // INICIALIZAR

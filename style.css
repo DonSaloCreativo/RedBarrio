@@ -1,15 +1,8 @@
 /* GENERAL */
-html, body {
-  width: 100%;
-  overflow-x: hidden;
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
 body {
   font-family: 'Poppins', sans-serif;
   background: #f5f7fb;
+  margin: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -27,27 +20,13 @@ body {
   align-items: center;
 }
 .logo { width: 150px; max-width: 200px; }
-.subtitle { font-size: 1rem; font-weight: 600; margin-top: 5px; }
-
-/* SECCIONES */
-.section-title {
-  margin-top: 20px;
-  padding: 6px 12px;
-  display: inline-block;
-  border-radius: 12px;
-  color: white;
-  font-weight: 600;
-  font-size: 1rem;
-}
-.purple-bg { background-color: #5a0080; }
-.blue-bg { background-color: #00bcd4; }
-.yellow-bg { background-color: #f3c13a; color:#111; }
+.subtitle { font-size: 1.2rem; font-weight: 600; margin-top: 5px; }
 
 /* BUSCADOR */
 .search-box {
   background: #f3c13a;
   margin: 20px auto 30px;
-  padding: 15px;
+  padding: 20px;
   border-radius: 20px;
   max-width: 500px;
   width: 90%;
@@ -74,17 +53,29 @@ body {
   font-weight: 600;
 }
 
+/* SECCIONES */
+.section-title {
+  margin-top: 20px;
+  padding: 8px 15px;
+  display: inline-block;
+  border-radius: 12px;
+  color: white;
+  font-weight: 600;
+}
+.purple-bg { background-color: #5a0080; }
+.blue-bg { background-color: #00bcd4; }
+.yellow-bg { background-color: #f3c13a; color:#111; }
+
 /* SCROLL HORIZONTAL */
 #cheap-scroll, #featured-scroll {
   display: flex;
   overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  scroll-behavior: smooth;
   gap: 12px;
   padding: 15px;
   width: 100%;
-  max-width: 100%;
+  max-width: 900px;
   margin-bottom: 20px;
+  scroll-behavior: smooth;
 }
 
 /* TARJETAS */
@@ -109,7 +100,7 @@ body {
 }
 .cheap-card .info, .featured-card .info {
   padding: 10px;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
 }
 
 /* BADGES */
@@ -120,7 +111,7 @@ body {
   background: #ff9800;
   color: white;
   padding: 3px 8px;
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   border-radius: 12px;
   font-weight: 600;
   animation: pulse 1.5s infinite;
@@ -133,11 +124,10 @@ body {
 
 /* LISTA VERTICAL */
 #product-list {
-  width: 90%;
+  width: 100%;
   max-width: 900px;
   list-style: none;
   padding: 15px;
-  margin: auto;
 }
 #product-list li {
   background: #f3c13a;
@@ -150,16 +140,7 @@ body {
   height: 180px;
   object-fit: cover;
 }
-.product-info {
-  padding: 10px;
-}
-
-/* NO RESULTS */
-.no-results {
-  color: #666;
-  padding: 15px;
-  text-align: center;
-}
+.product-info { padding: 10px; }
 
 /* BOTÓN WHATSAPP FIJO */
 #whatsapp-btn {
@@ -183,4 +164,18 @@ footer {
   padding: 15px 10px;
   font-size: 12px;
   text-align: center;
+}
+
+/* CENTRAR SCROLL EN ESCRITORIO */
+@media screen and (min-width: 768px) {
+  #cheap-scroll, #featured-scroll {
+    max-width: 900px;
+    margin: 0 auto 20px auto;
+  }
+
+  .section-title {
+    font-size: 1rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
 }
