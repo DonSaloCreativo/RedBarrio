@@ -86,13 +86,14 @@ body {
   min-width: 200px;
   flex-shrink: 0;
   background: #fff;
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s;
   position: relative;
   cursor: pointer;
 }
 .cheap-card:hover, .featured-card:hover {
   transform: scale(1.05);
   box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+  background-color: #ffe082; /* 🔹 color llamativo al levantar */
 }
 .cheap-card img, .featured-card img {
   width: 100%;
@@ -180,12 +181,12 @@ footer {
   top: 8px;
   right: 10px;
   cursor: pointer;
-  font-size: 22px;
+  font-size: 26px;
   font-weight: 700;
-  color: red;
+  color: red; /* 🔹 X roja */
 }
 #modal span:hover {
-  transform: scale(1.2);
+  transform: scale(1.3);
   transition: transform 0.2s;
 }
 

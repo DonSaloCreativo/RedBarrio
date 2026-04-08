@@ -112,7 +112,7 @@ function displayProducts(products){
       <img src="${p.image}" alt="${p.name}">
       <div class="info"><strong>${p.name}</strong><br><small>${p.comuna}</small><div>$${p.price.toLocaleString('es-CL')}</div></div>
     `;
-    cheapCard.addEventListener("click", () => showModal(p)); // 🔹 Rebote también aquí
+    cheapCard.addEventListener("click", () => showModal(p)); // 🔹 Rebote
     cheapScroll.appendChild(cheapCard);
   });
 
