@@ -11,7 +11,7 @@
 
 <!-- HEADER -->
 <header class="hero">
-  <img src="images/logo.png" class="logo">
+  <img src="images/logo.png" class="logo" alt="RedBarrio Logo">
   <p class="subtitle">Conectando vecinos con promociones reales</p>
 </header>
 
@@ -22,7 +22,9 @@
 <!-- BUSCADOR -->
 <div class="search-box">
   <label>📍 ¿En qué comuna estás?</label>
-  <select id="location-filter"></select>
+  <select id="location-filter">
+    <option value="">Todas las comunas</option>
+  </select>
 
   <label>🍔 ¿Qué estás buscando?</label>
   <input type="text" id="search-input" placeholder="Ej: pizza, sushi, gasfiter...">

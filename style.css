@@ -1,8 +1,15 @@
 /* GENERAL */
+html, body {
+  width: 100%;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
   font-family: 'Poppins', sans-serif;
   background: #f5f7fb;
-  margin: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -22,11 +29,25 @@ body {
 .logo { width: 150px; max-width: 200px; }
 .subtitle { font-size: 1rem; font-weight: 600; margin-top: 5px; }
 
+/* SECCIONES */
+.section-title {
+  margin-top: 20px;
+  padding: 6px 12px;
+  display: inline-block;
+  border-radius: 12px;
+  color: white;
+  font-weight: 600;
+  font-size: 1rem;
+}
+.purple-bg { background-color: #5a0080; }
+.blue-bg { background-color: #00bcd4; }
+.yellow-bg { background-color: #f3c13a; color:#111; }
+
 /* BUSCADOR */
 .search-box {
   background: #f3c13a;
   margin: 20px auto 30px;
-  padding: 20px;
+  padding: 15px;
   border-radius: 20px;
   max-width: 500px;
   width: 90%;
@@ -53,45 +74,43 @@ body {
   font-weight: 600;
 }
 
-/* SECCIONES */
-.section-title {
-  margin-top: 15px;
-  padding: 6px 12px;
-  display: inline-block;
-  border-radius: 12px;
-  color: white;
-  font-weight: 600;
-  font-size: 1.1rem; /* más pequeño para que no compita con logo */
-}
-.purple-bg { background-color: #5a0080; }
-.blue-bg { background-color: #00bcd4; }
-.yellow-bg { background-color: #f3c13a; color:#111; }
-
 /* SCROLL HORIZONTAL */
 #cheap-scroll, #featured-scroll {
   display: flex;
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
   gap: 12px;
   padding: 15px;
   width: 100%;
-  max-width: 900px;
+  max-width: 100%;
   margin-bottom: 20px;
-  scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch;
 }
+
+/* TARJETAS */
 .cheap-card, .featured-card {
-  flex: 0 0 auto;
-  min-width: 200px;
   border-radius: 16px;
   overflow: hidden;
   box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+  min-width: 200px;
+  flex-shrink: 0;
   background: #fff;
-  position: relative;
   transition: transform 0.2s, box-shadow 0.2s;
+  position: relative;
 }
-.cheap-card:hover, .featured-card:hover { transform: scale(1.05); box-shadow: 0 6px 18px rgba(0,0,0,0.25); }
-.cheap-card img, .featured-card img { width: 100%; height: 140px; object-fit: cover; }
-.cheap-card .info, .featured-card .info { padding: 10px; font-size: 0.95rem; }
+.cheap-card:hover, .featured-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+}
+.cheap-card img, .featured-card img {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+}
+.cheap-card .info, .featured-card .info {
+  padding: 10px;
+  font-size: 0.9rem;
+}
 
 /* BADGES */
 .badge {
@@ -101,7 +120,7 @@ body {
   background: #ff9800;
   color: white;
   padding: 3px 8px;
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   border-radius: 12px;
   font-weight: 600;
   animation: pulse 1.5s infinite;
@@ -114,10 +133,11 @@ body {
 
 /* LISTA VERTICAL */
 #product-list {
-  width: 100%;
+  width: 90%;
   max-width: 900px;
   list-style: none;
   padding: 15px;
+  margin: auto;
 }
 #product-list li {
   background: #f3c13a;
@@ -130,16 +150,18 @@ body {
   height: 180px;
   object-fit: cover;
 }
-.product-info { padding: 10px; }
+.product-info {
+  padding: 10px;
+}
 
-/* MENSAJES SIN RESULTADOS */
+/* NO RESULTS */
 .no-results {
-  padding: 20px;
   color: #666;
+  padding: 15px;
   text-align: center;
 }
 
-/* BOTÓN WHATSAPP */
+/* BOTÓN WHATSAPP FIJO */
 #whatsapp-btn {
   position: fixed;
   bottom: 20px;

@@ -24,12 +24,9 @@ comunas.forEach(c => {
 });
 
 // FUNCIÓN PARA MOSTRAR PRODUCTOS
-function displayProducts(products) {
-  cheapScroll.innerHTML = ""; // siempre mostrar todos los baratos
-  featuredScroll.innerHTML = "";
-  productList.innerHTML = "";
-
-  // SCROLL LO MÁS BARATO - TODAS LAS COMUNAS
+function displayProducts(products, filterDestacados = false) {
+  // "Lo más barato" siempre intacto
+  cheapScroll.innerHTML = "";
   allProducts.forEach(p => {
     const cheapCard = document.createElement("div");
     cheapCard.className = "cheap-card";
@@ -45,16 +42,13 @@ function displayProducts(products) {
     cheapScroll.appendChild(cheapCard);
   });
 
-  // DESTACADOS Y LISTA
-  if(products.length === 0){
-    featuredScroll.innerHTML = `<p class="no-results">No hay promociones en tu comuna con esos filtros.</p>`;
-    productList.innerHTML = `<p class="no-results">No encontramos promociones con esos filtros. ¡Prueba otra búsqueda!</p>`;
-    return;
-  }
-
-  products.forEach(p => {
-    // SCROLL DESTACADOS
-    if(p.destacado){
+  // Destacados filtrados
+  featuredScroll.innerHTML = "";
+  const destacados = products.filter(p => p.destacado);
+  if(destacados.length === 0){
+    featuredScroll.innerHTML = `<p class="no-results">No hay destacados en tu comuna.</p>`;
+  } else {
+    destacados.forEach(p => {
       const featuredCard = document.createElement("div");
       featuredCard.className = "featured-card";
       featuredCard.innerHTML = `
@@ -67,19 +61,26 @@ function displayProducts(products) {
         </div>
       `;
       featuredScroll.appendChild(featuredCard);
-    }
+    });
+  }
 
-    // LISTA VERTICAL
-    const li = document.createElement("li");
-    li.innerHTML = `
-      <img class="product-img" src="${p.image}" alt="${p.name}">
-      <div class="product-info">
-        <strong>${p.name}</strong> - <small>${p.comuna}</small><br>
-        <strong>$${p.price.toLocaleString('es-CL')}</strong>
-      </div>
-    `;
-    productList.appendChild(li);
-  });
+  // Lista vertical
+  productList.innerHTML = "";
+  if(products.length === 0){
+    productList.innerHTML = `<p class="no-results">No encontramos promociones con esos filtros. ¡Prueba otra búsqueda!</p>`;
+  } else {
+    products.forEach(p => {
+      const li = document.createElement("li");
+      li.innerHTML = `
+        <img class="product-img" src="${p.image}" alt="${p.name}">
+        <div class="product-info">
+          <strong>${p.name}</strong> - <small>${p.comuna}</small><br>
+          <strong>$${p.price.toLocaleString('es-CL')}</strong>
+        </div>
+      `;
+      productList.appendChild(li);
+    });
+  }
 }
 
 // FUNCIÓN DE BÚSQUEDA Y FILTRO
