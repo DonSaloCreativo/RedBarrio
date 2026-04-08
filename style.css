@@ -1,4 +1,6 @@
-/* GENERAL */
+/* ======================= */
+/* ESTILO GENERAL DEL BODY */
+/* ======================= */
 body {
   font-family: 'Poppins', sans-serif;
   background: #f5f7fb;
@@ -9,7 +11,9 @@ body {
   text-align: center;
 }
 
-/* HEADER */
+/* ======================= */
+/* HEADER / BANNER PRINCIPAL */
+/* ======================= */
 .hero {
   background-color: #f3c13a;
   color: white;
@@ -19,10 +23,19 @@ body {
   flex-direction: column;
   align-items: center;
 }
-.logo { width: 150px; max-width: 200px; }
-.subtitle { font-size: 1.2rem; font-weight: 600; margin-top: 5px; }
+.logo {
+  width: 150px;
+  max-width: 200px;
+}
+.subtitle {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-top: 5px;
+}
 
-/* BUSCADOR */
+/* ======================= */
+/* CAJA DE BÚSQUEDA */
+/* ======================= */
 .search-box {
   background: #f3c13a;
   margin: 20px auto 30px;
@@ -53,20 +66,25 @@ body {
   font-weight: 600;
 }
 
-/* SECCIONES */
+/* ======================= */
+/* SECCIONES DE PROMOCIONES */
+/* ======================= */
 .section-title {
-  margin-top: 20px;
-  padding: 8px 15px;
+  margin-top: 15px;
+  padding: 6px 12px;
   display: inline-block;
   border-radius: 12px;
   color: white;
   font-weight: 600;
+  font-size: 1rem; /* tamaño más equilibrado que antes */
 }
 .purple-bg { background-color: #5a0080; }
 .blue-bg { background-color: #00bcd4; }
 .yellow-bg { background-color: #f3c13a; color:#111; }
 
+/* ======================= */
 /* SCROLL HORIZONTAL */
+/* ======================= */
 #cheap-scroll, #featured-scroll {
   display: flex;
   overflow-x: auto;
@@ -78,7 +96,9 @@ body {
   scroll-behavior: smooth;
 }
 
+/* ======================= */
 /* TARJETAS */
+/* ======================= */
 .cheap-card, .featured-card {
   border-radius: 16px;
   overflow: hidden;
@@ -103,6 +123,7 @@ body {
   font-size: 0.95rem;
 }
 
+/* ======================= */
 /* BADGES */
 .badge {
   position: absolute;
@@ -116,13 +137,13 @@ body {
   font-weight: 600;
   animation: pulse 1.5s infinite;
 }
-
 @keyframes pulse {
   0% { transform: scale(1); opacity: 1; }
   50% { transform: scale(1.1); opacity: 0.9; }
   100% { transform: scale(1); opacity: 1; }
 }
 
+/* ======================= */
 /* LISTA VERTICAL */
 #product-list {
   width: 100%;
@@ -145,6 +166,7 @@ body {
   padding: 10px;
 }
 
+/* ======================= */
 /* BOTÓN WHATSAPP FIJO */
 #whatsapp-btn {
   position: fixed;
@@ -159,6 +181,7 @@ body {
   cursor: pointer;
 }
 
+/* ======================= */
 /* FOOTER */
 footer {
   width: 100%;

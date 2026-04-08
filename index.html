@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>RedBarrio</title>
-  <link rel="stylesheet" href="style.css?v=5">
+  <link rel="stylesheet" href="style.css?v=6">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -14,6 +14,14 @@
   <img src="images/logo.png" class="logo">
   <p class="subtitle">Conectando vecinos con promociones reales</p>
 </header>
+
+<!-- LO MÁS BARATO (Fijo) -->
+<h2 class="section-title purple-bg">💸 Lo más barato hoy</h2>
+<div class="scroll-container">
+  <button class="scroll-btn left" onclick="scrollLeft('cheap-scroll')">◀</button>
+  <div id="cheap-scroll"></div>
+  <button class="scroll-btn right" onclick="scrollRight('cheap-scroll')">▶</button>
+</div>
 
 <!-- BUSCADOR -->
 <div class="search-box">
@@ -25,13 +33,13 @@
   <button onclick="buscar()" class="search-btn">Buscar</button>
 </div>
 
-<!-- LO MÁS BARATO -->
-<h2 class="section-title purple-bg">💸 Lo más barato hoy</h2>
-<div id="cheap-scroll"></div>
-
-<!-- DESTACADOS -->
+<!-- DESTACADOS FILTRABLES -->
 <h2 class="section-title blue-bg">🔥 Destacados de tu comuna</h2>
-<div id="featured-scroll"></div>
+<div class="scroll-container">
+  <button class="scroll-btn left" onclick="scrollLeft('featured-scroll')">◀</button>
+  <div id="featured-scroll"></div>
+  <button class="scroll-btn right" onclick="scrollRight('featured-scroll')">▶</button>
+</div>
 
 <!-- TODAS LAS PROMOCIONES -->
 <h2 class="section-title yellow-bg">📍 Todas las promociones</h2>
