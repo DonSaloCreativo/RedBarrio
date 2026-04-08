@@ -13,32 +13,31 @@
 <header class="hero">
   <img src="images/logo.png" class="logo">
   <p class="subtitle">Conectando vecinos con promociones reales desde 2025</p>
-  <p class="info-text">⚠️ RedBarrio no vende productos. Solo conecta promociones locales.</p>
-</header>
 
 <!-- SECCIÓN LO MÁS BARATO -->
 <h2 class="section-title purple-bg">💸 Lo más barato hoy</h2>
-<div id="cheap-scroll" class="scrollable"></div>
+<div id="cheap-scroll"></div>
 
 <!-- CAJA DE BÚSQUEDA -->
 <div class="search-box">
   <label>📍 ¿En qué comuna estás?</label>
-  <select id="location-filter"></select>
+  <select id="location-filter">
+    <option value="">Todas</option>
+    <option value="Providencia">Providencia</option>
+    <option value="Las Condes">Las Condes</option>
+    <option value="Ñuñoa">Ñuñoa</option>
+  </select>
 
   <label>🍔 ¿Qué estás buscando?</label>
   <input type="text" id="search-input" placeholder="Ej: pizza, sushi, gasfiter...">
-  <div class="quick-tags">
-    <button onclick="setQuick('Pizza')">🍕 Pizza</button>
-    <button onclick="setQuick('Hamburguesa')">🍔 Hamburguesa</button>
-    <button onclick="setQuick('Empanadas')">🌮 Empanadas</button>
-    <button onclick="setQuick('Sushi')">🍣 Sushi</button>
-  </div>
-  <button onclick="buscar()" class="search-btn">Buscar 🔍</button>
+  <button onclick="buscar()" class="search-btn">Buscar</button>
 </div>
+  <p class="info-text">⚠️ RedBarrio no vende productos. Solo conecta promociones locales.</p>
+</header>
 
 <!-- SECCIÓN DESTACADOS -->
 <h2 class="section-title blue-bg">🔥 Destacados de tu comuna</h2>
-<div id="featured-scroll" class="scrollable"></div>
+<div id="featured-scroll"></div>
 
 <!-- TODAS LAS PROMOCIONES -->
 <h2 class="section-title yellow-bg">📍 Todas las promociones</h2>
