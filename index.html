@@ -15,7 +15,7 @@
   <p class="subtitle">Conectando vecinos con promociones reales</p>
 </header>
 
-<!-- LO MÁS BARATO (SIEMPRE VISIBLE) -->
+<!-- LO MÁS BARATO -->
 <h2 class="section-title purple-bg">💸 Lo más barato hoy</h2>
 <div id="cheap-scroll"></div>
 
@@ -37,9 +37,9 @@
 <h2 class="section-title yellow-bg">📍 Todas las promociones</h2>
 <ul id="product-list"></ul>
 
-<!-- BOTÓN WHATSAPP -->
-<a href="https://forms.gle/yNVktkjKFGuWC7MP8" target="_blank" class="btn-publicar">
-  Sube tu Oferta
+<!-- BOTÓN FLOTANTE -->
+<a href="#" class="btn-publicar" onclick="abrirForm()">
+  Publica GRATIS 🚀
 </a>
 
 <!-- FOOTER -->
@@ -48,6 +48,41 @@
   <p>© 2026 RedBarrio. All rights reserved.</p>
 </footer>
 
+<!-- POPUP -->
+<div id="formPopup" class="popup-overlay" style="display:none;">
+  <div class="popup-content" style="width:90%; max-width:600px;">
+    
+    <button class="popup-close" onclick="cerrarForm()">X</button>
+
+    <iframe 
+      src="https://docs.google.com/forms/d/e/1FAIpQLSe-NoZ-wev8KO0U6LT2ko9Ly0NyZcCjkZ4A0eBF-1TbH2qZxA/viewform?embedded=true" 
+      width="100%" 
+      height="500" 
+      style="border:none; border-radius:12px;">
+    </iframe>
+
+  </div>
+</div>
+
+<!-- SCRIPTS -->
 <script src="script.js"></script>
+
+<script>
+function abrirForm() {
+  document.getElementById("formPopup").style.display = "flex";
+}
+
+function cerrarForm() {
+  document.getElementById("formPopup").style.display = "none";
+}
+
+window.onclick = function(e) {
+  const popup = document.getElementById("formPopup");
+  if (e.target === popup) {
+    popup.style.display = "none";
+  }
+}
+</script>
+
 </body>
 </html>
