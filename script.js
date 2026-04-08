@@ -9,6 +9,8 @@ const allProducts = [
 const cheapScroll = document.getElementById("cheap-scroll");
 const featuredScroll = document.getElementById("featured-scroll");
 const productList = document.getElementById("product-list");
+const locationFilter = document.getElementById("location-filter");
+const searchInput = document.getElementById("search-input");
 
 function displayProducts(products) {
   cheapScroll.innerHTML = "";
@@ -38,6 +40,11 @@ function displayProducts(products) {
 // FILTRO BÁSICO
 function buscar() {
   displayProducts(allProducts);
+}
+
+function setQuick(value) {
+  searchInput.value = value;
+  buscar();
 }
 
 // Inicializar
