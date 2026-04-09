@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>RedBarrio</title>
-  <link rel="stylesheet" href="style.css?v=7">
+  <link rel="stylesheet" href="style.css?v=8">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
@@ -15,16 +15,18 @@
   <img src="images/logo.png" class="logo">
   <p class="subtitle">Conectando vecinos con promociones reales</p>
   <div class="banner-buttons">
-    <!-- BOTÓN TALLY -->
     <a href="javascript:void(0)" class="btn-banner highlight" onclick="abrirFormDato()">
       <i class="fas fa-camera"></i> Comparte tu picada
     </a>
-    <!-- BOTÓN GOOGLE FORM -->
     <a href="javascript:void(0)" class="btn-banner" onclick="abrirFormPromo()">
       <i class="fas fa-store"></i> Soy Negocio
     </a>
   </div>
 </header>
+
+<!-- PICADAS DE VECINOS -->
+<h2 class="section-title purple-text">📸 Picadas de nuestros vecinos</h2>
+<div id="cheap-scroll"></div>
 
 <!-- BUSCADOR -->
 <div class="search-box">
@@ -34,10 +36,6 @@
   <input type="text" id="search-input" placeholder="Ej: pizza, sushi, gasfiter...">
   <button onclick="buscar()" class="search-btn">Buscar</button>
 </div>
-
-<!-- LO MÁS BARATO -->
-<h2 class="section-title purple-text">💸 Lo más barato hoy</h2>
-<div id="cheap-scroll"></div>
 
 <!-- DESTACADOS -->
 <h2 class="section-title blue-text">🔥 Destacados de tu comuna</h2>
@@ -70,13 +68,11 @@
 
 <script src="script.js"></script>
 <script>
-  // ABRIR / CERRAR POPUPS
   function abrirFormPromo() { document.getElementById("popupPromo").style.display = "flex"; }
   function cerrarFormPromo() { document.getElementById("popupPromo").style.display = "none"; }
   function abrirFormDato() { document.getElementById("popupDato").style.display = "flex"; }
   function cerrarFormDato() { document.getElementById("popupDato").style.display = "none"; }
 
-  // CERRAR AL HACER CLICK FUERA DEL POPUP
   window.onclick = function(e) {
     const promo = document.getElementById("popupPromo");
     const dato = document.getElementById("popupDato");
@@ -84,5 +80,6 @@
     if (e.target === dato) dato.style.display = "none";
   }
 </script>
+
 </body>
 </html>

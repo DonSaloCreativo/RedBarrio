@@ -15,7 +15,7 @@ const locationFilter = document.getElementById("location-filter");
 const searchInput = document.getElementById("search-input");
 
 // COMUNAS
-const comunas = [ "Colina","Lampa","Til Til","Pirque","Puente Alto","San José de Maipo","Buin", "Calera de Tango","Paine","San Bernardo","Alhué","Curacaví","María Pinto", "Melipilla","San Pedro","Cerrillos","Cerro Navia","Conchalí","El Bosque","Estación Central","Huechuraba","Independencia","La Cisterna","La Granja","La Florida","La Pintana","La Reina","Las Condes","Lo Barnechea","Lo Espejo","Lo Prado","Macul","Maipú","Ñuñoa","Pedro Aguirre Cerda","Peñalolén", "Providencia","Pudahuel","Quilicura","Quinta Normal","Recoleta","Renca", "San Miguel","San Joaquín","San Ramón","Santiago","Vitacura","El Monte", "Isla de Maipo","Padre Hurtado","Peñaflor","Talagante" ];
+const comunas = [ "Colina","Lampa","Til Til","Pirque","Puente Alto","San José de Maipo","Buin","Calera de Tango","Paine","San Bernardo","Alhué","Curacaví","María Pinto","Melipilla","San Pedro","Cerrillos","Cerro Navia","Conchalí","El Bosque","Estación Central","Huechuraba","Independencia","La Cisterna","La Granja","La Florida","La Pintana","La Reina","Las Condes","Lo Barnechea","Lo Espejo","Lo Prado","Macul","Maipú","Ñuñoa","Pedro Aguirre Cerda","Peñalolén","Providencia","Pudahuel","Quilicura","Quinta Normal","Recoleta","Renca","San Miguel","San Joaquín","San Ramón","Santiago","Vitacura","El Monte","Isla de Maipo","Padre Hurtado","Peñaflor","Talagante"];
 
 // LLENAR SELECT
 locationFilter.innerHTML = '<option value="">Todas las comunas</option>';
@@ -26,21 +26,22 @@ comunas.forEach(c => {
   locationFilter.appendChild(option);
 });
 
-// FUNCIÓN PARA MOSTRAR PRODUCTOS
+// MOSTRAR PICADAS DE VECINOS
 function displayProducts(products) {
+  // PICADAS DE VECINOS (arriba)
   cheapScroll.innerHTML = "";
-  allProducts.forEach(p => {
-    const cheapCard = document.createElement("div");
-    cheapCard.className = "cheap-card";
-    cheapCard.innerHTML = `${p.destacado ? '<div class="badge">🌟 Oferta Real</div>' : ''}
+  products.forEach(p => {
+    const card = document.createElement("div");
+    card.className = "cheap-card";
+    card.innerHTML = `${p.destacado ? '<div class="badge">🌟 Oferta Real</div>' : ''}
       <img src="${p.image}" alt="${p.name}">
       <div class="info">
         <strong>${p.name}</strong><br>
         <small>${p.comuna}</small>
-        <div>$${p.price.toLocaleString('es-CL')}</div>
+        <div>${p.price ? `$${p.price.toLocaleString('es-CL')}` : ''}</div>
       </div>`;
-    cheapCard.onclick = () => abrirPopup(p);
-    cheapScroll.appendChild(cheapCard);
+    card.onclick = () => abrirPopup(p);
+    cheapScroll.appendChild(card);
   });
 
   // DESTACADOS
@@ -57,7 +58,7 @@ function displayProducts(products) {
         <div class="info">
           <strong>${p.name}</strong><br>
           <small>${p.comuna}</small>
-          <div>$${p.price.toLocaleString('es-CL')}</div>
+          <div>${p.price ? `$${p.price.toLocaleString('es-CL')}` : ''}</div>
         </div>`;
       featuredCard.onclick = () => abrirPopup(p);
       featuredScroll.appendChild(featuredCard);
@@ -74,7 +75,7 @@ function displayProducts(products) {
       li.innerHTML = `<img class="product-img" src="${p.image}" alt="${p.name}">
         <div class="product-info">
           <strong>${p.name}</strong> - <small>${p.comuna}</small><br>
-          <strong>$${p.price.toLocaleString('es-CL')}</strong>
+          ${p.price ? `<strong>$${p.price.toLocaleString('es-CL')}</strong>` : ''}
         </div>`;
       li.onclick = () => abrirPopup(p);
       productList.appendChild(li);
@@ -94,17 +95,18 @@ function buscar() {
   displayProducts(filtered);
 }
 
-// POPUP NUEVO
+// POPUP TARJETA
 function abrirPopup(p) {
   const overlay = document.createElement("div");
   overlay.className = "popup-overlay";
   const content = document.createElement("div");
   content.className = "popup-content";
+  content.style.maxWidth = "500px";
   content.innerHTML = `<button class="popup-close" onclick="this.parentElement.parentElement.remove()">X</button>
-    <img src="${p.image}">
+    <img src="${p.image}" style="width:100%; height:200px; object-fit:cover; border-radius:12px;">
     <h3>${p.name}</h3>
     <p>📍 ${p.comuna}</p>
-    <p>💰 $${p.price.toLocaleString('es-CL')}</p>`;
+    ${p.price ? `<p>💰 $${p.price.toLocaleString('es-CL')}</p>` : ''}`;
   overlay.appendChild(content);
   document.body.appendChild(overlay);
 }
