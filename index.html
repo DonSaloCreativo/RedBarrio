@@ -1,93 +1,98 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RedBarrio</title>
-  <link rel="stylesheet" href="style.css?v=12">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LlamaBarrio - Tu comunidad conectada</title>
+    <link rel="stylesheet" href="style.css?v=29">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
 
-<!-- HEADER -->
-<header class="hero">
-  <img src="images/logo.png" class="logo">
-  <p class="subtitle">Conectando vecinos con promociones reales</p>
-  <div class="banner-buttons">
-    <a href="javascript:void(0)" class="btn-banner highlight" onclick="abrirFormDato()">
-      <i class="fas fa-camera"></i> Comparte tu picada
-    </a>
-    <a href="javascript:void(0)" class="btn-banner" onclick="abrirFormPromo()">
-      <i class="fas fa-store"></i> Soy Negocio
-    </a>
-  </div>
-</header>
+<nav class="navbar">
+    <div class="nav-container">
+        <div class="brand">
+            <img src="images/logo.png" alt="LlamaBarrio" class="logo-img">
+        </div>
+        
+        <div class="header-controls-group">
+            <div class="oval-control location-wrapper">
+                <select id="location-filter" class="nav-select" onchange="buscar()">
+                    </select>
+            </div>
 
-<!-- PICADAS DE VECINOS -->
-<h2 class="section-title purple-text">📸 Picadas de nuestros vecinos</h2>
-<div id="cheap-scroll"></div>
+            <div class="oval-control search-bar-wrapper">
+                <input type="text" placeholder="¿Que quieres buscar hoy?" id="main-search">
+                <button class="search-icon-btn minimal" onclick="buscar()">🔍</button>
+            </div>
+        </div>
 
-<!-- BUSCADOR -->
-<div class="search-box">
-  <label>📍 ¿En qué comuna estás?</label>
-  <select id="location-filter"></select>
+        <div class="nav-actions">
+            <button class="btn-picada-destacado" onclick="abrirFormDato()">Compartir picada</button>
+            <button class="btn-negocio-small" onclick="abrirFormPromo()">Soy negocio</button>
+        </div>
+    </div>
+</nav>
 
-  <label>🔍 Filtra por categoría:</label>
-  <div class="filter-buttons">
-    <button class="filter-btn active" data-category="Todos">Todo</button>
-    <button class="filter-btn" data-category="Comida">Comida 🍔</button>
-    <button class="filter-btn" data-category="Botillerías">Botillerías 🍷</button>
-    <button class="filter-btn" data-category="Farmacias">Farmacias 💊</button>
-    <button class="filter-btn" data-category="Vida Nocturna">Vida Nocturna 🌙</button>
-  </div>
+<main class="content-wrapper">
+    <section class="hero-section">
+        <h1 class="hero-title">Encuentra los mejores datos y promociones de tu barrio en un solo lugar.</h1>
+    </section>
 
-  <button onclick="buscar()" class="search-btn">Buscar</button>
-</div>
+    <section class="suggestions">
+        <h2 class="section-tag morado">🔥 Las picadas de los vecinos</h2>
+        <p class="section-subtitle">Los mejores datos compartidos por nuestra comunidad.</p>
+        <div id="cheap-scroll" class="circle-scroll"></div>
+    </section>
 
-<!-- DESTACADOS -->
-<h2 class="section-title blue-text">🔥 Destacados de tu comuna</h2>
-<div id="featured-scroll"></div>
+    <section class="results">
+        <h3 class="section-tag-bg oscuro">🍔 Resultados</h3>
+        <div id="product-list" class="results-grid"></div>
+        <div id="no-results" style="display:none; text-align:center; padding:40px; font-weight:600; color:#666;">
+            ❌ No encontramos resultados.
+        </div>
+    </section>
 
-<!-- TODAS LAS PROMOCIONES -->
-<h2 class="section-title yellow-bg">📍 Todas las promociones</h2>
-<ul id="product-list"></ul>
+    <section class="results">
+        <h3 class="section-tag-bg" style="background-color: #ffda79;">🌟 Recomendaciones en tu comuna</h3>
+        <div id="comuna-list" class="results-grid"></div>
+    </section>
 
-<!-- FOOTER -->
-<footer>
-  <p>© 2026 RedBarrio. All rights reserved.</p>
+    <section class="promo-banner-container">
+        <div class="promo-card">
+            <img src="images/promocionimagen.png" alt="Publicidad LlamaBarrio" class="full-promo-img">
+        </div>
+    </section>
+</main>
+
+<footer class="main-footer">
+    <div class="footer-content">
+        <p><strong>LlamaBarrio © 2026</strong></p>
+        <p>Términos y Condiciones | Políticas de Privacidad</p>
+    </div>
 </footer>
 
-<!-- POPUP GOOGLE FORM (Soy Negocio) -->
-<div id="popupPromo" class="popup-overlay" style="display:none;">
-  <div class="popup-content" style="width:90%; max-width:600px;">
-    <button class="popup-close" onclick="cerrarFormPromo()">X</button>
-    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSe-NoZ-wev8KO0U6LT2ko9Ly0NyZcCjkZ4A0eBF-1TbH2qZxA/viewform?embedded=true" width="100%" height="500" style="border:none; border-radius:12px;"></iframe>
-  </div>
+<div id="productPopup" class="popup-overlay" style="display:none;">
+    <div class="popup-content product-view compact">
+        <button class="popup-close" onclick="cerrarPopupProducto()">X</button>
+        <div id="popup-body"></div>
+    </div>
 </div>
 
-<!-- POPUP TALLY (Comparte tu picada) -->
+<div id="popupPromo" class="popup-overlay" style="display:none;">
+    <div class="popup-content form-view large-form">
+        <button class="popup-close" onclick="cerrarFormPromo()">X</button>
+        <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSe-NoZ-wev8KO0U6LT2ko9Ly0NyZcCjkZ4A0eBF-1TbH2qZxA/viewform?embedded=true" width="100%" height="100%" frameborder="0"></iframe>
+    </div>
+</div>
+
 <div id="popupDato" class="popup-overlay" style="display:none;">
-  <div class="popup-content" style="width:90%; max-width:600px;">
-    <button class="popup-close" onclick="cerrarFormDato()">X</button>
-    <iframe src="https://tally.so/r/ja7DOQ" width="100%" height="500" style="border:none; border-radius:12px;"></iframe>
-  </div>
+    <div class="popup-content form-view large-form">
+        <button class="popup-close" onclick="cerrarFormDato()">X</button>
+        <iframe src="https://tally.so/r/ja7DOQ" width="100%" height="100%" frameborder="0"></iframe>
+    </div>
 </div>
 
 <script src="script.js"></script>
-<script>
-  function abrirFormPromo() { document.getElementById("popupPromo").style.display = "flex"; }
-  function cerrarFormPromo() { document.getElementById("popupPromo").style.display = "none"; }
-  function abrirFormDato() { document.getElementById("popupDato").style.display = "flex"; }
-  function cerrarFormDato() { document.getElementById("popupDato").style.display = "none"; }
-
-  window.onclick = function(e) {
-    const promo = document.getElementById("popupPromo");
-    const dato = document.getElementById("popupDato");
-    if (e.target === promo) promo.style.display = "none";
-    if (e.target === dato) dato.style.display = "none";
-  }
-</script>
-
 </body>
 </html>
