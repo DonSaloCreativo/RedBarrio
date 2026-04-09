@@ -1,4 +1,3 @@
-// 1. TODAS LAS COMUNAS
 const comunas = [
     "Cerrillos", "Cerro Navia", "Conchalí", "El Bosque", "Estación Central", 
     "Huechuraba", "Independencia", "La Cisterna", "La Florida", "La Granja", 
@@ -18,67 +17,47 @@ const allProducts = [
 
 function init() {
     const filter = document.getElementById("location-filter");
-    filter.innerHTML = '<option value="">¿Donde estás?</option>';
-    comunas.sort().forEach(c => {
-        const op = document.createElement("option");
-        op.value = c; op.textContent = c;
-        filter.appendChild(op);
-    });
+    if(filter){
+        filter.innerHTML = '<option value="">¿Donde estás?</option>';
+        comunas.sort().forEach(c => {
+            const op = document.createElement("option");
+            op.value = c; op.textContent = c;
+            filter.appendChild(op);
+        });
+    }
     displayProducts(allProducts);
 }
-
-function abrirDetalleProducto(p) {
-    const body = document.getElementById("popup-body");
-    body.innerHTML = `
-        <img src="${p.image}">
-        <div style="padding:15px; text-align:center;">
-            <h2 style="margin:0;">${p.name}</h2>
-            <p style="color:#777; font-size:0.8rem;">📍 ${p.comuna}</p>
-            <p style="font-size:0.9rem; margin:10px 0;">${p.desc}</p>
-            <h3 style="color:#FF4500; font-size:1.5rem; margin:10px 0;">$${p.price.toLocaleString('es-CL')}</h3>
-            <div style="background:#f1f1f1; padding:10px; border-radius:8px; font-size:0.8rem; margin-bottom:10px;">
-                <p>📞 ${p.contacto}</p>
-                <p>📸 ${p.redes}</p>
-            </div>
-            <button onclick="cerrarPopupProducto()" style="background:#2ecc71; color:white; border:none; padding:10px; width:100%; border-radius:8px; font-weight:700; cursor:pointer;">Volver</button>
-        </div>
-    `;
-    document.getElementById("productPopup").style.display = "flex";
-}
-
-function cerrarPopupProducto() { document.getElementById("productPopup").style.display = "none"; }
-function abrirFormPromo() { document.getElementById("popupPromo").style.display = "flex"; }
-function cerrarFormPromo() { document.getElementById("popupPromo").style.display = "none"; }
-function abrirFormDato() { document.getElementById("popupDato").style.display = "flex"; }
-function cerrarFormDato() { document.getElementById("popupDato").style.display = "none"; }
 
 function displayProducts(products) {
     const list = document.getElementById("product-list");
     const scroll = document.getElementById("cheap-scroll");
     const comunaList = document.getElementById("comuna-list");
 
-    scroll.innerHTML = "";
-    allProducts.forEach(p => {
-        const div = document.createElement("div");
-        div.className = "circle-item";
-        div.onclick = () => abrirDetalleProducto(p);
-        div.innerHTML = `<img src="${p.image}" class="circle-img"><p style="font-size:0.75rem; font-weight:600; margin-top:5px;">${p.name}</p>`;
-        scroll.appendChild(div);
-    });
+    if(scroll){
+        scroll.innerHTML = "";
+        allProducts.forEach(p => {
+            const div = document.createElement("div");
+            div.className = "circle-item";
+            div.onclick = () => abrirDetalleProducto(p);
+            div.innerHTML = `<img src="${p.image}" class="circle-img"><p style="font-size:0.7rem; font-weight:600; margin-top:5px; text-align:center;">${p.name}</p>`;
+            scroll.appendChild(div);
+        });
+    }
 
-    list.innerHTML = "";
-    products.forEach(p => {
-        const card = document.createElement("div");
-        card.className = "res-card";
-        card.onclick = () => abrirDetalleProducto(p);
-        card.innerHTML = `<img src="${p.image}" class="res-thumb"><div class="res-info"><strong>${p.name}</strong><br><small>📍 ${p.comuna}</small><div style="color:#FF4500; font-weight:700;">$${p.price.toLocaleString('es-CL')}</div></div>`;
-        list.appendChild(card);
-    });
+    if(list){
+        list.innerHTML = "";
+        products.forEach(p => {
+            const card = document.createElement("div");
+            card.className = "res-card";
+            card.onclick = () => abrirDetalleProducto(p);
+            card.innerHTML = `<img src="${p.image}" class="res-thumb"><div class="res-info"><strong>${p.name}</strong><br><small>📍 ${p.comuna}</small><div style="color:#FF4500; font-weight:700;">$${p.price.toLocaleString('es-CL')}</div></div>`;
+            list.appendChild(card);
+        });
+    }
 
-    // 3. FIX: POPUP PARA RECOMENDACIONES COMUNA
     if(comunaList) {
         comunaList.innerHTML = "";
-        allProducts.slice(0, 3).forEach(p => {
+        allProducts.forEach(p => {
             const card = document.createElement("div");
             card.className = "res-card";
             card.onclick = () => abrirDetalleProducto(p);
@@ -87,6 +66,29 @@ function displayProducts(products) {
         });
     }
 }
+
+function abrirDetalleProducto(p) {
+    const body = document.getElementById("popup-body");
+    body.innerHTML = `
+        <img src="${p.image}" style="width:100%; height:180px; object-fit:cover;">
+        <div style="padding:15px; text-align:center;">
+            <h2 style="margin:0;">${p.name}</h2>
+            <p style="color:#777; font-size:0.8rem;">📍 ${p.comuna}</p>
+            <p style="font-size:0.9rem; margin:10px 0;">${p.desc}</p>
+            <h3 style="color:#FF4500; font-size:1.5rem; margin:10px 0;">$${p.price.toLocaleString('es-CL')}</h3>
+            <div style="background:#f1f1f1; padding:10px; border-radius:8px; font-size:0.8rem; margin-bottom:10px;">
+                <p>📞 ${p.contacto}</p><p>📸 ${p.redes}</p>
+            </div>
+            <button onclick="cerrarPopupProducto()" style="background:#2ecc71; color:white; border:none; padding:10px; width:100%; border-radius:8px; font-weight:700; cursor:pointer;">Cerrar</button>
+        </div>`;
+    document.getElementById("productPopup").style.display = "flex";
+}
+
+function cerrarPopupProducto() { document.getElementById("productPopup").style.display = "none"; }
+function abrirFormPromo() { document.getElementById("popupPromo").style.display = "flex"; }
+function cerrarFormPromo() { document.getElementById("popupPromo").style.display = "none"; }
+function abrirFormDato() { document.getElementById("popupDato").style.display = "flex"; }
+function cerrarFormDato() { document.getElementById("popupDato").style.display = "none"; }
 
 function buscar() {
     const loc = document.getElementById("location-filter").value;

@@ -2,9 +2,9 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>LlamaBarrio - Tu comunidad conectada</title>
-    <link rel="stylesheet" href="style.css?v=29">
+    <link rel="stylesheet" href="style.css?v=33">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -20,7 +20,6 @@
                 <select id="location-filter" class="nav-select" onchange="buscar()">
                     </select>
             </div>
-
             <div class="oval-control search-bar-wrapper">
                 <input type="text" placeholder="¿Que quieres buscar hoy?" id="main-search">
                 <button class="search-icon-btn minimal" onclick="buscar()">🔍</button>
@@ -53,12 +52,12 @@
         </div>
     </section>
 
-    <section class="results">
+    <section class="results comuna-recomendados-section">
         <h3 class="section-tag-bg" style="background-color: #ffda79;">🌟 Recomendaciones en tu comuna</h3>
-        <div id="comuna-list" class="results-grid"></div>
+        <div id="comuna-list" class="comuna-scroll-mobile"></div>
     </section>
 
-    <section class="promo-banner-container">
+    <section class="promo-banner">
         <div class="promo-card">
             <img src="images/promocionimagen.png" alt="Publicidad LlamaBarrio" class="full-promo-img">
         </div>
@@ -68,7 +67,7 @@
 <footer class="main-footer">
     <div class="footer-content">
         <p><strong>LlamaBarrio © 2026</strong></p>
-        <p>Términos y Condiciones | Políticas de Privacidad</p>
+        <p style="margin-top: 10px; opacity: 0.8;">Términos y Condiciones | Políticas de Privacidad</p>
     </div>
 </footer>
 
