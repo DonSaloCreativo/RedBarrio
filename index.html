@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>RedBarrio</title>
-  <link rel="stylesheet" href="style.css?v=8">
+  <link rel="stylesheet" href="style.css?v=11">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
@@ -32,8 +32,16 @@
 <div class="search-box">
   <label>📍 ¿En qué comuna estás?</label>
   <select id="location-filter"></select>
-  <label>🍔 ¿Qué estás buscando?</label>
-  <input type="text" id="search-input" placeholder="Ej: pizza, sushi, gasfiter...">
+
+  <label>🔍 Filtra por categoría:</label>
+  <div class="filter-buttons">
+    <button class="filter-btn active" data-category="Todos">Todo</button>
+    <button class="filter-btn" data-category="Comida">Comida 🍔</button>
+    <button class="filter-btn" data-category="Botillerías">Botillerías 🍷</button>
+    <button class="filter-btn" data-category="Farmacias">Farmacias 💊</button>
+    <button class="filter-btn" data-category="Vida Nocturna">Vida Nocturna 🌙</button>
+  </div>
+
   <button onclick="buscar()" class="search-btn">Buscar</button>
 </div>
 
