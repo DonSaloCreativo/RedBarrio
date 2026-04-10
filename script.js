@@ -20,25 +20,38 @@ function init() {
     cargarPicadasVecinos();
 }
 
+// 1. CARGAR NEGOCIOS (API)
+function cargarProductosNegocios() {
+    fetch(API_URL)
+        .then(res => res.json())
+        .then(data => {
+            allProducts = data.filter(p => p.estado === "aprobado");
+            displayNegocios(allProducts);
+        });
+}
+
+// 2. CARGAR VECINOS (CSV TALLY)
 async function cargarPicadasVecinos() {
     try {
         const res = await fetch(CSV_VECINOS_URL);
         const csvText = await res.text();
+        // Dividimos por filas y quitamos las vacías
         const filas = csvText.split(/\r?\n/).filter(f => f.trim() !== "").slice(1);
         const scroll = document.getElementById("cheap-scroll");
         
         if (filas.length > 0) scroll.innerHTML = "";
 
         filas.forEach(fila => {
+            // Esta Regex es clave para que no se pierda con las comas de las direcciones
             const cols = fila.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g);
             
             if (cols && cols.length >= 2) {
-                // MAPEADO SEGÚN TU EXCEL "PUBLICADOS"
-                const img = cols[0].replace(/"/g, "").trim();    // Col A
-                const nombre = cols[1].replace(/"/g, "").trim(); // Col B (Esmeralda 469)
-                const desc = cols[2] ? cols[2].replace(/"/g, "").trim() : ""; // Col C
-                const precio = cols[3] ? cols[3].replace(/"/g, "").trim() : "Dato gratuito"; // Col D
-                const autor = cols[4] ? cols[4].replace(/"/g, "").trim() : "Vecino"; // Col E
+                // MAPEADO FORZADO SEGÚN TU PESTAÑA 'PUBLICADOS'
+                const img = cols[0].replace(/"/g, "").trim();    // Columna A (Imagen)
+                const nombre = cols[1].replace(/"/g, "").trim(); // Columna B (Nombre/Lugar)
+                const desc = cols[2] ? cols[2].replace(/"/g, "").trim() : ""; // Columna C
+                const precio = cols[3] ? cols[3].replace(/"/g, "").trim() : "Dato gratuito"; // Columna D
+                const autor = cols[4] ? cols[4].replace(/"/g, "").trim() : "Vecino"; // Columna E
 
                 const div = document.createElement("div");
                 div.style.cssText = "text-align:center !important; flex:0 0 105px !important; width:105px !important; cursor:pointer !important; margin:5px !important;";
@@ -59,34 +72,6 @@ async function cargarPicadasVecinos() {
     } catch (e) { console.error("Error picadas:", e); }
 }
 
-// Función para mostrar el detalle de la picada (Popup)
-function abrirDetalleVecino(img, titulo, desc, precio, autor) {
-    const body = document.getElementById("popup-body");
-    body.innerHTML = `
-        <img src="${img}" style="width:100%; height:220px; object-fit:cover;">
-        <div style="padding:20px; text-align:center;">
-            <h2 style="color:#6c5ce7; text-transform:uppercase; margin-bottom:10px;">${titulo}</h2>
-            <p style="font-size: 0.95rem; color: #444;">${desc}</p>
-            <div style="background:#fdf2e3; padding:15px; border-radius:12px; margin:15px 0; text-align:left; border: 1px solid #eee;">
-                <p style="margin: 5px 0;"><strong>💰 Precio:</strong> ${precio || 'Dato gratuito'}</p>
-                <p style="margin: 5px 0;"><strong>👤 Por:</strong> ${autor || 'Vecino anónimo'}</p>
-            </div>
-            <button onclick="cerrarPopupProducto()" style="background:#6c5ce7; color:white; border:none; padding:14px; width:100%; border-radius:12px; font-weight:bold; cursor:pointer;">¡Genial!</button>
-        </div>
-    `;
-    document.getElementById("productPopup").style.display = "flex";
-}
-
-// Resto de funciones se mantienen igual
-function cargarProductosNegocios() {
-    fetch(API_URL)
-        .then(res => res.json())
-        .then(data => {
-            allProducts = data.filter(p => p.estado === "aprobado");
-            displayNegocios(allProducts);
-        });
-}
-
 function displayNegocios(products) {
     const list = document.getElementById("product-list");
     if (list) {
@@ -104,6 +89,23 @@ function displayNegocios(products) {
 function abrirDetalleProducto(p) {
     const body = document.getElementById("popup-body");
     body.innerHTML = `<img src="${p.imagen}" style="width:100%; height:200px; object-fit:cover;"><div style="padding:20px; text-align:center;"><h2 style="color:#6c5ce7;">${p.nombre}</h2><p>${p.desc || ""}</p><h3 style="color:#FF4500;">$${Number(p.precio).toLocaleString('es-CL')}</h3><p>📍 ${p.comuna}</p><button onclick="cerrarPopupProducto()" style="background:#2ecc71; color:white; border:none; padding:12px; width:100%; border-radius:10px; font-weight:bold; cursor:pointer; margin-top:10px;">Cerrar</button></div>`;
+    document.getElementById("productPopup").style.display = "flex";
+}
+
+function abrirDetalleVecino(img, titulo, desc, precio, autor) {
+    const body = document.getElementById("popup-body");
+    body.innerHTML = `
+        <img src="${img}" style="width:100%; height:220px; object-fit:cover;">
+        <div style="padding:20px; text-align:center;">
+            <h2 style="color:#6c5ce7; text-transform:uppercase; margin-bottom:10px;">${titulo}</h2>
+            <p style="font-size: 0.95rem; color: #444;">${desc}</p>
+            <div style="background:#fdf2e3; padding:15px; border-radius:12px; margin:15px 0; text-align:left; border: 1px solid #eee;">
+                <p style="margin: 5px 0;"><strong>💰 Precio:</strong> ${precio || 'Dato gratuito'}</p>
+                <p style="margin: 5px 0;"><strong>👤 Por:</strong> ${autor || 'Vecino anónimo'}</p>
+            </div>
+            <button onclick="cerrarPopupProducto()" style="background:#6c5ce7; color:white; border:none; padding:14px; width:100%; border-radius:12px; font-weight:bold; cursor:pointer;">¡Genial!</button>
+        </div>
+    `;
     document.getElementById("productPopup").style.display = "flex";
 }
 
