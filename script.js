@@ -16,11 +16,11 @@ function init() {
             filter.appendChild(op);
         });
     }
-    cargarProductosNegocios(); // Carga la grilla de abajo (API)
-    cargarPicadasVecinos();   // Carga los círculos de arriba (CSV)
+    cargarProductosNegocios();
+    cargarPicadasVecinos();
 }
 
-// 1. CARGAR NEGOCIOS (API SHEETBEST) -> Grilla de resultados
+// 1. CARGAR NEGOCIOS (API)
 function cargarProductosNegocios() {
     fetch(API_URL)
         .then(res => res.json())
@@ -30,7 +30,7 @@ function cargarProductosNegocios() {
         });
 }
 
-// 2. CARGAR VECINOS (CSV TALLY) -> Círculos pequeños con blindaje de estilo
+// 2. CARGAR VECINOS (CSV) - CÍRCULOS PEQUEÑOS FORZADOS
 async function cargarPicadasVecinos() {
     try {
         const res = await fetch(CSV_VECINOS_URL);
@@ -50,16 +50,16 @@ async function cargarPicadasVecinos() {
                 const autor = cols[4] ? cols[4].replace(/"/g, "").trim() : "Vecino";
 
                 const div = document.createElement("div");
-                // Blindaje para que el contenedor no se estire
-                div.setAttribute("style", "text-align: center !important; flex: 0 0 100px !important; width: 100px !important; cursor: pointer !important; margin: 10px 5px !important;");
+                // Estilos forzados para el contenedor del círculo
+                div.style.cssText = "text-align:center !important; flex:0 0 100px !important; width:100px !important; cursor:pointer !important; margin:5px !important; display:inline-block !important;";
                 
                 div.onclick = () => abrirDetalleVecino(img, nombre, desc, precio, autor);
                 
                 div.innerHTML = `
                     <div style="width: 80px !important; height: 80px !important; margin: 0 auto !important; border-radius: 50% !important; overflow: hidden !important; border: 3px solid #00FF00 !important; box-shadow: 0 0 10px rgba(0,255,0,0.3) !important;">
-                        <img src="${img}" style="width: 100% !important; height: 100% !important; object-fit: cover !important;" onerror="this.src='images/logo.png'">
+                        <img src="${img}" style="width: 100% !important; height: 100% !important; object-fit: cover !important; display: block !important;" onerror="this.src='images/logo.png'">
                     </div>
-                    <span style="display: block !important; font-size: 11px !important; font-weight: bold !important; margin-top: 8px !important; color: #333 !important; overflow: hidden !important; text-overflow: ellipsis !important; white-space: nowrap !important; width: 100% !important;">
+                    <span style="display: block !important; font-size: 11px !important; font-weight: bold !important; margin-top: 8px !important; color: #333 !important; overflow: hidden !important; text-overflow: ellipsis !important; white-space: nowrap !important; width: 90px !important; margin-left: auto !important; margin-right: auto !important;">
                         ${nombre}
                     </span>
                 `;
@@ -69,11 +69,9 @@ async function cargarPicadasVecinos() {
     } catch (e) { console.error("Error vecinos:", e); }
 }
 
-// RENDERIZAR SOLO LA GRILLA DE ABAJO
 function displayNegocios(products) {
     const list = document.getElementById("product-list");
     const comunaList = document.getElementById("comuna-list");
-
     if (list) {
         list.innerHTML = "";
         if (products.length === 0) {
@@ -84,72 +82,32 @@ function displayNegocios(products) {
                 const card = document.createElement("div");
                 card.className = "res-card";
                 card.onclick = () => abrirDetalleProducto(p);
-                card.innerHTML = `
-                    <img src="${p.imagen}" class="res-thumb">
-                    <div class="res-info">
-                        <strong>${p.nombre}</strong><br>
-                        <small>📍 ${p.comuna}</small>
-                        <div style="color:#FF4500; font-weight:700; margin-top:5px;">
-                            $${Number(p.precio).toLocaleString('es-CL')}
-                        </div>
-                    </div>
-                `;
+                card.innerHTML = `<img src="${p.imagen}" class="res-thumb"><div class="res-info"><strong>${p.nombre}</strong><br><small>📍 ${p.comuna}</small><div style="color:#FF4500; font-weight:700; margin-top:5px;">$${Number(p.precio).toLocaleString('es-CL')}</div></div>`;
                 list.appendChild(card);
             });
         }
     }
-
     if (comunaList) {
         comunaList.innerHTML = "";
         allProducts.slice(0, 3).forEach(p => {
             const card = document.createElement("div");
             card.className = "res-card";
             card.onclick = () => abrirDetalleProducto(p);
-            card.innerHTML = `
-                <img src="${p.imagen}" class="res-thumb">
-                <div class="res-info">
-                    <strong>${p.nombre}</strong><br>
-                    <small>📍 ${p.comuna}</small>
-                    <div style="color:#FF4500; font-weight:700; margin-top:5px;">
-                        $${Number(p.precio).toLocaleString('es-CL')}
-                    </div>
-                </div>
-            `;
+            card.innerHTML = `<img src="${p.imagen}" class="res-thumb"><div class="res-info"><strong>${p.nombre}</strong><br><small>📍 ${p.comuna}</small><div style="color:#FF4500; font-weight:700; margin-top:5px;">$${Number(p.precio).toLocaleString('es-CL')}</div></div>`;
             comunaList.appendChild(card);
         });
     }
 }
 
-// POPUPS
 function abrirDetalleProducto(p) {
     const body = document.getElementById("popup-body");
-    body.innerHTML = `
-        <img src="${p.imagen}" style="width:100%; height:200px; object-fit:cover;">
-        <div style="padding:20px; text-align:center;">
-            <h2 style="color:var(--morado);">${p.nombre}</h2>
-            <p>${p.desc || ""}</p>
-            <h3 style="color:#FF4500;">$${Number(p.precio).toLocaleString('es-CL')}</h3>
-            <p>📍 ${p.comuna}</p>
-            <button onclick="cerrarPopupProducto()" style="background:#2ecc71; color:white; border:none; padding:12px; width:100%; border-radius:10px; font-weight:bold; cursor:pointer; margin-top:10px;">Cerrar</button>
-        </div>
-    `;
+    body.innerHTML = `<img src="${p.imagen}" style="width:100%; height:200px; object-fit:cover;"><div style="padding:20px; text-align:center;"><h2 style="color:var(--morado);">${p.nombre}</h2><p>${p.desc || ""}</p><h3 style="color:#FF4500;">$${Number(p.precio).toLocaleString('es-CL')}</h3><p>📍 ${p.comuna}</p><button onclick="cerrarPopupProducto()" style="background:#2ecc71; color:white; border:none; padding:12px; width:100%; border-radius:10px; font-weight:bold; cursor:pointer; margin-top:10px;">Cerrar</button></div>`;
     document.getElementById("productPopup").style.display = "flex";
 }
 
 function abrirDetalleVecino(img, titulo, desc, precio, autor) {
     const body = document.getElementById("popup-body");
-    body.innerHTML = `
-        <img src="${img}" style="width:100%; height:200px; object-fit:cover;">
-        <div style="padding:20px; text-align:center;">
-            <h2 style="color:var(--morado); text-transform:uppercase;">${titulo}</h2>
-            <p style="margin:10px 0;">${desc}</p>
-            <div style="background:var(--bg-light); padding:10px; border-radius:10px; margin-top:10px; text-align:left;">
-                <p><strong>💰 Precio:</strong> ${precio}</p>
-                <p><strong>👤 Por:</strong> ${autor}</p>
-            </div>
-            <button onclick="cerrarPopupProducto()" style="background:var(--morado); color:white; border:none; padding:12px; width:100%; border-radius:10px; font-weight:bold; cursor:pointer; margin-top:15px;">Genial!</button>
-        </div>
-    `;
+    body.innerHTML = `<img src="${img}" style="width:100%; height:200px; object-fit:cover;"><div style="padding:20px; text-align:center;"><h2 style="color:var(--morado); text-transform:uppercase;">${titulo}</h2><p style="margin:10px 0;">${desc}</p><div style="background:var(--bg-light); padding:10px; border-radius:10px; margin-top:10px; text-align:left;"><p><strong>💰 Precio:</strong> ${precio}</p><p><strong>👤 Por:</strong> ${autor}</p></div><button onclick="cerrarPopupProducto()" style="background:var(--morado); color:white; border:none; padding:12px; width:100%; border-radius:10px; font-weight:bold; cursor:pointer; margin-top:15px;">Genial!</button></div>`;
     document.getElementById("productPopup").style.display = "flex";
 }
 
