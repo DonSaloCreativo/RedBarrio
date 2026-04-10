@@ -1,20 +1,29 @@
-const SHEETBEST_URL = "https://api.sheetbest.com/sheets/caf4ae8d-2b11-42a4-bf34-c2b68a0b921a"; 
+// URL de Google Apps Script (Reemplaza a Sheetbest para ser 100% gratuito e ilimitado)
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxH1VvPvLKq9bxXD3bnP8owGzJVE0gmxScoWWY9smVlnO3TIPg554rTRdg34htBSDGysA/exec"; 
 let datosLocales = [];
 
 async function obtenerDatos() {
     try {
-        const respuesta = await fetch(SHEETBEST_URL);
+        const respuesta = await fetch(APPS_SCRIPT_URL);
         if (!respuesta.ok) throw new Error("Error en la respuesta de la red");
         const data = await respuesta.json();
         
         // Filtramos por estado 'aprobado' (sensible a minúsculas)
-        datosLocales = data.filter(fila => fila.estado && fila.estado.toLowerCase() === "aprobado");
+        // Con Apps Script, nos aseguramos de que los datos existan antes de filtrar
+        datosLocales = data.filter(fila => {
+            return fila.estado && fila.estado.toString().toLowerCase().trim() === "aprobado";
+        });
         
         renderizarTarjetas(datosLocales);
         document.getElementById("loading").style.display = "none";
     } catch (error) {
         console.error("Error cargando datos:", error);
-        document.getElementById("loading").innerText = "No se pudieron cargar los locales. Revisa la conexión.";
+        document.getElementById("loading").innerHTML = `
+            <div style="padding: 20px;">
+                <p>No se pudieron cargar los locales.</p>
+                <small>Asegúrate de haber publicado el Script de Google como "Cualquier persona".</small>
+            </div>
+        `;
     }
 }
 
@@ -23,7 +32,7 @@ function renderizarTarjetas(locales) {
     contenedor.innerHTML = "";
 
     if (locales.length === 0) {
-        contenedor.innerHTML = "<p class='status-msg'>No se encontraron locales con esos criterios.</p>";
+        contenedor.innerHTML = "<p class='status-msg'>No se encontraron locales aprobados en el Sheets.</p>";
         return;
     }
 
@@ -51,9 +60,14 @@ function buscar() {
 
     const filtrados = datosLocales.filter(l => {
         const matchComuna = comunaSelec ? l.comuna === comunaSelec : true;
-        // Agregamos seguridad por si tags o categoría vienen vacíos
-        const textoParaBuscar = `${l.nombre} ${l.tags || ''} ${l.categoria || ''}`.toLowerCase();
+        // Seguridad por si tags o categoría vienen vacíos o no son texto
+        const nombre = (l.nombre || "").toString().toLowerCase();
+        const tags = (l.tags || "").toString().toLowerCase();
+        const cat = (l.categoria || "").toString().toLowerCase();
+        
+        const textoParaBuscar = `${nombre} ${tags} ${cat}`;
         const matchTexto = textoParaBuscar.includes(busqueda);
+        
         return matchComuna && matchTexto;
     });
 
@@ -94,4 +108,5 @@ function cerrarPopupBtn() {
     document.getElementById("productPopup").style.display = "none";
 }
 
+// Iniciar la descarga de datos al cargar la página
 obtenerDatos();
