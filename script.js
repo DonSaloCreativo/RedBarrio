@@ -10,7 +10,7 @@ const allProducts = [
 function init() {
     const filter = document.getElementById("location-filter");
     if(filter){
-        filter.innerHTML = '<option value="">¿Donde estás?</option>';
+        filter.innerHTML = '<option value="">Comuna</option>';
         comunas.sort().forEach(c => {
             const op = document.createElement("option");
             op.value = c; op.textContent = c;
@@ -70,10 +70,12 @@ function abrirDetalleProducto(p) {
             <img src="${p.image}">
         </div>
         <div style="padding:20px; text-align:center;">
-            <h2 style="margin-top:0;">${p.name}</h2>
-            <p style="color:#666;">${p.desc}</p>
-            <h3 style="color:#FF4500; font-size:1.5rem;">$${p.price.toLocaleString('es-CL')}</h3>
-            <button onclick="cerrarPopupProducto()" style="background:var(--morado); color:white; border:none; padding:12px; width:100%; border-radius:12px; font-weight:bold; cursor:pointer;">Volver</button>
+            <h2 style="margin: 0 0 10px 0; font-size: 1.4rem;">${p.name}</h2>
+            <p style="color:#666; font-size: 0.9rem; margin-bottom: 15px;">${p.desc}</p>
+            <div style="background: #fff0e6; padding: 10px; border-radius: 12px; margin-bottom: 20px;">
+                <span style="color:#FF4500; font-size: 1.5rem; font-weight: 800;">$${p.price.toLocaleString('es-CL')}</span>
+            </div>
+            <button onclick="cerrarPopupProducto()" style="background:var(--morado); color:white; border:none; padding:14px; width:100%; border-radius:15px; font-weight:bold; cursor:pointer; font-size: 1rem;">Cerrar</button>
         </div>`;
     document.getElementById("productPopup").style.display = "flex";
 }
