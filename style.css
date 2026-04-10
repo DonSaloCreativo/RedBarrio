@@ -10,7 +10,6 @@ body { font-family: 'Poppins', sans-serif; background-color: var(--bg-light); ma
 
 .mobile-only { display: none !important; }
 
-/* BORDE RESALTADO PARA SECCIÓN PICADAS */
 .highlighted-border {
     border: 3px dashed var(--morado);
     border-radius: 20px;
