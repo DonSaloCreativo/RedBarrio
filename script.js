@@ -16,20 +16,21 @@ function init() {
             filter.appendChild(op);
         });
     }
-    cargarProductos();
-    cargarPicadasVecinos(); // Nueva función integrada
+    cargarProductosNegocios(); // Carga la grilla de abajo
+    cargarPicadasVecinos();   // Carga solo los círculos de arriba
 }
 
-function cargarProductos() {
+// 1. CARGAR NEGOCIOS (API SHEETBEST) -> Van a la grilla de resultados
+function cargarProductosNegocios() {
     fetch(API_URL)
         .then(res => res.json())
         .then(data => {
             allProducts = data.filter(p => p.estado === "aprobado");
-            displayProducts(allProducts);
+            displayNegocios(allProducts);
         });
 }
 
-// --- LÓGICA DE PICADAS DE VECINOS (EXCEL) ---
+// 2. CARGAR VECINOS (CSV TALLY) -> Van SOLO a los círculos
 async function cargarPicadasVecinos() {
     try {
         const res = await fetch(CSV_VECINOS_URL);
@@ -61,7 +62,8 @@ async function cargarPicadasVecinos() {
     } catch (e) { console.error("Error vecinos:", e); }
 }
 
-function displayProducts(products) {
+// RENDERIZAR SOLO LA GRILLA DE ABAJO
+function displayNegocios(products) {
     const list = document.getElementById("product-list");
     const comunaList = document.getElementById("comuna-list");
 
@@ -111,6 +113,7 @@ function displayProducts(products) {
     }
 }
 
+// POPUPS
 function abrirDetalleProducto(p) {
     const body = document.getElementById("popup-body");
     body.innerHTML = `
@@ -153,7 +156,7 @@ function buscar() {
     const loc = document.getElementById("location-filter").value;
     const txt = document.getElementById("main-search").value.toLowerCase();
     const res = allProducts.filter(p => (loc ? p.comuna === loc : true) && p.nombre.toLowerCase().includes(txt));
-    displayProducts(res);
+    displayNegocios(res);
 }
 
 window.onclick = (e) => { if (e.target.className === 'popup-overlay') e.target.style.display = "none"; };
