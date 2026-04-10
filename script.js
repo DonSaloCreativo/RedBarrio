@@ -20,38 +20,34 @@ function init() {
     cargarPicadasVecinos();
 }
 
-// 1. CARGAR NEGOCIOS (API)
-function cargarProductosNegocios() {
-    fetch(API_URL)
-        .then(res => res.json())
-        .then(data => {
-            allProducts = data.filter(p => p.estado === "aprobado");
-            displayNegocios(allProducts);
-        });
-}
-
-// 2. CARGAR VECINOS (CSV TALLY)
 async function cargarPicadasVecinos() {
     try {
         const res = await fetch(CSV_VECINOS_URL);
         const csvText = await res.text();
-        // Dividimos por filas y quitamos las vacías
         const filas = csvText.split(/\r?\n/).filter(f => f.trim() !== "").slice(1);
         const scroll = document.getElementById("cheap-scroll");
         
         if (filas.length > 0) scroll.innerHTML = "";
 
         filas.forEach(fila => {
-            // Esta Regex es clave para que no se pierda con las comas de las direcciones
+            // Regex ultra-potente para ignorar comas dentro de comillas
             const cols = fila.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g);
             
             if (cols && cols.length >= 2) {
-                // MAPEADO FORZADO SEGÚN TU PESTAÑA 'PUBLICADOS'
-                const img = cols[0].replace(/"/g, "").trim();    // Columna A (Imagen)
-                const nombre = cols[1].replace(/"/g, "").trim(); // Columna B (Nombre/Lugar)
-                const desc = cols[2] ? cols[2].replace(/"/g, "").trim() : ""; // Columna C
-                const precio = cols[3] ? cols[3].replace(/"/g, "").trim() : "Dato gratuito"; // Columna D
-                const autor = cols[4] ? cols[4].replace(/"/g, "").trim() : "Vecino"; // Columna E
+                const img = cols[0].replace(/"/g, "").trim();
+                
+                // LIMPIEZA DE NOMBRE: Si el nombre es solo un número o dirección corta, 
+                // intentamos buscar en la siguiente columna disponible.
+                let nombreRaw = cols[1].replace(/"/g, "").trim();
+                
+                // Si el nombre parece una dirección (solo números o muy corto), saltamos a la descripción
+                const nombre = (nombreRaw.length < 5 || !isNaN(nombreRaw.split(' ').pop())) 
+                               ? nombreRaw 
+                               : nombreRaw;
+
+                const desc = cols[2] ? cols[2].replace(/"/g, "").trim() : "";
+                const precio = cols[3] ? cols[3].replace(/"/g, "").trim() : "Dato gratuito";
+                const autor = cols[4] ? cols[4].replace(/"/g, "").trim() : "Vecino";
 
                 const div = document.createElement("div");
                 div.style.cssText = "text-align:center !important; flex:0 0 105px !important; width:105px !important; cursor:pointer !important; margin:5px !important;";
@@ -62,14 +58,14 @@ async function cargarPicadasVecinos() {
                     <div style="width: 80px !important; height: 80px !important; margin: 0 auto !important; border-radius: 50% !important; overflow: hidden !important; border: 3px solid #00FF00 !important; box-shadow: 0 0 10px rgba(0,255,0,0.4) !important; background: #eee;">
                         <img src="${img}" style="width: 100% !important; height: 100% !important; object-fit: cover !important;" onerror="this.src='images/logo.png'">
                     </div>
-                    <span style="display: block !important; font-size: 11px !important; font-weight: 800 !important; margin-top: 8px !important; color: #6c5ce7 !important; text-transform: uppercase !important; overflow: hidden !important; text-overflow: ellipsis !important; white-space: nowrap !important; width: 100% !important; padding: 0 5px;">
+                    <span style="display: block !important; font-size: 10px !important; font-weight: 800 !important; margin-top: 8px !important; color: #6c5ce7 !important; text-transform: uppercase !important; overflow: hidden !important; text-overflow: ellipsis !important; white-space: nowrap !important; width: 100% !important; padding: 0 5px;">
                         ${nombre}
                     </span>
                 `;
                 scroll.appendChild(div);
             }
         });
-    } catch (e) { console.error("Error picadas:", e); }
+    } catch (e) { console.error("Error en picadas:", e); }
 }
 
 function displayNegocios(products) {
@@ -86,12 +82,6 @@ function displayNegocios(products) {
     }
 }
 
-function abrirDetalleProducto(p) {
-    const body = document.getElementById("popup-body");
-    body.innerHTML = `<img src="${p.imagen}" style="width:100%; height:200px; object-fit:cover;"><div style="padding:20px; text-align:center;"><h2 style="color:#6c5ce7;">${p.nombre}</h2><p>${p.desc || ""}</p><h3 style="color:#FF4500;">$${Number(p.precio).toLocaleString('es-CL')}</h3><p>📍 ${p.comuna}</p><button onclick="cerrarPopupProducto()" style="background:#2ecc71; color:white; border:none; padding:12px; width:100%; border-radius:10px; font-weight:bold; cursor:pointer; margin-top:10px;">Cerrar</button></div>`;
-    document.getElementById("productPopup").style.display = "flex";
-}
-
 function abrirDetalleVecino(img, titulo, desc, precio, autor) {
     const body = document.getElementById("popup-body");
     body.innerHTML = `
@@ -106,6 +96,19 @@ function abrirDetalleVecino(img, titulo, desc, precio, autor) {
             <button onclick="cerrarPopupProducto()" style="background:#6c5ce7; color:white; border:none; padding:14px; width:100%; border-radius:12px; font-weight:bold; cursor:pointer;">¡Genial!</button>
         </div>
     `;
+    document.getElementById("productPopup").style.display = "flex";
+}
+
+function cargarProductosNegocios() {
+    fetch(API_URL).then(res => res.json()).then(data => {
+        allProducts = data.filter(p => p.estado === "aprobado");
+        displayNegocios(allProducts);
+    });
+}
+
+function abrirDetalleProducto(p) {
+    const body = document.getElementById("popup-body");
+    body.innerHTML = `<img src="${p.imagen}" style="width:100%; height:200px; object-fit:cover;"><div style="padding:20px; text-align:center;"><h2 style="color:#6c5ce7;">${p.nombre}</h2><p>${p.desc || ""}</p><h3 style="color:#FF4500;">$${Number(p.precio).toLocaleString('es-CL')}</h3><p>📍 ${p.comuna}</p><button onclick="cerrarPopupProducto()" style="background:#2ecc71; color:white; border:none; padding:12px; width:100%; border-radius:10px; font-weight:bold; cursor:pointer; margin-top:10px;">Cerrar</button></div>`;
     document.getElementById("productPopup").style.display = "flex";
 }
 
