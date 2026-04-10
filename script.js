@@ -1,31 +1,115 @@
 const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxH1VvPvLKq9bxXD3bnP8owGzJVE0gmxScoWWY9smVlnO3TIPg554rTRdg34htBSDGysA/exec"; 
 let allProducts = [];
 
+const comunas = ["Cerrillos", "Cerro Navia", "Conchalí", "El Bosque", "Estación Central", "Huechuraba", "Independencia", "La Cisterna", "La Florida", "La Granja", "La Pintana", "La Reina", "Las Condes", "Lo Barnechea", "Lo Espejo", "Lo Prado", "Macul", "Maipú", "Ñuñoa", "Pedro Aguirre Cerda", "Peñalolén", "Providencia", "Pudahuel", "Quilicura", "Quinta Normal", "Recoleta", "Renca", "San Bernardo", "San Joaquín", "San Miguel", "San Ramón", "Santiago", "Vitacura"];
+
 async function init() {
+    // 1. Cargar comunas
+    const filter = document.getElementById("location-filter");
+    if(filter){
+        filter.innerHTML = '<option value="">Comuna</option>';
+        comunas.sort().forEach(c => {
+            const op = document.createElement("option");
+            op.value = c; op.textContent = c;
+            filter.appendChild(op);
+        });
+    }
+
+    // 2. Traer datos reales de Google Sheets
     try {
         const respuesta = await fetch(APPS_SCRIPT_URL);
         const data = await respuesta.json();
         
-        // Filtramos solo los locales marcados como "aprobado" en tu Excel
-        allProducts = data.filter(f => f.estado && f.estado.toString().toLowerCase().trim() === "aprobado");
+        allProducts = data.filter(fila => 
+            fila.estado && fila.estado.toString().toLowerCase().trim() === "aprobado"
+        );
         
         displayProducts(allProducts);
-    } catch (e) { console.error("Error cargando datos:", e); }
+    } catch (error) {
+        console.error("Error cargando locales:", error);
+    }
 }
 
 function displayProducts(products) {
     const list = document.getElementById("product-list");
-    if(list) {
-        list.innerHTML = products.map(p => `
-            <div class="res-card">
-                <img src="${p.imagen || 'images/logo.png'}" class="res-thumb">
-                <div class="res-info">
-                    <strong>${p.nombre}</strong><br>
-                    <small>📍 ${p.comuna}</small>
-                    <div style="color:#FF4500; font-weight:700;">${p.precio || ''}</div>
+    const scroll = document.getElementById("cheap-scroll");
+    const comunaList = document.getElementById("comuna-list");
+
+    // Arreglo de los círculos gigantes que viste en la captura
+    if(scroll){
+        scroll.innerHTML = "";
+        allProducts.slice(0, 10).forEach(p => {
+            const div = document.createElement("div");
+            div.className = "circle-item";
+            div.onclick = () => abrirDetalleProducto(p);
+            div.innerHTML = `
+                <div class="circle-container">
+                    <img src="${p.imagen || 'images/logo.png'}" class="circle-img">
                 </div>
-            </div>
-        `).join('');
+                <p style="font-size:0.7rem; font-weight:600; margin-top:5px; color:#333;">${p.nombre}</p>
+            `;
+            scroll.appendChild(div);
+        });
+    }
+
+    // Resultados principales
+    if(list){
+        list.innerHTML = "";
+        if(products.length === 0) {
+            document.getElementById("no-results").style.display = "block";
+        } else {
+            document.getElementById("no-results").style.display = "none";
+            products.forEach(p => {
+                const card = document.createElement("div");
+                card.className = "res-card";
+                card.onclick = () => abrirDetalleProducto(p);
+                card.innerHTML = `
+                    <img src="${p.imagen || 'images/logo.png'}" class="res-thumb">
+                    <div class="res-info">
+                        <strong>${p.nombre}</strong><br>
+                        <small>📍 ${p.comuna}</small>
+                        <div style="color:#FF4500; font-weight:700; margin-top:5px;">${p.precio || ''}</div>
+                    </div>
+                `;
+                list.appendChild(card);
+            });
+        }
     }
 }
+
+function abrirDetalleProducto(p) {
+    const body = document.getElementById("popup-body");
+    body.innerHTML = `
+        <img src="${p.imagen}" style="width:100%; height:180px; object-fit:cover;">
+        <div style="padding:20px; text-align:center;">
+            <h2>${p.nombre}</h2>
+            <p>${p.tags || p.categoria || ''}</p>
+            <h3 style="color:#FF4500;">${p.precio || ''}</h3>
+            <p style="font-size:0.9rem; color:#666;">📍 ${p.direccion || ''}, ${p.comuna}</p>
+            <a href="https://wa.me/${p.telefono}" target="_blank" style="display:block; background:#2ecc71; color:white; text-decoration:none; padding:12px; border-radius:10px; font-weight:bold; margin-top:10px;">
+                Contactar WhatsApp
+            </a>
+        </div>
+    `;
+    document.getElementById("productPopup").style.display = "flex";
+}
+
+// Funciones de UI
+function cerrarPopupProducto() { document.getElementById("productPopup").style.display = "none"; }
+function abrirFormPromo() { document.getElementById("popupPromo").style.display = "flex"; }
+function cerrarFormPromo() { document.getElementById("popupPromo").style.display = "none"; }
+function abrirFormDato() { document.getElementById("popupDato").style.display = "flex"; }
+function cerrarFormDato() { document.getElementById("popupDato").style.display = "none"; }
+
+function buscar() {
+    const loc = document.getElementById("location-filter").value;
+    const txt = document.getElementById("main-search").value.toLowerCase();
+    const res = allProducts.filter(p => 
+        (loc ? p.comuna === loc : true) && 
+        (p.nombre.toLowerCase().includes(txt) || (p.tags || "").toLowerCase().includes(txt))
+    );
+    displayProducts(res);
+}
+
+window.onclick = (e) => { if(e.target.className === 'popup-overlay') e.target.style.display = "none"; }
 init();

@@ -58,3 +58,18 @@ body {
 .res-card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.1); margin-top: 15px; }
 .res-thumb { width: 100%; height: 180px; object-fit: cover; }
 .res-info { padding: 15px; }
+/* Arreglo final para círculos de picadas */
+.circle-container {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0 auto;
+    border: 3px solid var(--morado);
+}
+
+.circle-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
