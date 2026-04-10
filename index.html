@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>LlamaBarrio - Tu comunidad conectada</title>
-    <link rel="stylesheet" href="style.css?v=200">
+    <title>LlamaBarrio | Tu Guía Local</title>
+    <link rel="stylesheet" href="style.css?v=201">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -22,7 +22,7 @@
                 </select>
             </div>
             <div class="oval-control search-bar-wrapper">
-                <input type="text" placeholder="Buscar..." id="main-search" onkeyup="buscar()">
+                <input type="text" placeholder="¿Qué quieres buscar hoy?" id="main-search" onkeyup="buscar()">
                 <button class="search-icon-btn minimal" onclick="buscar()">🔍</button>
             </div>
         </div>
@@ -35,17 +35,13 @@
 </nav>
 
 <main class="content-wrapper">
-    <section class="hero-section">
-        <h1 class="hero-title">Encuentra los mejores datos y promociones de tu barrio en un solo lugar.</h1>
-    </section>
-
-    <section class="suggestions highlighted-border">
-        <h2 class="tag-picadas-morado">🔥 Las picadas de los vecinos</h2>
+    <section class="suggestions">
+        <h2 class="section-title">🔥 El barrio recomienda</h2>
         <div id="cheap-scroll" class="circle-scroll"></div>
     </section>
 
     <section class="results">
-        <h3 class="section-tag-bg tag-resultados">🍔 Resultados</h3>
+        <h2 class="section-title">🍔 Resultados</h2>
         <div id="product-list" class="results-grid"></div>
         <div id="no-results" style="display:none; text-align:center; padding:40px;">❌ No encontramos resultados.</div>
     </section>
