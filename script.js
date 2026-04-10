@@ -3,20 +3,46 @@ const comunas = ["Cerrillos", "Cerro Navia", "Conchalí", "El Bosque", "Estació
 const allProducts = [
     { name: "Sushis del Puerto", image: "images/sushi.jpg", price: 12000, comuna: "Santiago", desc: "Sushi premium artesanal.", contacto: "+569 1234 5678" },
     { name: "La Picada de Don Salo", image: "images/casera.jpg", price: 5500, comuna: "San Bernardo", desc: "Sabor casero de verdad.", contacto: "+569 8888 7777" },
-    { name: "Pizzería Italia", image: "images/pizza.jpg", price: 8990, comuna: "Santiago", desc: "Pizzas a la piedra.", contacto: "www.italia.cl" },
-    { name: "Empanadas Ñuñoa", image: "images/empanadas.jpg", price: 2500, comuna: "Ñuñoa", desc: "Receta tradicional.", contacto: "+562 222 3344" }
+    { name: "Pizzería Italia", image: "images/pizza.jpg", price: 8990, comuna: "Santiago", desc: "Pizzas a la piedra.", contacto: "+569 2222 3344" },
+    { name: "Empanadas Ñuñoa", image: "images/empanadas.jpg", price: 2500, comuna: "Ñuñoa", desc: "Receta tradicional.", contacto: "+569 3333 4455" }
 ];
 
 function init() {
     const filter = document.getElementById("location-filter");
+    const formSelectDato = document.getElementById("dato-Comuna");
+    const formSelectPromo = document.getElementById("promo-comuna");
+    
     if(filter){
         filter.innerHTML = '<option value="">Comuna</option>';
         comunas.sort().forEach(c => {
             const op = document.createElement("option");
-            op.value = c; op.textContent = c;
+            op.value = c; 
+            op.textContent = c;
             filter.appendChild(op);
         });
     }
+
+    // Llenar selects en los formularios
+    if(formSelectDato) {
+        formSelectDato.innerHTML = '<option value="">Selecciona una comuna</option>';
+        comunas.sort().forEach(c => {
+            const op = document.createElement("option");
+            op.value = c; 
+            op.textContent = c;
+            formSelectDato.appendChild(op);
+        });
+    }
+
+    if(formSelectPromo) {
+        formSelectPromo.innerHTML = '<option value="">Selecciona una comuna</option>';
+        comunas.sort().forEach(c => {
+            const op = document.createElement("option");
+            op.value = c; 
+            op.textContent = c;
+            formSelectPromo.appendChild(op);
+        });
+    }
+
     displayProducts(allProducts);
 }
 
@@ -30,8 +56,11 @@ function displayProducts(products) {
         allProducts.forEach(p => {
             const div = document.createElement("div");
             div.className = "circle-item";
+            div.role = "button";
+            div.tabIndex = 0;
             div.onclick = () => abrirDetalleProducto(p);
-            div.innerHTML = `<img src="${p.image}" class="circle-img" loading="lazy"><p style="font-size:0.7rem; font-weight:600; margin-top:5px;">${p.name}</p>`;
+            div.onkeypress = (e) => { if(e.key === 'Enter') abrirDetalleProducto(p); };
+            div.innerHTML = `<img src="${p.image}" class="circle-img" loading="lazy" alt="${p.name}"><p style="font-size:0.7rem; font-weight:600; margin-top:5px;">${p.name}</p>`;
             scroll.appendChild(div);
         });
     }
@@ -50,20 +79,21 @@ function displayProducts(products) {
 
     if(comunaList) {
         comunaList.innerHTML = "";
-        // Mostramos las primeras 3 recomendaciones de respaldo
         allProducts.slice(0, 3).forEach(p => {
             comunaList.appendChild(createProductCard(p));
         });
     }
 }
 
-// Función auxiliar para crear tarjetas de producto uniformes
 function createProductCard(p) {
     const card = document.createElement("div");
     card.className = "res-card";
+    card.role = "button";
+    card.tabIndex = 0;
     card.onclick = () => abrirDetalleProducto(p);
+    card.onkeypress = (e) => { if(e.key === 'Enter') abrirDetalleProducto(p); };
     card.innerHTML = `
-        <img src="${p.image}" class="res-thumb" loading="lazy">
+        <img src="${p.image}" class="res-thumb" loading="lazy" alt="${p.name}">
         <div class="res-info">
             <strong>${p.name}</strong><br>
             <small>📍 ${p.comuna}</small>
@@ -76,16 +106,16 @@ function createProductCard(p) {
 
 function abrirDetalleProducto(p) {
     const body = document.getElementById("popup-body");
-    // Estructura fija para que todos los popups se vean del mismo tamaño
+    const whatsappNumber = p.contacto.replace(/\s+/g, '').replace('+', '');
     body.innerHTML = `
         <div style="width:100%; height:200px; overflow:hidden;">
-            <img src="${p.image}" style="width:100%; height:100%; object-fit:cover;">
+            <img src="${p.image}" style="width:100%; height:100%; object-fit:cover;" alt="${p.name}">
         </div>
         <div style="padding:20px; text-align:center; display:flex; flex-direction:column; gap:10px;">
             <h2 style="margin:0; font-size:1.4rem;">${p.name}</h2>
             <p style="color:#666; font-size:0.9rem; min-height:40px; margin:0;">${p.desc}</p>
             <h3 style="color:#FF4500; margin:5px 0;">$${p.price.toLocaleString('es-CL')}</h3>
-            <a href="https://wa.me/${p.contacto.replace(/\s+/g, '')}" target="_blank" 
+            <a href="https://wa.me/${whatsappNumber}" target="_blank" rel="noopener noreferrer"
                style="background:#25D366; color:white; text-decoration:none; padding:12px; border-radius:12px; font-weight:bold; font-size:0.9rem;">
                Contactar por WhatsApp
             </a>
@@ -103,6 +133,20 @@ function cerrarFormPromo() { document.getElementById("popupPromo").style.display
 function abrirFormDato() { document.getElementById("popupDato").style.display = "flex"; }
 function cerrarFormDato() { document.getElementById("popupDato").style.display = "none"; }
 
+function enviarDato(event) {
+    event.preventDefault();
+    alert('✅ ¡Gracias por compartir tu picada! Nos pondremos en contacto pronto.');
+    cerrarFormDato();
+    document.getElementById("formDato").reset();
+}
+
+function enviarPromo(event) {
+    event.preventDefault();
+    alert('✅ ¡Gracias por registrarte! Pronto tu negocio estará visible en LlamaBarrio.');
+    cerrarFormPromo();
+    document.getElementById("formPromo").reset();
+}
+
 function buscar() {
     const loc = document.getElementById("location-filter").value;
     const txt = document.getElementById("main-search").value.toLowerCase();
@@ -110,7 +154,6 @@ function buscar() {
     displayProducts(res);
 }
 
-// Cerrar al hacer clic fuera del contenido
 window.onclick = (e) => { 
     if(e.target.className === 'popup-overlay') {
         e.target.style.display = "none"; 
