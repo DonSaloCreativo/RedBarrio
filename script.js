@@ -65,7 +65,16 @@ function displayProducts(products) {
 
 function abrirDetalleProducto(p) {
     const body = document.getElementById("popup-body");
-    body.innerHTML = `<img src="${p.image}" style="width:100%; height:180px; object-fit:cover;"><div style="padding:20px; text-align:center;"><h2>${p.name}</h2><p>${p.desc}</p><h3 style="color:#FF4500;">$${p.price.toLocaleString('es-CL')}</h3><button onclick="cerrarPopupProducto()" style="background:#2ecc71; color:white; border:none; padding:10px; width:100%; border-radius:10px; font-weight:bold; cursor:pointer; margin-top:10px;">Cerrar</button></div>`;
+    body.innerHTML = `
+        <div class="popup-img-container">
+            <img src="${p.image}">
+        </div>
+        <div style="padding:20px; text-align:center;">
+            <h2 style="margin-top:0;">${p.name}</h2>
+            <p style="color:#666;">${p.desc}</p>
+            <h3 style="color:#FF4500; font-size:1.5rem;">$${p.price.toLocaleString('es-CL')}</h3>
+            <button onclick="cerrarPopupProducto()" style="background:var(--morado); color:white; border:none; padding:12px; width:100%; border-radius:12px; font-weight:bold; cursor:pointer;">Volver</button>
+        </div>`;
     document.getElementById("productPopup").style.display = "flex";
 }
 
