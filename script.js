@@ -30,7 +30,7 @@ function cargarProductosNegocios() {
         });
 }
 
-// 2. CARGAR VECINOS (CSV TALLY) -> Círculos pequeños forzados
+// 2. CARGAR VECINOS (CSV TALLY) -> Círculos pequeños con blindaje de estilo
 async function cargarPicadasVecinos() {
     try {
         const res = await fetch(CSV_VECINOS_URL);
@@ -50,19 +50,16 @@ async function cargarPicadasVecinos() {
                 const autor = cols[4] ? cols[4].replace(/"/g, "").trim() : "Vecino";
 
                 const div = document.createElement("div");
-                // Estilos para mantener el tamaño pequeño y evitar que crezcan
-                div.style.textAlign = "center";
-                div.style.flex = "0 0 auto";
-                div.style.width = "100px"; 
-                div.style.cursor = "pointer";
+                // Blindaje para que el contenedor no se estire
+                div.setAttribute("style", "text-align: center !important; flex: 0 0 100px !important; width: 100px !important; cursor: pointer !important; margin: 10px 5px !important;");
                 
                 div.onclick = () => abrirDetalleVecino(img, nombre, desc, precio, autor);
                 
                 div.innerHTML = `
-                    <div style="width: 80px; height: 80px; margin: 0 auto; border-radius: 50%; overflow: hidden; border: 3px solid #00FF00; box-shadow: 0 0 10px rgba(0,255,0,0.3);">
-                        <img src="${img}" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='images/logo.png'">
+                    <div style="width: 80px !important; height: 80px !important; margin: 0 auto !important; border-radius: 50% !important; overflow: hidden !important; border: 3px solid #00FF00 !important; box-shadow: 0 0 10px rgba(0,255,0,0.3) !important;">
+                        <img src="${img}" style="width: 100% !important; height: 100% !important; object-fit: cover !important;" onerror="this.src='images/logo.png'">
                     </div>
-                    <span style="display: block; font-size: 11px; font-weight: bold; margin-top: 8px; color: #333; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                    <span style="display: block !important; font-size: 11px !important; font-weight: bold !important; margin-top: 8px !important; color: #333 !important; overflow: hidden !important; text-overflow: ellipsis !important; white-space: nowrap !important; width: 100% !important;">
                         ${nombre}
                     </span>
                 `;
