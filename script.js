@@ -1,10 +1,10 @@
 const comunas = ["Cerrillos", "Cerro Navia", "Conchalí", "El Bosque", "Estación Central", "Huechuraba", "Independencia", "La Cisterna", "La Florida", "La Granja", "La Pintana", "La Reina", "Las Condes", "Lo Barnechea", "Lo Espejo", "Lo Prado", "Macul", "Maipú", "Ñuñoa", "Pedro Aguirre Cerda", "Peñalolén", "Providencia", "Pudahuel", "Quilicura", "Quinta Normal", "Recoleta", "Renca", "San Bernardo", "San Joaquín", "San Miguel", "San Ramón", "Santiago", "Vitacura"];
 
 const allProducts = [
-    { name: "Sushis del Puerto", image: "images/sushi.jpg", price: 12000, comuna: "Santiago", desc: "Sushi premium artesanal.", contacto: "+569 1234 5678" },
-    { name: "La Picada de Don Salo", image: "images/casera.jpg", price: 5500, comuna: "San Bernardo", desc: "Sabor casero de verdad.", contacto: "+569 8888 7777" },
-    { name: "Pizzería Italia", image: "images/pizza.jpg", price: 8990, comuna: "Santiago", desc: "Pizzas a la piedra.", contacto: "www.italia.cl" },
-    { name: "Empanadas Ñuñoa", image: "images/empanadas.jpg", price: 2500, comuna: "Ñuñoa", desc: "Receta tradicional.", contacto: "+562 222 3344" }
+    { name: "Sushis del Puerto", image: "images/sushi.jpg", price: 12000, comuna: "Santiago", desc: "Sushi premium artesanal.", contacto: "+56912345678" },
+    { name: "La Picada de Don Salo", image: "images/casera.jpg", price: 5500, comuna: "San Bernardo", desc: "Sabor casero de verdad.", contacto: "+56988887777" },
+    { name: "Pizzería Italia", image: "images/pizza.jpg", price: 8990, comuna: "Santiago", desc: "Pizzas a la piedra con ingredientes italianos.", contacto: "+56922223344" },
+    { name: "Empanadas Ñuñoa", image: "images/empanadas.jpg", price: 2500, comuna: "Ñuñoa", desc: "Receta tradicional de pino y queso.", contacto: "+5622223344" }
 ];
 
 function init() {
@@ -25,7 +25,7 @@ function displayProducts(products) {
     const scroll = document.getElementById("cheap-scroll");
     const comunaList = document.getElementById("comuna-list");
 
-    if(scroll){
+    if(scroll) {
         scroll.innerHTML = "";
         allProducts.forEach(p => {
             const div = document.createElement("div");
@@ -36,36 +36,42 @@ function displayProducts(products) {
         });
     }
 
-    if(list){
+    if(list) {
         list.innerHTML = "";
         if(products.length === 0) document.getElementById("no-results").style.display = "block";
         else {
             document.getElementById("no-results").style.display = "none";
-            products.forEach(p => {
-                const card = document.createElement("div");
-                card.className = "res-card";
-                card.onclick = () => abrirDetalleProducto(p);
-                card.innerHTML = `<img src="${p.image}" class="res-thumb"><div class="res-info"><strong>${p.name}</strong><br><small>📍 ${p.comuna}</small><div style="color:#FF4500; font-weight:700; margin-top:5px;">$${p.price.toLocaleString('es-CL')}</div></div>`;
-                list.appendChild(card);
-            });
+            products.forEach(p => list.appendChild(createCard(p)));
         }
     }
 
     if(comunaList) {
         comunaList.innerHTML = "";
-        allProducts.slice(0, 3).forEach(p => {
-            const card = document.createElement("div");
-            card.className = "res-card";
-            card.onclick = () => abrirDetalleProducto(p);
-            card.innerHTML = `<img src="${p.image}" class="res-thumb"><div class="res-info"><strong>${p.name}</strong><br><small>📍 ${p.comuna}</small><div style="color:#FF4500; font-weight:700; margin-top:5px;">$${p.price.toLocaleString('es-CL')}</div></div>`;
-            comunaList.appendChild(card);
-        });
+        allProducts.slice(0, 3).forEach(p => comunaList.appendChild(createCard(p)));
     }
+}
+
+function createCard(p) {
+    const card = document.createElement("div");
+    card.className = "res-card";
+    card.onclick = () => abrirDetalleProducto(p);
+    card.innerHTML = `<img src="${p.image}" class="res-thumb"><div class="res-info"><strong>${p.name}</strong><br><small>📍 ${p.comuna}</small><div style="color:var(--primary); font-weight:700; margin-top:5px;">$${p.price.toLocaleString('es-CL')}</div></div>`;
+    return card;
 }
 
 function abrirDetalleProducto(p) {
     const body = document.getElementById("popup-body");
-    body.innerHTML = `<img src="${p.image}" style="width:100%; height:180px; object-fit:cover;"><div style="padding:20px; text-align:center;"><h2>${p.name}</h2><p>${p.desc}</p><h3 style="color:#FF4500;">$${p.price.toLocaleString('es-CL')}</h3><button onclick="cerrarPopupProducto()" style="background:#2ecc71; color:white; border:none; padding:10px; width:100%; border-radius:10px; font-weight:bold; cursor:pointer; margin-top:10px;">Cerrar</button></div>`;
+    body.innerHTML = `
+        <div style="width:100%; height:200px; overflow:hidden;">
+            <img src="${p.image}" style="width:100%; height:100%; object-fit:cover;">
+        </div>
+        <div style="padding:20px; text-align:center; display:flex; flex-direction:column; gap:10px;">
+            <h2 style="margin:0;">${p.name}</h2>
+            <p style="color:#666; font-size:0.9rem; min-height:40px;">${p.desc}</p>
+            <h3 style="color:var(--primary); margin:5px 0;">$${p.price.toLocaleString('es-CL')}</h3>
+            <a href="https://wa.me/${p.contacto}" target="_blank" style="background:#25D366; color:white; text-decoration:none; padding:12px; border-radius:10px; font-weight:bold;">Contactar por WhatsApp</a>
+            <button onclick="cerrarPopupProducto()" style="background:#eee; border:none; padding:10px; border-radius:10px; cursor:pointer;">Cerrar</button>
+        </div>`;
     document.getElementById("productPopup").style.display = "flex";
 }
 
