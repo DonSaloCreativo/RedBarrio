@@ -13,7 +13,7 @@ body { font-family: 'Poppins', sans-serif; background: var(--bg); margin: 0; col
 .desktop-only { display: flex !important; }
 .mobile-only { display: none !important; }
 
-/* NAVBAR */
+/* NAVBAR Base */
 .navbar { background: white; padding: 15px 5%; display: flex; justify-content: center; border-bottom: 1px solid #eee; position: sticky; top: 0; z-index: 1000; }
 .nav-container { width: 100%; max-width: 1200px; display: flex; justify-content: space-between; align-items: center; }
 .logo-img { height: 60px; width: auto; }
@@ -68,62 +68,18 @@ body { font-family: 'Poppins', sans-serif; background: var(--bg); margin: 0; col
 .open { background: #27ae60; }
 .card-body { padding: 18px; }
 
-/* --- PUBLICIDAD FINAL --- */
-.final-ad-section {
-    width: 100%;
-    margin-top: 60px;
-    padding: 0; /* Asegura que la sección principal no meta márgenes */
-}
+/* PUBLICIDAD FINAL */
+.ad-slide-final-wrapper { display: flex; justify-content: center; align-items: center; width: 100%; margin-top: 60px;}
+.ad-slide-final-card { border-radius: 25px; overflow: hidden; position: relative; box-shadow: 0 4px 15px rgba(0,0,0,0.1); max-width: 650px; width: 100%; }
+.ad-img-final { width: 100%; height: auto; display: block; }
+.ad-dots-final { position: absolute; bottom: 20px; right: 20px; display: flex; gap: 5px; }
+.dot { width: 8px; height: 8px; background: rgba(255,255,255,0.4); border-radius: 50%; }
+.dot.active { background: white; width: 20px; border-radius: 10px; }
 
-/* Contenedor principal que forza el centrado absoluto */
-.ad-slide-final-wrapper {
-    display: flex;
-    justify-content: center; /* Centrado horizontal perfecto */
-    align-items: center;
-    width: 100%;
-}
-
-/* La tarjeta con bordes curvos */
-.ad-slide-final-card {
-    border-radius: 25px;
-    overflow: hidden;
-    position: relative;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    max-width: 650px; /* Ancho controlado en escritorio */
-    width: 100%; /* Se adapta a la pantalla */
-}
-
-.ad-img-final {
-    width: 100%;
-    height: auto;
-    display: block;
-}
-
-.ad-dots-final {
-    position: absolute;
-    bottom: 20px;
-    right: 20px;
-    display: flex;
-    gap: 5px;
-}
-
-.dot {
-    width: 8px;
-    height: 8px;
-    background: rgba(255,255,255,0.4);
-    border-radius: 50%;
-}
-
-.dot.active {
-    background: white;
-    width: 20px;
-    border-radius: 10px;
-}
-
-/* FOOTER */
-.site-footer { background: var(--dark); color: #888; padding: 30px 0; text-align: center; font-size: 0.85rem; margin-top: 60px; }
-.site-footer a { color: #bbb; text-decoration: none; margin: 0 12px; }
-.disclaimer-text { font-size: 0.85rem; opacity: 0.9; margin-top: 15px; padding: 0 20px; line-height: 1.5; font-weight: 500; color: #eee; }
+/* FOOTER Escritorio Base */
+.site-footer { background: var(--dark); color: #bbb; padding: 30px 0; text-align: center; font-size: 0.85rem; margin-top: 60px; }
+.site-footer a { color: #eee; text-decoration: none; margin: 0 10px; font-weight: 500; }
+.disclaimer-text { font-size: 0.8rem; opacity: 0.8; margin-top: 15px; padding: 0 20px; line-height: 1.4; color: #eee; }
 
 /* --- AJUSTES MÓVIL --- */
 @media (max-width: 800px) {
@@ -131,24 +87,19 @@ body { font-family: 'Poppins', sans-serif; background: var(--bg); margin: 0; col
     .mobile-only { display: flex !important; }
     body { padding-bottom: 110px; }
 
-    .navbar { padding: 10px 5%; }
-    .logo-img { height: 45px; }
+    /* 1. Centrado de Logo Solo Móvil */
+    .navbar { padding: 10px 0; }
+    .nav-container { justify-content: center; } /* Fuerza centrado del hijo */
+    .logo-img { height: 45px; margin: 0 auto; display: block; }
 
     .hero { padding: 20px 15px 15px 15px !important; border-radius: 0 0 30px 30px; }
     .hero h1 { font-size: 1.55rem !important; margin-bottom: 5px; }
     
     .search-area { flex-direction: column; width: 88%; gap: 8px; margin-top: 15px; }
     .oval-input { height: 42px; padding: 5px 15px; }
-    
     .subtitle { margin-top: 12px !important; margin-bottom: 0; font-size: 0.8rem !important; }
 
-    .community-grid {
-        display: flex;
-        overflow-x: auto;
-        flex-wrap: nowrap;
-        justify-content: flex-start;
-        scrollbar-width: none;
-    }
+    .community-grid { display: flex; overflow-x: auto; flex-wrap: nowrap; justify-content: flex-start; scrollbar-width: none; }
     .community-grid::-webkit-scrollbar { display: none; }
 
     .invite-banner.narrow { padding: 10px 15px !important; margin: 20px auto; }
@@ -157,21 +108,26 @@ body { font-family: 'Poppins', sans-serif; background: var(--bg); margin: 0; col
     .vertical-header { margin-top: 25px !important; }
     .locals-grid-3 { grid-template-columns: 1fr; width: 95%; margin: 0 auto; }
 
-    /* Centrado en móvil asegurado con margen controlado */
-    .ad-slide-final-wrapper {
-        width: 100%;
-        padding: 0 10px; /* Pequeño aire a los lados para que no choque */
-        box-sizing: border-box;
-    }
+    /* Publicidad final centrada en móvil */
+    .ad-slide-final-wrapper { width: 100%; padding: 0 10px; box-sizing: border-box; margin-top: 40px;}
+    .ad-slide-final-card { max-width: 100%; margin: 0 auto; }
+    .ad-dots-final { bottom: 15px; right: 15px; }
 
-    .ad-slide-final-card {
-        max-width: 100%; /* Ocupa el ancho disponible */
-        margin: 0 auto; /* Refuerza centrado */
+    /* 2. Footer Finito Solo Móvil */
+    .site-footer { 
+        margin-top: 40px; 
+        padding: 15px 0 110px 0; /* Menos padding superior */
+        font-size: 0.65rem !important; /* Fuente mucho más chica */
+        line-height: 1.2;
     }
-
-    .ad-dots-final {
-        bottom: 15px;
-        right: 15px;
+    .site-footer a { 
+        margin: 0 5px; /* Menos espacio entre enlaces */
+    }
+    .disclaimer-text { 
+        font-size: 0.6rem !important; /* Disclaimer diminuto */
+        margin-top: 8px; 
+        padding: 0 10px; 
+        opacity: 0.7;
     }
 }
 
