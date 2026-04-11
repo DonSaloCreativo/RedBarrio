@@ -1,5 +1,5 @@
 const CONFIG = {
-    PROXY_URL: 'TU_NUEVA_URL_DE_IMPLEMENTACION_AQUI', 
+    PROXY_URL: 'https://script.google.com/macros/s/AKfycbx3eTprAjyYooIep7S2w_Q9kIUCCvknoWHORhyglVlOHWKWZ8ononv6-FvpDrXyC7OPfw/exec', 
     RELOAD_INTERVAL_MS: 5 * 60 * 1000
 };
 
@@ -22,7 +22,7 @@ async function cargarTodo() {
             })).filter(p => p.estado?.toLowerCase().trim() === 'aprobado');
         }
         renderBase();
-    } catch (e) { console.error("Error cargando:", e); }
+    } catch (e) { console.error("Error cargando datos:", e); }
 }
 
 async function fetchSheet(name) {
@@ -103,7 +103,7 @@ function abrirFormPromo() { document.getElementById("popupPromo").style.display 
 
 window.onload = () => {
     const f = document.getElementById("location-filter");
-    const comunas = ["Cerrillos","Cerro Navia","Conchalí","El Bosque","Estación Central","Huechuraba","Independencia","La Cisterna","La Florida","La Granja","La Pintana","La Reina","Las Condes","Lo Barnechea","Lo Espejo","Lo Prado","Macul","Maipú","Ñuñoa","Pedro Aguirre Cerda","Peñalolén","Providencia","Pudahuel","Quilicura","Quinta Normal","Recoleta","Renca","San Bernardo","San Joaquín","San Miguel","San Ramón","Santiago","Vitacura"];
+    const comunas = ["Cerrillos","Cerro Navia","Conchalí","El Bosque","Estación Central","Huechuraba","Independencia","La Cisterna","La Florida","La Granja","La Pintana","La Reina","Las Condes","Lo Barnechea","Lo Espejo","Lo Prado","Macul","Maipú","Ñuñoa","Pedro Aguirre Cerda","Peñalolén","Providencia","Pudahuel","Quilicura","Quinta Normal","Recoleta","San Bernardo","San Joaquín","San Miguel","San Ramón","Santiago","Vitacura"];
     comunas.sort().forEach(c => f.innerHTML += `<option value="${c}">${c}</option>`);
     cargarTodo();
 };
