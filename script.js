@@ -17,12 +17,12 @@ async function cargarTodo() {
         }
         if (tally.values) {
             allPicadas = tally.values.slice(1).map(r => ({
-                nombre: r[7] || 'Picada Vecinal', comuna: r[4], contacto: r[6] || 'No especificado',
+                nombre: r[7] || 'Picada', comuna: r[4], contacto: r[6] || 'No especificado',
                 descripcion: r[5], imagen: r[3], estado: r[8]
             })).filter(p => p.estado?.toLowerCase().trim() === 'aprobado');
         }
         renderBase();
-    } catch (e) { console.error("Error cargando datos:", e); }
+    } catch (e) { console.error("Error:", e); }
 }
 
 async function fetchSheet(name) {
@@ -35,7 +35,7 @@ function renderBase() {
     if (scroll) scroll.innerHTML = allPicadas.map(p => `
         <div class="circle-item" onclick='abrirDetallePicada(${JSON.stringify(p)})'>
             <div class="circle-img-container"><img class="circle-img" src="${p.imagen}" onerror="this.src='images/placeholder.jpg'"></div>
-            <p class="card-nombre-small">${p.nombre}</p>
+            <p style="font-size:0.7rem; font-weight:800; color:#333; margin-top:5px;">${p.nombre}</p>
         </div>
     `).join('');
     buscar();
@@ -54,9 +54,9 @@ function createCardHTML(p) {
     return `
         <div class="res-card" onclick='abrirDetalleProducto(${JSON.stringify(p)})'>
             <img src="${p.imagen}" class="card-img" onerror="this.src='images/placeholder.jpg'">
-            <div class="res-info">
-                <div class="info-top"><h4>${p.nombre}</h4><small>📍 ${p.comuna}</small></div>
-                <div class="info-bottom"><p class="p-price">$${p.precio}</p><span class="tag-cat">${p.categoria}</span></div>
+            <div style="padding:15px; flex-grow:1; display:flex; flex-direction:column; justify-content:space-between;">
+                <div><h4 style="margin:0; font-size:0.9rem;">${p.nombre}</h4><small style="color:#777;">📍 ${p.comuna}</small></div>
+                <div style="margin-top:10px; color:var(--primary); font-weight:800; font-size:1rem;">$${p.precio}</div>
             </div>
         </div>
     `;
@@ -64,12 +64,14 @@ function createCardHTML(p) {
 
 function abrirDetalleProducto(p) {
     document.getElementById("popup-body").innerHTML = `
-        <img src="${p.imagen}" style="width:100%; height:230px; object-fit:cover; border-radius:15px;">
+        <img src="${p.imagen}" style="width:100%; height:180px; object-fit:cover;">
         <div style="padding:20px; text-align:center;">
-            <h2>${p.nombre}</h2><p>📍 ${p.direccion} - ${p.comuna}</p>
-            <p style="font-size:0.9rem; color:#666;">🕒 Horario: ${p.horario || 'Abierto hoy'}</p>
-            <div style="background:#fff0eb; padding:15px; border-radius:15px; margin:20px 0;"><h3 style="color:#FF4500; font-size:1.8rem; margin:0;">$${p.precio}</h3></div>
-            <a href="https://wa.me/${p.telefono.toString().replace(/\D/g,'')}" target="_blank" style="background:#25D366; color:white; padding:12px 30px; border-radius:30px; text-decoration:none; font-weight:bold; display:inline-block;">WhatsApp</a>
+            <h2 style="font-size:1.2rem; margin:0;">${p.nombre}</h2>
+            <p style="font-size:0.8rem; color:#666;">📍 ${p.direccion} - ${p.comuna}</p>
+            <div style="background:#fff0eb; padding:10px; border-radius:10px; margin:15px 0;">
+                <h3 style="color:#FF4500; font-size:1.4rem; margin:0;">$${p.precio}</h3>
+            </div>
+            <a href="https://wa.me/${p.telefono.toString().replace(/\D/g,'')}" target="_blank" style="background:#25D366; color:white; padding:10px 20px; border-radius:20px; text-decoration:none; font-weight:bold; font-size:0.8rem; display:inline-block;">WhatsApp</a>
         </div>
     `;
     document.getElementById("productPopup").style.display = "flex";
@@ -77,12 +79,15 @@ function abrirDetalleProducto(p) {
 
 function abrirDetallePicada(p) {
     document.getElementById("popup-body").innerHTML = `
-        <img src="${p.imagen}" style="width:100%; height:230px; object-fit:cover; border-radius:15px;">
+        <img src="${p.imagen}" style="width:100%; height:180px; object-fit:cover;">
         <div style="padding:20px; text-align:center;">
-            <span style="color:#6c5ce7; font-weight:bold; font-size:0.8rem;">🔥 DATO VECINAL</span>
-            <h2>${p.nombre}</h2><p style="font-size:0.95rem; color:#555; line-height:1.4;">${p.descripcion}</p>
-            <div style="background:#f0f7ff; padding:12px; border-radius:15px; margin:15px 0; border:1px solid #cce5ff;"><p style="margin:0; font-size:0.8rem; color:#555;">Contacto:</p><strong style="color:var(--secondary); font-size:1.1rem;">${p.contacto}</strong></div>
-            <small style="color:#aaa;">📍 Comuna: ${p.comuna}</small>
+            <span style="color:#6c5ce7; font-weight:bold; font-size:0.7rem;">🔥 PICADA VECINAL</span>
+            <h2 style="font-size:1.2rem; margin:5px 0;">${p.nombre}</h2>
+            <p style="font-size:0.8rem; color:#555;">${p.descripcion}</p>
+            <div style="background:#f0f7ff; padding:10px; border-radius:10px; margin:10px 0; border:1px solid #cce5ff;">
+                <p style="margin:0; font-size:0.7rem; color:#555;">Contacto:</p>
+                <strong style="color:var(--secondary); font-size:0.9rem;">${p.contacto}</strong>
+            </div>
         </div>
     `;
     document.getElementById("productPopup").style.display = "flex";
