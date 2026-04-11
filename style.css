@@ -1,87 +1,181 @@
-@media (max-width: 768px) {
+:root {
+    --orange: #f26522;
+    --orange-soft: #fff4e6;
+    --orange-border: #ffd8a8;
+    --blue: #3a86ff;
+    --bg: #fdfaf6;
+    --dark: #111;
+}
+
+body { font-family: 'Poppins', sans-serif; background: var(--bg); margin: 0; color: #333; overflow-x: hidden; }
+
+/* VISIBILIDAD */
+.desktop-only { display: flex !important; }
+.mobile-only { display: none !important; }
+
+/* NAVBAR */
+.navbar { background: white; padding: 15px 5%; display: flex; justify-content: center; border-bottom: 1px solid #eee; position: sticky; top: 0; z-index: 1000; }
+.nav-container { width: 100%; max-width: 1200px; display: flex; justify-content: space-between; align-items: center; }
+.logo-img { height: 60px; width: auto; }
+.recomienda { color: #444; font-weight: 600; cursor: pointer; margin-right: 30px; }
+.btn-negocio-blue { background: var(--blue); color: white; border: none; padding: 10px 22px; border-radius: 20px; font-weight: bold; cursor: pointer; }
+
+/* HERO / BANNER PRINCIPAL */
+.hero { background: white; text-align: center; padding: 40px 20px 50px 20px; border-bottom-left-radius: 40px; border-bottom-right-radius: 40px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+.hero h1 { font-size: 2.2rem; font-weight: 800; line-height: 1.1; margin: 0; }
+.highlight { color: var(--orange); }
+.subtitle { color: #888; font-size: 0.95rem; margin-top: 15px; font-weight: 500; }
+
+/* BUSCADORES */
+.search-area { display: flex; justify-content: center; gap: 15px; max-width: 800px; margin: 25px auto 0 auto; width: 95%; }
+.filter-group { flex: 1; min-width: 0; }
+.oval-input { 
+    background: #f2f2f2; border-radius: 30px; border: 1px solid #ddd; 
+    padding: 8px 18px; width: 100%; display: flex; align-items: center; 
+    box-sizing: border-box; height: 48px;
+}
+.clean-select { border: none; background: transparent; width: 100%; font-family: 'Poppins'; font-size: 0.9rem; font-weight: 600; outline: none; color: #555; cursor: pointer; }
+.search-box input { border: none; background: transparent; width: 100%; margin-left: 10px; font-family: 'Poppins'; outline: none; font-size: 0.9rem; font-weight: 600; }
+
+/* CONTENIDO */
+.content { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+.vertical-header { flex-direction: column; align-items: flex-start !important; margin-bottom: 15px; margin-top: 40px; }
+.sub-small { font-size: 0.75rem; color: #888; margin: 0; }
+
+/* COMUNIDAD */
+.community-grid { 
+    display: flex; 
+    flex-wrap: wrap; 
+    gap: 12px; 
+    padding: 10px 5px 20px 5px; 
+}
+.centered-container { justify-content: center; } 
+
+.comm-card.orange-soft { min-width: 230px; background: var(--orange-soft); border: 1px solid var(--orange-border); border-radius: 25px; overflow: hidden; }
+.comm-img-placeholder { height: 130px; background: #ddd; display: flex; align-items: center; justify-content: center; font-weight: bold; }
+.comm-info { padding: 15px; font-size: 0.85rem; }
+
+/* BANNER INVITACIÓN */
+.invite-banner.narrow { background: #fff4e6; border: 1px solid #ffd8a8; padding: 15px 25px; border-radius: 20px; text-align: center; margin: 30px auto; width: fit-content; max-width: 90%; }
+.invite-banner.wide-desktop { width: 60%; }
+.invite-banner h3 { color: #d9480f; margin: 0; font-size: 1.1rem; }
+
+/* GRID LOCALES */
+.locals-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.local-card { background: white; border-radius: 25px; overflow: hidden; border: 1.5px solid var(--orange-border); }
+.card-img-box { height: 170px; position: relative; background: #eee; }
+.badge { position: absolute; padding: 4px 12px; border-radius: 20px; font-size: 0.7rem; font-weight: bold; color: white; top: 12px; left: 12px; }
+.open { background: #27ae60; }
+.card-body { padding: 18px; }
+
+/* --- PUBLICIDAD FINAL --- */
+.final-ad-section {
+    width: 100%;
+    margin-top: 60px;
+    padding: 0; /* Asegura que la sección principal no meta márgenes */
+}
+
+/* Contenedor principal que forza el centrado absoluto */
+.ad-slide-final-wrapper {
+    display: flex;
+    justify-content: center; /* Centrado horizontal perfecto */
+    align-items: center;
+    width: 100%;
+}
+
+/* La tarjeta con bordes curvos */
+.ad-slide-final-card {
+    border-radius: 25px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    max-width: 650px; /* Ancho controlado en escritorio */
+    width: 100%; /* Se adapta a la pantalla */
+}
+
+.ad-img-final {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.ad-dots-final {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    gap: 5px;
+}
+
+.dot {
+    width: 8px;
+    height: 8px;
+    background: rgba(255,255,255,0.4);
+    border-radius: 50%;
+}
+
+.dot.active {
+    background: white;
+    width: 20px;
+    border-radius: 10px;
+}
+
+/* FOOTER */
+.site-footer { background: var(--dark); color: #888; padding: 30px 0; text-align: center; font-size: 0.85rem; margin-top: 60px; }
+.site-footer a { color: #bbb; text-decoration: none; margin: 0 12px; }
+.disclaimer-text { font-size: 0.85rem; opacity: 0.9; margin-top: 15px; padding: 0 20px; line-height: 1.5; font-weight: 500; color: #eee; }
+
+/* --- AJUSTES MÓVIL --- */
+@media (max-width: 800px) {
     .desktop-only { display: none !important; }
     .mobile-only { display: flex !important; }
+    body { padding-bottom: 110px; }
 
-    body { padding-bottom: 80px; }
+    .navbar { padding: 10px 5%; }
+    .logo-img { height: 45px; }
 
-    .nav-container {
-        flex-direction: column;
-        padding: 10px;
-        gap: 8px;
+    .hero { padding: 20px 15px 15px 15px !important; border-radius: 0 0 30px 30px; }
+    .hero h1 { font-size: 1.55rem !important; margin-bottom: 5px; }
+    
+    .search-area { flex-direction: column; width: 88%; gap: 8px; margin-top: 15px; }
+    .oval-input { height: 42px; padding: 5px 15px; }
+    
+    .subtitle { margin-top: 12px !important; margin-bottom: 0; font-size: 0.8rem !important; }
+
+    .community-grid {
+        display: flex;
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        scrollbar-width: none;
     }
+    .community-grid::-webkit-scrollbar { display: none; }
 
-    .logo-img {
-        height: 60px;
-    }
+    .invite-banner.narrow { padding: 10px 15px !important; margin: 20px auto; }
+    .invite-banner.wide-desktop { width: fit-content; max-width: 90%; }
+    
+    .vertical-header { margin-top: 25px !important; }
+    .locals-grid-3 { grid-template-columns: 1fr; width: 95%; margin: 0 auto; }
 
-    .header-controls-group {
+    /* Centrado en móvil asegurado con margen controlado */
+    .ad-slide-final-wrapper {
         width: 100%;
-        gap: 6px;
+        padding: 0 10px; /* Pequeño aire a los lados para que no choque */
+        box-sizing: border-box;
     }
 
-    .location-wrapper {
-        width: 40%;
-        padding: 6px 8px;
+    .ad-slide-final-card {
+        max-width: 100%; /* Ocupa el ancho disponible */
+        margin: 0 auto; /* Refuerza centrado */
     }
 
-    .search-bar-wrapper {
-        width: 60%;
-        padding: 6px 8px;
-    }
-
-    .nav-select,
-    .search-bar-wrapper input {
-        font-size: 0.75rem;
-    }
-
-    .hero-title {
-        font-size: 1.3rem;
-        margin: 20px 0;
-    }
-
-    /* 🔥 TARJETAS MUCHO MÁS CHICAS */
-    .results-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 10px;
-    }
-
-    .res-card {
-        border-radius: 12px;
-    }
-
-    .res-thumb {
-        height: 110px; /* 🔥 antes 200px */
-    }
-
-    .res-info {
-        padding: 8px; /* 🔥 antes 15px */
-    }
-
-    .res-info strong {
-        font-size: 0.8rem;
-    }
-
-    .res-info small {
-        font-size: 0.7rem;
-    }
-
-    .res-info div {
-        font-size: 0.8rem;
-    }
-
-    /* BOTONES FLOTANTES */
-    .mobile-float-bar {
-        position: fixed;
+    .ad-dots-final {
         bottom: 15px;
-        left: 5%;
-        width: 90%;
-        z-index: 2000;
-        gap: 10px;
-    }
-
-    .btn-mob-trans-orange,
-    .btn-mob-trans-blue {
-        font-size: 0.7rem;
-        padding: 10px;
+        right: 15px;
     }
 }
+
+/* NAV MÓVIL FLOTANTE */
+.floating-nav { position: fixed; bottom: 20px; left: 0; width: 100%; display: flex; justify-content: center; gap: 10px; z-index: 1000; }
+.btn-blue { background: var(--blue); color: white; border: none; padding: 15px 25px; border-radius: 35px; font-weight: bold; box-shadow: 0 5px 15px rgba(58, 134, 255, 0.4); }
+.btn-outline { background: white; color: var(--orange); border: 2px solid var(--orange); padding: 15px 20px; border-radius: 35px; font-weight: bold; }

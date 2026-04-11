@@ -2,86 +2,133 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LlamaBarrio</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>LlamaBarrio - Tu comunidad conectada</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-<nav class="navbar">
-    <div class="nav-container">
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <img src="images/logo.png" alt="LlamaBarrio" class="logo-img">
+            </div>
+            <div class="nav-right desktop-only">
+                <span class="recomienda">+ Recomienda</span>
+                <button class="btn-negocio-blue">Soy Negocio</button>
+            </div>
+        </div>
+    </nav>
 
-        <!-- LOGO CENTRADO -->
-        <div class="brand">
-            <img src="images/logo.png" class="logo-img">
+    <header class="hero">
+        <h1>Encuentra tu próxima <br><span class="highlight">picada favorita</span></h1>
+        
+        <div class="search-area">
+            <div class="filter-group">
+                <div class="oval-input">
+                    <span>📍</span>
+                    <select class="clean-select">
+                        <option value="" disabled selected>Tu Comuna</option>
+                        <option value="santiago">Santiago Centro</option>
+                        <option value="providencia">Providencia</option>
+                        <option value="las-condes">Las Condes</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="filter-group">
+                <div class="search-box oval-input">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" placeholder="¿Qué quieres comer?" id="main-search">
+                </div>
+            </div>
+        </div>
+        
+        <p class="subtitle">Recomendadas por la comunidad · Sin registro</p>
+    </header>
+
+    <main class="content">
+        <section class="section">
+            <div class="section-header vertical-header">
+                <h2>Picadas de la comunidad</h2>
+                <p class="sub-small">Fotos enviadas por vecinos del barrio</p>
+            </div>
+            
+            <div class="community-grid centered-container">
+                <div class="comm-card orange-soft">
+                    <div class="comm-img-placeholder">Sushi</div>
+                    <div class="comm-info">
+                        <b>Camila R.</b>
+                        <p>"Joya en Recoleta." 🔥</p>
+                    </div>
+                </div>
+                <div class="comm-card orange-soft">
+                    <div class="comm-img-placeholder">Mote</div>
+                    <div class="comm-info">
+                        <b>Felipe T.</b>
+                        <p>"El mejor mote." 🥤</p>
+                    </div>
+                </div>
+                <div class="comm-card orange-soft">
+                    <div class="comm-img-placeholder">Masas</div>
+                    <div class="comm-info">
+                        <b>Rodrigo B.</b>
+                        <p>"Masa perfecta." 🥟</p>
+                    </div>
+                </div>
+                <div class="comm-card orange-soft">
+                    <div class="comm-img-placeholder">Pizzas</div>
+                    <div class="comm-info">
+                        <b>Valeria M.</b>
+                        <p>"Sabor artesanal." 🍕</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="invite-banner narrow wide-desktop">
+            <h3>¿Encontraste una picada increíble?</h3>
+            <p>Mándanos tu foto y la publicamos aquí 🙌</p>
         </div>
 
-        <!-- BUSCADOR -->
-        <div class="header-controls-group">
-
-            <div class="oval-control location-wrapper">
-                <select id="location-filter" onchange="buscar()">
-                    <option value="">Comuna</option>
-                </select>
+        <section class="section">
+            <div class="section-header">
+                <div class="header-text">
+                    <h2>📍 Locales cerca tuyo</h2>
+                    <p class="sub">8 locales · Santiago Centro</p>
+                </div>
+                <button class="btn-filtrar">⚙️ Filtrar</button>
             </div>
+            <div class="locals-grid-3" id="locals-grid"></div>
+        </section>
 
-            <div class="oval-control search-bar-wrapper">
-                <input type="text" id="main-search" placeholder="Buscar" onkeyup="buscar()">
+        <section class="section final-ad-section">
+            <div class="ad-slide-final-wrapper">
+                <div class="ad-slide-final-card">
+                    <img src="images/promocion1.png" alt="Promoción Final" class="ad-img-final">
+                    <div class="ad-dots-final">
+                        <span class="dot active"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                    </div>
+                </div>
             </div>
+        </section>
+    </main>
 
+    <footer class="site-footer">
+        <div class="footer-content">
+            <p>LlamaBarrio © 2026 · <a href="#">Términos y Condiciones</a> · <a href="#">Privacidad</a></p>
+            <p class="disclaimer-text">LlamaBarrio es una vitrina informativa. No realizamos ventas ni transacciones.</p>
         </div>
+    </footer>
+
+    <div class="floating-nav mobile-only">
+        <button class="btn-blue">+ Recomienda</button>
+        <button class="btn-outline">🏠 Soy Negocio</button>
     </div>
-</nav>
 
-<main class="content-wrapper">
-
-    <h1 class="hero-title">Encuentra datos en tu barrio</h1>
-
-    <!-- PICADAS -->
-    <section class="section-picadas-container">
-        <h2 class="titulo-picadas-morado">🔥 Picadas</h2>
-        <div id="cheap-scroll" class="circle-scroll"></div>
-    </section>
-
-    <!-- RESULTADOS -->
-    <section class="section-resultados">
-        <h3 class="tag naranja">🍔 Resultados</h3>
-        <div id="product-list" class="results-grid"></div>
-    </section>
-
-    <!-- RECOMENDADOS -->
-    <section class="section-recomendados">
-        <h3 class="tag azul">🌟 Recomendados</h3>
-        <div id="comuna-list" class="results-grid"></div>
-    </section>
-
-    <!-- BANNER -->
-    <section class="promo-banner">
-        <img src="images/promocionimagen.png" class="full-promo-img">
-    </section>
-
-</main>
-
-<footer class="main-footer">
-    <p>LlamaBarrio © 2026</p>
-</footer>
-
-<!-- BOTONES -->
-<div class="mobile-float-bar">
-    <button onclick="abrirFormDato()">Compartir</button>
-    <button onclick="abrirFormPromo()">Negocio</button>
-</div>
-
-<!-- POPUP -->
-<div id="productPopup" class="popup-overlay" style="display:none;">
-    <div class="popup-content">
-        <button onclick="cerrarPopupProducto()">✕</button>
-        <div id="popup-body"></div>
-    </div>
-</div>
-
-<script src="script.js"></script>
-
+    <script src="script.js"></script>
 </body>
 </html>
