@@ -19,6 +19,7 @@ body { font-family: 'Poppins', sans-serif; background: var(--bg); margin: 0; col
 .logo-img { height: 60px; width: auto; }
 .recomienda { color: #444; font-weight: 600; cursor: pointer; margin-right: 30px; }
 .btn-negocio-blue { background: var(--blue); color: white; border: none; padding: 10px 22px; border-radius: 20px; font-weight: bold; cursor: pointer; }
+
 /* BOTÓN RECOMIENDA PRO */
 .btn-recomienda {
   background: var(--orange);
@@ -72,75 +73,42 @@ body { font-family: 'Poppins', sans-serif; background: var(--bg); margin: 0; col
 .comm-img-placeholder { height: 130px; background: #ddd; display: flex; align-items: center; justify-content: center; font-weight: bold; }
 .comm-info { padding: 15px; font-size: 0.85rem; }
 
-/* BANNER INVITACIÓN */
-.invite-banner.narrow { background: #fff4e6; border: 1px solid #ffd8a8; padding: 15px 25px; border-radius: 20px; text-align: center; margin: 30px auto; width: fit-content; max-width: 90%; }
-.invite-banner.wide-desktop { width: 60%; }
-.invite-banner h3 { color: #d9480f; margin: 0; font-size: 1.1rem; }
-
 /* GRID LOCALES */
 .locals-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-.local-card { background: white; border-radius: 25px; overflow: hidden; border: 1.5px solid var(--orange-border); }
-.card-img-box { height: 170px; position: relative; background: #eee; }
-.badge { position: absolute; padding: 4px 12px; border-radius: 20px; font-size: 0.7rem; font-weight: bold; color: white; top: 12px; left: 12px; }
-.open { background: #27ae60; }
-.card-body { padding: 18px; }
 
-/* --- PUBLICIDAD FINAL --- */
-.final-ad-section {
-    width: 100%;
-    margin-top: 60px;
-    padding: 0; /* Asegura que la sección principal no meta márgenes */
-}
-
-/* Contenedor principal que forza el centrado absoluto */
+/* PUBLICIDAD FINAL */
 .ad-slide-final-wrapper {
     display: flex;
-    justify-content: center; /* Centrado horizontal perfecto */
+    justify-content: center;
     align-items: center;
     width: 100%;
 }
 
-/* La tarjeta con bordes curvos */
 .ad-slide-final-card {
     border-radius: 25px;
     overflow: hidden;
     position: relative;
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    max-width: 650px; /* Ancho controlado en escritorio */
-    width: 100%; /* Se adapta a la pantalla */
-}
-
-.ad-img-final {
+    max-width: 650px;
     width: 100%;
-    height: auto;
-    display: block;
 }
 
-.ad-dots-final {
-    position: absolute;
-    bottom: 20px;
-    right: 20px;
-    display: flex;
-    gap: 5px;
-}
+.ad-img-final { width: 100%; height: auto; display: block; }
 
-.dot {
-    width: 8px;
-    height: 8px;
-    background: rgba(255,255,255,0.4);
-    border-radius: 50%;
-}
-
-.dot.active {
-    background: white;
-    width: 20px;
-    border-radius: 10px;
-}
-
-/* FOOTER */
+/* FOOTER (Escritorio) */
 .site-footer { background: var(--dark); color: #888; padding: 30px 0; text-align: center; font-size: 0.85rem; margin-top: 60px; }
 .site-footer a { color: #bbb; text-decoration: none; margin: 0 12px; }
 .disclaimer-text { font-size: 0.85rem; opacity: 0.9; margin-top: 15px; padding: 0 20px; line-height: 1.5; font-weight: 500; color: #eee; }
+
+/* CTA BANNER */
+.cta-banner { width: 100%; display: flex; justify-content: center; margin: 40px 0; }
+.cta-content {
+  background: linear-gradient(90deg, #ff6a00, #ff7e1a);
+  color: white; border-radius: 25px; padding: 20px 25px;
+  max-width: 850px; width: 90%; display: flex; align-items: center;
+  justify-content: space-between; gap: 20px; box-shadow: 0 6px 18px rgba(0,0,0,0.15); flex-wrap: wrap;
+}
+.cta-button { background: white; color: #ff6a00; padding: 10px 18px; border-radius: 999px; text-decoration: none; font-weight: bold; }
 
 /* --- AJUSTES MÓVIL --- */
 @media (max-width: 800px) {
@@ -148,111 +116,27 @@ body { font-family: 'Poppins', sans-serif; background: var(--bg); margin: 0; col
     .mobile-only { display: flex !important; }
     body { padding-bottom: 110px; }
 
+    /* OCULTAR FOOTER EN MÓVIL */
+    .site-footer { display: none !important; }
+
     .navbar { padding: 10px 5%; }
     .logo-img { height: 45px; }
-
     .hero { padding: 20px 15px 15px 15px !important; border-radius: 0 0 30px 30px; }
-    .hero h1 { font-size: 1.55rem !important; margin-bottom: 5px; }
+    .hero h1 { font-size: 1.55rem !important; }
     
     .search-area { flex-direction: column; width: 88%; gap: 8px; margin-top: 15px; }
-    .oval-input { height: 42px; padding: 5px 15px; }
+    .oval-input { height: 42px; }
     
-    .subtitle { margin-top: 12px !important; margin-bottom: 0; font-size: 0.8rem !important; }
-
-    .community-grid {
-        display: flex;
-        overflow-x: auto;
-        flex-wrap: nowrap;
-        justify-content: flex-start;
-        scrollbar-width: none;
-    }
+    .community-grid { overflow-x: auto; flex-wrap: nowrap; justify-content: flex-start; scrollbar-width: none; }
     .community-grid::-webkit-scrollbar { display: none; }
 
-    .invite-banner.narrow { padding: 10px 15px !important; margin: 20px auto; }
-    .invite-banner.wide-desktop { width: fit-content; max-width: 90%; }
-    
-    .vertical-header { margin-top: 25px !important; }
     .locals-grid-3 { grid-template-columns: 1fr; width: 95%; margin: 0 auto; }
 
-    /* Centrado en móvil asegurado con margen controlado */
-    .ad-slide-final-wrapper {
-        width: 100%;
-        padding: 0 10px; /* Pequeño aire a los lados para que no choque */
-        box-sizing: border-box;
-    }
-
-    .ad-slide-final-card {
-        max-width: 100%; /* Ocupa el ancho disponible */
-        margin: 0 auto; /* Refuerza centrado */
-    }
-
-    .ad-dots-final {
-        bottom: 15px;
-        right: 15px;
-    }
+    .cta-content { text-align: center; justify-content: center; }
+    .cta-button { width: 100%; text-align: center; }
 }
 
 /* NAV MÓVIL FLOTANTE */
 .floating-nav { position: fixed; bottom: 20px; left: 0; width: 100%; display: flex; justify-content: center; gap: 10px; z-index: 1000; }
 .btn-blue { background: var(--blue); color: white; border: none; padding: 15px 25px; border-radius: 35px; font-weight: bold; box-shadow: 0 5px 15px rgba(58, 134, 255, 0.4); }
 .btn-outline { background: white; color: var(--orange); border: 2px solid var(--orange); padding: 15px 20px; border-radius: 35px; font-weight: bold; }
-/* CTA NEGOCIOS */
-.cta-banner {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  margin: 40px 0;
-}
-
-.cta-content {
-  background: linear-gradient(90deg, #ff6a00, #ff7e1a);
-  color: white;
-  border-radius: 25px;
-  padding: 20px 25px;
-  max-width: 850px;
-  width: 90%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.15);
-  flex-wrap: wrap;
-}
-
-.cta-text {
-  display: flex;
-  flex-direction: column;
-  font-size: 14px;
-}
-
-.cta-text strong {
-  font-size: 16px;
-}
-
-.cta-button {
-  background: white;
-  color: #ff6a00;
-  padding: 10px 18px;
-  border-radius: 999px;
-  text-decoration: none;
-  font-weight: bold;
-  transition: all 0.3s ease;
-  white-space: nowrap;
-}
-
-.cta-button:hover {
-  background: #ffe5d0;
-}
-
-/* MOBILE */
-@media (max-width: 800px) {
-  .cta-content {
-    text-align: center;
-    justify-content: center;
-  }
-
-  .cta-button {
-    width: 100%;
-    text-align: center;
-  }
-}
