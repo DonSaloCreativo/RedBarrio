@@ -9,7 +9,24 @@
     <link rel="manifest" href="/manifest.json">
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=2">
+    
+    <link rel="stylesheet" href="style.css?v=4.0">
+
+    <style>
+      @media screen and (max-width: 800px) {
+          footer, 
+          .site-footer, 
+          [class*="footer"] {
+              display: none !important;
+              visibility: hidden !important;
+              height: 0 !important;
+              padding: 0 !important;
+              margin: 0 !important;
+              opacity: 0 !important;
+              pointer-events: none !important;
+          }
+      }
+    </style>
 
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -19,9 +36,7 @@
     <script>
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
-          navigator.serviceWorker.register('/sw.js')
-            .then(reg => console.log('Service Worker registrado', reg))
-            .catch(err => console.error('Error al registrar Service Worker', err));
+          navigator.serviceWorker.register('/sw.js');
         });
       }
     </script>
