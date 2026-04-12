@@ -1,22 +1,21 @@
-const cacheName = 'llamabarrio-v1';
-const assets = [
-  '/',
-  '/index.html',
-  'manifest.json'
-];
-
-self.addEventListener('install', e => {
-  e.waitUntil(
-    caches.open(cacheName).then(cache => {
-      return cache.addAll(assets);
+self.addEventListener('install', (event) => {
+  event.waitUntil(
+    caches.open('llamabarrio-v1').then((cache) => {
+      return cache.addAll([
+        '/',
+        'index.html',
+        'style.css',
+        'script.js',
+        'manifest.json'
+      ]).catch(err => console.log("Error cargando caché: ", err));
     })
   );
 });
 
-self.addEventListener('fetch', e => {
-  e.respondWith(
-    caches.match(e.request).then(res => {
-      return res || fetch(e.request);
+self.addEventListener('fetch', (event) => {
+  event.respondWith(
+    caches.match(event.request).then((response) => {
+      return response || fetch(event.request);
     })
   );
 });
