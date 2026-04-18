@@ -1,0 +1,1 @@
+Merged pull request #4: Optimize mobile layout density and image loading path on homepage. * Squash merge strategy applied. * Adjusted styles for better mobile responsiveness and loading speed.
