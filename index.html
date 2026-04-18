@@ -173,7 +173,11 @@
       const description = doc.querySelector('meta[name="description"]');
       const viewport = doc.querySelector('meta[name="viewport"]');
       const images = [...doc.querySelectorAll('img')];
-      const imagesWithoutAlt = images.filter((img) => !img.hasAttribute('alt') || !img.getAttribute('alt').trim());
+      const imagesWithoutAlt = images.filter((img) => {
+        if (!img.hasAttribute('alt')) return true;
+        const altText = img.getAttribute('alt');
+        return !altText || !altText.trim();
+      });
       const h1Count = doc.querySelectorAll('h1').length;
       const formFields = [...doc.querySelectorAll('input, select, textarea')];
       const unlabeledFields = formFields.filter((field) => {
