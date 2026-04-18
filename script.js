@@ -3,6 +3,7 @@ const formUrls = {
     tally: "https://tally.so/r/ja7DOQ",
     business: "https://forms.gle/k3VE5zWxYB5Fxrdk6"
 };
+const DESTACADO_IMAGES = ["images/promocion1.png", "images/promocion2.png"];
 let locales = [];
 let joyitas = [];
 
@@ -438,10 +439,9 @@ function renderTrending() {
 function setupDestacadoOfferRotation() {
     const destacadoImg = document.querySelector(".destacado-offer-image");
     if (!destacadoImg) return;
-    const destacadoImages = ["images/promocion1.png", "images/promocion2.png"];
     let idx = 0;
     setInterval(() => {
-        idx = (idx + 1) % destacadoImages.length;
-        destacadoImg.src = destacadoImages[idx];
+        idx = (idx + 1) % DESTACADO_IMAGES.length;
+        destacadoImg.src = DESTACADO_IMAGES[idx];
     }, 8000);
 }
