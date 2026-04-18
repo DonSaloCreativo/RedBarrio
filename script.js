@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
     
     setupFormTriggers();
     setupFloatingCta();
+    setupMiniHow();
     
     Promise.all([
         fetch(`${API_BASE}?hoja=Publicaciones%20Locales`).then(r => r.json()),
@@ -33,13 +34,14 @@ document.addEventListener("DOMContentLoaded", () => {
         joyitas = (joyitasData || []).map(j => {
             console.log("🎉 Joyita cruda:", j);
             return {
+                localName: j["Nombre del Local"] || j.localName || "",
                 name: j["¿Dónde lo encontraste?"] || j.name || j.Nombre || "",
                 desc: j["Comentario sobre la Picada"] || j["Cuéntanos el dato"] || j.desc || j.Descripción || "",
                 img: (j["Untitled file upload field"] || j["Untitled file upload"] || j["Untitled file uplo"] || j.Imagen || j.img || "sin-imagen.png"),
                 price: j["¿Precio? (opcional)"] || j["💰Precio? (opcional)"] || "",
-                autor: j["Nombre"] ? String(j["Nombre"]).trim() : "",
+                autor: j["Tu Nombre"] ? String(j["Tu Nombre"]).trim() : "",
                 category: j.Categoria || j.category || "",
-                comuna: j["Comun"] || j.Comuna || j.comuna || "",
+                comuna: j["Comuna"] || j["Comun"] || j.Comuna || j.comuna || "",
                 ubicacion: j["¿Dónde lo encontraste?"] || j.loc || "",
                 estado: j.Estado || "Pendiente"
             };
@@ -52,7 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
         console.log("✅ Joyitas procesadas:", joyitas);
         
         renderJoyitas();
-        setupTestimonials();
+        renderTrending();
         renderLocales();
     }).catch(err => {
         console.error("❌ Error cargando datos:", err);
@@ -302,13 +304,13 @@ function abrirDetalle(local) {
 
 function abrirDetalleJoyita(j) {
     const el = id => document.getElementById(id) || { innerText:"", src:"", alt:"", href:"#", style:{} };
-    el("modal-titulo").innerText = j.autor && j.autor.trim() ? `"${j.name}" - ${j.autor}` : `"${j.name}" - Anónimo`;
+    el("modal-titulo").innerText = j.localName ? `${j.localName}` : (j.name || "Recomendación");
     el("modal-categoria").innerText = j.category || "";
-    el("modal-dir").innerText = j.ubicacion ? `${j.ubicacion}` : (j.comuna ? `Encontrado en: ${j.comuna}` : "");
+    el("modal-dir").innerText = j.ubicacion ? `${j.ubicacion}` : (j.comuna ? `${j.comuna}` : "");
     el("modal-desc").innerText = j.desc || '';
     el("modal-hor").innerText = '';
     el("modal-precio").innerText = j.price ? "Precio: " + j.price : '';
-    el("modal-autor").innerText = '';
+    el("modal-autor").innerText = j.autor && j.autor.trim() ? `Por: ${j.autor}` : '';
     
     const imgSrc = j.img && String(j.img).startsWith("http")
         ? j.img
@@ -316,7 +318,7 @@ function abrirDetalleJoyita(j) {
             ? `images/${j.img}`
             : "images/sin-imagen.png");
     el("modal-img").src = imgSrc;
-    el("modal-img").alt = j.name || '';
+    el("modal-img").alt = j.localName || j.name || '';
     
     el("modal-wa").classList.add('is-hidden');
     el("modal-wa").href = "#";
@@ -353,41 +355,6 @@ window.onclick = function (event) {
     if (event.target === document.getElementById("form-modal")) cerrarFormulario();
 };
 
-function setupTestimonials() {
-    const testimonialsGrid = document.getElementById('testimonials-grid');
-    const testimonialsDots = document.getElementById('testimonials-dots');
-
-    if (testimonialsGrid && testimonialsDots && window.innerWidth < 760) {
-        const cards = testimonialsGrid.querySelectorAll('.testimonial-card');
-        const totalCards = cards.length;
-        let testimonialIndex = 0;
-        
-        for (let i = 0; i < totalCards; i++) {
-            const dot = document.createElement('div');
-            dot.className = `testimonial-dot ${i === 0 ? 'active' : ''}`;
-            dot.addEventListener('click', () => showTestimonial(i));
-            testimonialsDots.appendChild(dot);
-        }
-        
-        function showTestimonial(index) {
-            testimonialIndex = index;
-            testimonialsGrid.style.transform = `translateX(-${index * 100}%)`;
-            
-            const dots = testimonialsDots.querySelectorAll('.testimonial-dot');
-            dots.forEach((dot, i) => {
-                dot.classList.toggle('active', i === index);
-            });
-        }
-        
-        setInterval(() => {
-            testimonialIndex = (testimonialIndex + 1) % totalCards;
-            showTestimonial(testimonialIndex);
-        }, 6000);
-        
-        testimonialsGrid.style.transition = 'transform 0.3s ease';
-    }
-}
-
 function setupFormTriggers() {
     const formTriggers = document.querySelectorAll("[data-form-modal]");
     formTriggers.forEach((trigger) => {
@@ -408,4 +375,61 @@ function setupFloatingCta() {
             abrirFormulario(formType);
         });
     });
+}
+
+function setupMiniHow() {
+    const header = document.querySelector('.mini-how-header');
+    const steps = document.querySelector('.mini-how-steps');
+    const section = document.querySelector('.mini-how-section');
+    
+    if (header && steps && section) {
+        section.addEventListener('click', () => {
+            steps.classList.toggle('collapsed');
+        });
+        
+        steps.classList.add('collapsed');
+    }
+}
+
+function renderTrending() {
+    // Calcular qué LOCAL fue más recomendado (usando el nombre del local)
+    const localesConteo = {};
+    
+    joyitas.forEach(joyita => {
+        const nombreLocal = joyita.localName;
+        if (nombreLocal && nombreLocal.trim() !== "") {
+            localesConteo[nombreLocal] = (localesConteo[nombreLocal] || 0) + 1;
+        }
+    });
+    
+    // Ordenar de mayor a menor y sacar TOP 5
+    const trending = Object.entries(localesConteo)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 5);
+    
+    // Verificar que existe el elemento
+    const trendingContainer = document.getElementById('trending-section');
+    if (!trendingContainer) {
+        console.log("ℹ️ No hay sección de trending configurada");
+        return;
+    }
+    
+    // Si no hay datos, mostrar mensaje
+    if (trending.length === 0) {
+        trendingContainer.innerHTML = '<p style="text-align:center;color:#999;padding:20px;">Aún no hay recomendaciones</p>';
+        return;
+    }
+    
+    // Crear HTML de trending - NOMBRE DEL LOCAL
+    const trendingHTML = trending.map(([nombre, cantidad], index) => `
+        <div class="trending-item">
+            <div class="trending-rank">#${index + 1}</div>
+            <div class="trending-info">
+                <h4>${nombre}</h4>
+                <p>⭐⭐⭐⭐⭐ ${cantidad} recomendaciones</p>
+            </div>
+        </div>
+    `).join('');
+    
+    trendingContainer.innerHTML = trendingHTML;
 }
