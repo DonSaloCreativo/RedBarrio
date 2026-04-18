@@ -1,21 +1,25 @@
-{
+﻿{
   "name": "LlamaBarrio",
   "short_name": "LlamaBarrio",
-  "start_url": "/",
+  "description": "Picadas reales recomendadas por vecinos de tu comuna.",
+  "start_url": "./",
+  "scope": "./",
   "display": "standalone",
-  "background_color": "#000000",
-  "theme_color": "#39FF14",
-  "description": "Tu buscador de datos y picadas de barrio.",
+  "background_color": "#fbf6ef",
+  "theme_color": "#f26522",
+  "orientation": "portrait-primary",
   "icons": [
     {
-      "src": "icon-192.png",
+      "src": "images/icon-192.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
-      "src": "icon-512.png",
+      "src": "images/icon-512.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ]
 }

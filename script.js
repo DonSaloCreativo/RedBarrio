@@ -1,114 +1,319 @@
-﻿// Variable global que guardará los locales que vienen del Excel
+﻿const API_BASE = "https://script.google.com/macros/s/AKfycbzbdLTbh0a9sVSC7DOB04QrLLANsSak2pd4qQE2GqZ1BSDqwtgD69vot3R2MQk-GFV0uw/exec";
+const formUrls = {
+    tally: "https://tally.so/r/ja7DOQ",
+    business: "https://forms.gle/k3VE5zWxYB5Fxrdk6"
+};
 let locales = [];
+let joyitas = [];
 
-/**
- * 1. CARGA DE DATOS: Busca el archivo locales.json que genera tu Google Sheet
- */
-async function cargarDatos() {
-    try {
-        // El "?v=" + Date.now() obliga al navegador a leer siempre la última versión del Excel
-        const response = await fetch('locales.json?v=' + Date.now());
-        if (!response.ok) throw new Error("No se pudo cargar el archivo locales.json");
+document.addEventListener("DOMContentLoaded", () => {
+    console.log("🔄 Iniciando carga de datos...");
+    
+    Promise.all([
+        fetch(`${API_BASE}?hoja=Publicaciones%20Locales`).then(r => r.json()),
+        fetch(`${API_BASE}?hoja=Tally`).then(r => r.json())
+    ]).then(([localesData, joyitasData]) => {
+        console.log("📊 Datos RAW de Locales:", localesData);
+        console.log("📊 Datos RAW de Joyitas:", joyitasData);
         
-        locales = await response.json();
-        console.log("Locales cargados con éxito:", locales);
+        locales = (localesData || []).map(local => ({
+            name: local.Nombre || local.name || "",
+            comuna: local.Comuna || local.comuna || "",
+            loc: local.Dirección || local.loc || "",
+            desc: local.Descripción || local.desc || "",
+            hor: local.Horario || local.hor || "",
+            img: (local.Imagen || local.Img || local.img || "sin-imagen.png"),
+            wa: (typeof local.WhatsApp === "string" ? local.WhatsApp : (local.wa || "")),
+            category: local.Categoria || local.category || ""
+        }));
         
-        // Ejecutamos las funciones para mostrar los datos en pantalla
+        joyitas = (joyitasData || []).map(j => {
+            console.log("🎉 Joyita cruda:", j);
+            return {
+                name: j["¿Dónde lo encontraste?"] || j.name || j.Nombre || "",
+                desc: j["Comentario sobre la Picada"] || j["Cuéntanos el dato"] || j.desc || j.Descripción || "",
+                img: (j["Untitled file upload field"] || j["Untitled file upload"] || j["Untitled file uplo"] || j.Imagen || j.img || "sin-imagen.png"),
+                price: j["¿Precio? (opcional)"] || j["💰Precio? (opcional)"] || "",
+                autor: j["Nombre"] ? String(j["Nombre"]).trim() : "",
+                category: j.Categoria || j.category || "",
+                comuna: j["Comun"] || j.Comuna || j.comuna || "",
+                ubicacion: j["¿Dónde lo encontraste?"] || j.loc || "",
+                estado: j.Estado || "Pendiente"
+            };
+        }).filter(j => {
+            // Filtro robusto: solo mostrar joyitas aprobadas
+            const estadoLimpio = String(j.estado).trim().toLowerCase();
+            return estadoLimpio.includes("aprob");
+        });
+        
+        console.log("✅ Locales procesados:", locales);
+        console.log("✅ Joyitas procesadas:", joyitas);
+        
+        renderJoyitas();
         renderLocales();
-        inicializarFiltros();
-    } catch (error) {
-        console.error("Error al cargar los locales:", error);
-    }
-}
-
-/**
- * 2. RENDERIZADO: Crea las tarjetas de los locales en el HTML
- */
-function renderLocales() {
-    const grid = document.getElementById("locals-grid");
-    if (!grid) return;
-    grid.innerHTML = ""; // Limpiamos la cuadrícula antes de cargar
-
-    locales.forEach((local) => {
-        const card = document.createElement("article");
-        card.className = "local-card";
-        
-        // Atributo para que el buscador sepa qué texto filtrar
-        card.dataset.search = `${local.name} ${local.comuna} ${local.category}`.toLowerCase();
-        
-        card.innerHTML = `
-            <div class="local-img-wrap">
-                <div class="local-img-box">
-                    <img src="${local.img}" alt="${local.name}" onerror="this.src='images/logo.png'">
-                </div>
-            </div>
-            <div class="local-body">
-                <span class="local-inline-tag">${local.category}</span>
-                <h3>${local.name}</h3>
-                <p><b>${local.comuna}</b></p>
-                <p>${local.loc}</p>
-                <button type="button" class="btn-ver">Ver más</button>
-            </div>
-        `;
-        
-        // Al hacer clic en la tarjeta, abrimos el modal con los detalles
-        card.addEventListener("click", () => abrirDetalle(local));
-        grid.appendChild(card);
+    }).catch(err => {
+        console.error("❌ Error cargando datos:", err);
     });
-}
 
-/**
- * 3. BUSCADOR: Filtra los locales en tiempo real
- */
-function inicializarFiltros() {
-    const searchInput = document.getElementById("main-search");
-    if (!searchInput) return;
-
-    searchInput.addEventListener("input", () => {
-        const termino = searchInput.value.toLowerCase();
-        const cards = document.querySelectorAll(".local-card");
+    // RENDER JOYITAS (COMUNA ARRIBA, NOMBRE Y COMENTARIO ABAJO)
+    function renderJoyitas(){
+        const joyitasGrid = document.getElementById("joyitas-grid");
+        if(!joyitasGrid) {
+            console.error("❌ No encontré el elemento joyitas-grid");
+            return;
+        }
+        joyitasGrid.innerHTML = "";
+        console.log("🎨 Renderizando joyitas, cantidad:", joyitas.length);
         
-        cards.forEach(card => {
-            const contenido = card.dataset.search;
-            card.style.display = contenido.includes(termino) ? "flex" : "none";
+        if (joyitas.length === 0) {
+            joyitasGrid.innerHTML = "<p style='padding:2em;text-align:center;color:#bbb;'>No hay recomendaciones aún.</p>";
+            return;
+        }
+        joyitas.forEach((j, idx) => {
+            console.log(`🎴 Card #${idx}:`, j);
+            const c = document.createElement("article");
+            c.className = "comm-card";
+            c.style.cursor = "pointer";
+            
+            // Manejo seguro de imagen
+            const imgSrc = j.img && String(j.img).startsWith("http") 
+                ? j.img 
+                : (j.img && j.img !== "sin-imagen.png" 
+                    ? `images/${j.img}` 
+                    : "images/sin-imagen.png");
+            
+            c.innerHTML = `
+                <div class="comm-img-box"><img src="${imgSrc}" alt="Dato recomendado" onerror="this.src='images/sin-imagen.png'"></div>
+                <div class="comm-info">
+                    <span class="comm-tag">${j.comuna || "Sin comuna"}</span>
+                    <b>${j.autor && j.autor.trim() ? j.autor : "Anónimo"}</b>
+                    <p>"${j.desc || ""}"</p>
+                </div>
+            `;
+            c.addEventListener("click", (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                abrirDetalleJoyita(j);
+            });
+            joyitasGrid.appendChild(c);
+        });
+    }
+
+    // ========== CONFIG BUSQUEDA Y FILTROS DE LOCALES ==========
+    const grid = document.getElementById("locals-grid");
+    const searchInput = document.getElementById("main-search");
+    const searchButton = document.querySelector(".btn-buscar-main");
+    const comunaSelect = document.getElementById("comuna-select");
+    const comunaLabel = document.getElementById("current-comuna-label");
+    const noResults = document.getElementById("no-results");
+    const formTriggers = document.querySelectorAll("[data-form-modal]");
+    const categoryButtons = document.querySelectorAll(".category-pill");
+    const openNowFilter = document.getElementById("open-now-filter");
+
+    let categoriaActiva = "Todas";
+    let soloAbiertos = false;
+
+    function renderLocales() {
+        if(!grid) {
+            console.error("❌ No encontré el elemento locals-grid");
+            return;
+        }
+        grid.innerHTML = "";
+        console.log("🏪 Renderizando locales, cantidad:", locales.length);
+        
+        locales.forEach((local) => {
+            const abierta = estaAbiertoAhora(local.hor);
+            const card = document.createElement("article");
+            card.className = "local-card";
+            card.dataset.comuna = local.comuna;
+            card.dataset.category = local.category;
+            card.dataset.search = `${local.name} ${local.loc} ${local.desc} ${local.category}`.toLowerCase();
+            card.dataset.open = abierta ? "true" : "false";
+            
+            // Manejo seguro de imagen para locales
+            const imgSrc = local.img && String(local.img).startsWith("http")
+                ? local.img
+                : (local.img && local.img !== "sin-imagen.png"
+                    ? `images/${local.img}`
+                    : "images/sin-imagen.png");
+            
+            card.innerHTML = `
+                <div class="local-img-wrap">
+                    <div class="local-img-box">
+                        <img src="${imgSrc}" alt="${local.name}" onerror="this.src='images/sin-imagen.png'">
+                    </div>
+                </div>
+                <div class="local-body">
+                    <div class="local-headline">
+                        <span class="local-inline-tag">${local.category}</span>
+                        <span class="local-status ${abierta ? "open" : "closed"}">${abierta ? "Abierto" : "Cerrado"}</span>
+                    </div>
+                    <div class="local-topline">
+                        <h3>${local.name}</h3>
+                    </div>
+                    <div class="local-meta">
+                        <p><b>${local.comuna}</b></p>
+                        <p>${local.loc}</p>
+                    </div>
+                    <button type="button" class="btn-ver">Ver más</button>
+                </div>
+            `;
+            card.addEventListener("click", (e) => {
+                e.preventDefault();
+                abrirDetalle(local);
+            });
+            card.querySelector(".btn-ver").addEventListener("click", (event) => {
+                event.stopPropagation();
+                abrirDetalle(local);
+            });
+            grid.appendChild(card);
+        });
+        filtrarLocales();
+    }
+
+    function updateCategoryButtons() {
+        if(!categoryButtons) return;
+        categoryButtons.forEach((button) => {
+            button.classList.toggle("is-active", button.dataset.category === categoriaActiva);
+        });
+    }
+
+    function filtrarLocales() {
+        if (!grid) return;
+        const termino = (searchInput?.value || "").trim().toLowerCase();
+        const comunaSeleccionada = comunaSelect?.value || "San Bernardo";
+        const cards = grid.querySelectorAll(".local-card");
+        let visibles = 0;
+        if (comunaLabel) comunaLabel.textContent = comunaSeleccionada;
+        cards.forEach((card) => {
+            const coincideBusqueda = termino === "" || card.dataset.search.includes(termino);
+            const coincideComuna = card.dataset.comuna === comunaSeleccionada;
+            const coincideCategoria = categoriaActiva === "Todas" || card.dataset.category === categoriaActiva;
+            const coincideAbierto = !soloAbiertos || card.dataset.open === "true";
+            const mostrar = coincideBusqueda && coincideComuna && coincideCategoria && coincideAbierto;
+            card.classList.toggle("is-hidden", !mostrar);
+            if (mostrar) visibles += 1;
+        });
+        if (noResults) noResults.hidden = visibles !== 0;
+    }
+
+    searchInput?.addEventListener("input", filtrarLocales);
+    searchButton?.addEventListener("click", filtrarLocales);
+    comunaSelect?.addEventListener("change", filtrarLocales);
+    categoryButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+            categoriaActiva = button.dataset.category || "Todas";
+            updateCategoryButtons();
+            filtrarLocales();
         });
     });
+    openNowFilter?.addEventListener("click", () => {
+        soloAbiertos = !soloAbiertos;
+        openNowFilter.classList.toggle("is-active", soloAbiertos);
+        filtrarLocales();
+    });
+    formTriggers.forEach((trigger) => {
+        trigger.addEventListener("click", (event) => {
+            event.preventDefault();
+            abrirFormulario(trigger.dataset.formModal);
+        });
+    });
+    updateCategoryButtons();
+});
+
+// ========== FUNCIONES UTILIDAD Y POPUP ===========
+
+function convertirHoraAMinutos(valor) {
+    const match = valor.match(/^(\d{1,2}):(\d{2})$/);
+    if (!match) return null;
+    return Number(match[1]) * 60 + Number(match[2]);
+}
+function estaAbiertoAhora(horario) {
+    if (!horario || !horario.includes("-")) return false;
+    const ahora = new Date();
+    const minutosActuales = ahora.getHours() * 60 + ahora.getMinutes();
+    const partes = horario.split("-").map((parte) => parte.trim());
+    if (partes.length !== 2) return false;
+    const inicio = convertirHoraAMinutos(partes[0]);
+    const fin = convertirHoraAMinutos(partes[1]);
+    if (inicio === null || fin === null) return false;
+    if (inicio <= fin) return minutosActuales >= inicio && minutosActuales <= fin;
+    return minutosActuales >= inicio || minutosActuales <= fin;
 }
 
-/**
- * 4. MODAL: Muestra la información detallada del local seleccionado
- */
+// --- POPUP PARA LOCALES ---
 function abrirDetalle(local) {
-    document.getElementById("modal-titulo").innerText = local.name;
-    document.getElementById("modal-categoria").innerText = local.category;
-    document.getElementById("modal-dir").innerText = `${local.comuna} · ${local.loc}`;
-    document.getElementById("modal-desc").innerText = local.desc;
-    document.getElementById("modal-hor").innerText = local.hor;
-    document.getElementById("modal-img").src = local.img;
-    document.getElementById("modal-img").alt = local.name;
-
-    const waBtn = document.getElementById("modal-wa");
-    // Limpiamos el número de WhatsApp por si acaso
-    const numLimpio = local.wa ? local.wa.toString().replace(/\D/g, "") : "";
-    waBtn.href = numLimpio ? `https://wa.me/${numLimpio}` : "#";
+    const el = id => document.getElementById(id) || { innerText:"", src: "", alt:"", href:"#", classList:{toggle:()=>{}}, style:{} };
+    el("modal-titulo").innerText = local.name || "";
+    el("modal-categoria").innerText = local.category || "";
+    el("modal-dir").innerText = `${local.comuna || ""} · ${local.loc || ""}`;
+    el("modal-desc").innerText = local.desc || "";
+    el("modal-hor").innerText = local.hor ? `Horario: ${local.hor}` : "";
+    el("modal-precio").innerText = '';
+    el("modal-autor").innerText = '';
     
-    document.getElementById("modal-detalle").style.display = "flex";
+    // Manejo seguro de imagen en modal
+    const imgSrc = local.img && String(local.img).startsWith("http")
+        ? local.img
+        : (local.img && local.img !== "sin-imagen.png"
+            ? `images/${local.img}`
+            : "images/sin-imagen.png");
+    el("modal-img").src = imgSrc;
+    el("modal-img").alt = local.name || "";
+    
+    const waBtn = el("modal-wa");
+    const waLink = typeof local.wa === "string" && local.wa.trim() !== "" ? `https://wa.me/${local.wa.replace(/\D/g, "")}` : "#";
+    waBtn.href = waLink;
+    if (waBtn.classList) waBtn.classList.toggle("is-hidden", waLink === "#");
+    el("modal-detalle").style.display = "flex";
 }
 
-/**
- * 5. CERRAR MODAL
- */
+// --- POPUP PARA JOYITAS ---
+function abrirDetalleJoyita(j) {
+    const el = id => document.getElementById(id) || { innerText:"", src:"", alt:"", href:"#", style:{} };
+    el("modal-titulo").innerText = j.autor && j.autor.trim() ? `"${j.name}" - ${j.autor}` : `"${j.name}" - Anónimo`;
+    el("modal-categoria").innerText = j.category || "";
+    el("modal-dir").innerText = j.ubicacion ? `📍 ${j.ubicacion}` : (j.comuna ? `Encontrado en: ${j.comuna}` : "");
+    el("modal-desc").innerText = j.desc || '';
+    el("modal-hor").innerText = '';
+    el("modal-precio").innerText = j.price ? "💰 Precio: " + j.price : '';
+    el("modal-autor").innerText = '';
+    
+    // Manejo seguro de imagen en modal joyita
+    const imgSrc = j.img && String(j.img).startsWith("http")
+        ? j.img
+        : (j.img && j.img !== "sin-imagen.png"
+            ? `images/${j.img}`
+            : "images/sin-imagen.png");
+    el("modal-img").src = imgSrc;
+    el("modal-img").alt = j.name || '';
+    
+    el("modal-wa").classList.add('is-hidden');
+    el("modal-wa").href = "#";
+    el("modal-detalle").style.display = "flex";
+}
+
+// --- CIERRE MODALES ---
 function cerrarModal() {
-    document.getElementById("modal-detalle").style.display = "none";
+    const el = id => document.getElementById(id) || { style:{} };
+    el("modal-detalle").style.display = "none";
 }
-
-// Iniciar todo cuando el navegador esté listo
-document.addEventListener("DOMContentLoaded", cargarDatos);
-
-// Cerrar modal al hacer clic fuera de la tarjeta blanca
-window.onclick = function(event) {
-    const modal = document.getElementById("modal-detalle");
-    if (event.target === modal) {
-        cerrarModal();
-    }
+function abrirFormulario(tipoFormulario) {
+    const modal = document.getElementById("form-modal");
+    const frame = document.getElementById("form-modal-frame");
+    const url = formUrls[tipoFormulario];
+    if (!modal || !frame || !url) return;
+    frame.src = url;
+    modal.style.display = "flex";
+}
+function cerrarFormulario() {
+    const modal = document.getElementById("form-modal");
+    const frame = document.getElementById("form-modal-frame");
+    if (!modal || !frame) return;
+    modal.style.display = "none";
+    frame.src = "";
+}
+window.onclick = function (event) {
+    if (event.target === document.getElementById("modal-detalle")) cerrarModal();
+    if (event.target === document.getElementById("form-modal")) cerrarFormulario();
 };
