@@ -436,12 +436,12 @@ function renderTrending() {
 }
 
 function setupDestacadoOfferRotation() {
-    const promoImg = document.querySelector(".destacado-offer-image");
-    if (!promoImg) return;
-    const promoImages = ["images/promocion1.png", "images/promocion2.png"];
+    const destacadoImg = document.querySelector(".destacado-offer-image");
+    if (!destacadoImg) return;
+    const destacadoImages = ["images/promocion1.png", "images/promocion2.png"];
     let idx = 0;
     setInterval(() => {
-        idx = (idx + 1) % promoImages.length;
-        promoImg.src = promoImages[idx];
+        idx = (idx + 1) % destacadoImages.length;
+        destacadoImg.src = destacadoImages[idx];
     }, 8000);
 }
