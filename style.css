@@ -241,7 +241,7 @@ button { cursor: pointer; }
 
 .community-grid {
     display: flex;
-    gap: 18px;
+    gap: 14px;
     overflow-x: auto;
     overflow-y: hidden;
     padding-bottom: 16px;
@@ -254,7 +254,7 @@ button { cursor: pointer; }
     border-radius: 999px;
 }
 .comm-card {
-    min-width: 248px;
+    min-width: 200px;
     max-width: 98vw;
     flex: 0 0 auto;
     scroll-snap-align: start;
@@ -265,9 +265,9 @@ button { cursor: pointer; }
     box-shadow: var(--shadow);
     transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
 }
-.comm-img-box { background: #f0ebe5; overflow: hidden; height: 180px; }
+.comm-img-box { background: #f0ebe5; overflow: hidden; height: 140px; }
 .comm-img-box img { width: 100%; height: 100%; object-fit: cover; }
-.comm-info { padding: 18px; }
+.comm-info { padding: 14px; }
 .comm-tag, .modal-tag {
     display: inline-flex;
     align-items: center;
@@ -280,8 +280,8 @@ button { cursor: pointer; }
     font-weight: 700;
 }
 
-.comm-info b { display: block; margin: 10px 0 8px; }
-.comm-info p { margin: 0; color: var(--muted); line-height: 1.6; }
+.comm-info b { display: block; margin: 8px 0 6px; font-size: 0.9rem; }
+.comm-info p { margin: 0; color: var(--muted); line-height: 1.5; font-size: 0.8rem; }
 
 /* ------ CTA BANNER ------ */
 
@@ -357,8 +357,7 @@ button { cursor: pointer; }
 .local-img-box img { 
     width: 100%; 
     height: 100%; 
-    object-fit: contain;
-    padding: 8px;
+    object-fit: cover;
 }
 .local-body { padding: 18px; }
 
@@ -570,7 +569,7 @@ button { cursor: pointer; }
     .cta-banner {
         flex-direction: column;
         text-align: center;
-        padding: 24px;
+        padding: 20px;
     }
 }
 
@@ -647,16 +646,16 @@ button { cursor: pointer; }
     
     /* COMMUNITY SECTION */
     .community-section {
-        padding: 18px;
+        padding: 16px;
         border-radius: 22px;
         margin-top: 20px;
     }
     
-    /* JOYITAS OPTIMIZADAS PARA MÓVIL */
+    /* JOYITAS OPTIMIZADAS PARA MÓVIL - MÁS ANGOSTAS */
     .mobile-swipe-hint { display: block; }
     
     .community-grid {
-        gap: 12px;
+        gap: 10px;
         padding-bottom: 8px;
     }
     
@@ -665,69 +664,70 @@ button { cursor: pointer; }
         background: rgba(242, 101, 34, 0.3);
     }
     
-    /* TARJETAS JOYITAS MÁS PEQUEÑAS */
+    /* TARJETAS JOYITAS MÁS ANGOSTAS Y COMPACTAS */
     .comm-card {
-        min-width: 76%;
+        min-width: 55%;
         max-width: 100%;
-        flex: 0 0 76%;
-        border-radius: 18px;
+        flex: 0 0 55%;
+        border-radius: 16px;
     }
     
     .comm-img-box { 
-        height: 120px;
+        height: 100px;
     }
     
     .comm-info { 
-        padding: 12px;
+        padding: 10px;
     }
     
     .comm-tag {
-        padding: 5px 10px;
-        font-size: 0.72rem;
+        padding: 4px 8px;
+        font-size: 0.65rem;
     }
     
     .comm-info b { 
-        margin: 8px 0 6px;
-        font-size: 0.95rem;
+        margin: 6px 0 4px;
+        font-size: 0.8rem;
     }
     
     .comm-info p { 
-        font-size: 0.85rem;
-        line-height: 1.4;
+        font-size: 0.75rem;
+        line-height: 1.3;
         margin: 0;
     }
     
-    /* CTA BANNER MÓVIL */
+    /* CTA BANNER MÓVIL - MÁS COMPACTO */
     .cta-banner {
-        margin: 24px auto;
-        padding: 18px;
+        margin: 20px auto;
+        padding: 14px 18px;
         flex-direction: column;
         text-align: center;
-        border-radius: 20px;
+        border-radius: 18px;
+        gap: 12px;
     }
     
     .cta-left {
         flex-direction: column;
-        gap: 12px;
+        gap: 10px;
         width: 100%;
     }
     
     .mega-icon {
-        font-size: 2rem;
+        font-size: 1.8rem;
     }
     
     .cta-desc strong {
-        font-size: 1.1rem;
+        font-size: 1rem;
     }
     
     .cta-desc span {
-        font-size: 0.85rem;
+        font-size: 0.8rem;
     }
     
     .btn-contact {
         width: 100%;
-        padding: 11px 18px;
-        font-size: 0.9rem;
+        padding: 10px 16px;
+        font-size: 0.85rem;
     }
     
     /* ===== LOCALES GRID MÓVIL - 2 COLUMNAS ===== */
@@ -738,7 +738,7 @@ button { cursor: pointer; }
     }
     
     .local-card {
-        border-radius: 16px;
+        border-radius: 14px;
     }
     
     .local-img-box { 
@@ -753,8 +753,7 @@ button { cursor: pointer; }
     .local-img-box img {
         width: 100%;
         height: 100%;
-        object-fit: contain;
-        padding: 4px;
+        object-fit: cover;
     }
     
     .local-body { 
@@ -762,30 +761,30 @@ button { cursor: pointer; }
     }
     
     .local-body h3 {
-        font-size: 0.85rem;
-        margin: 4px 0 0;
+        font-size: 0.82rem;
+        margin: 3px 0 0;
         line-height: 1.2;
     }
     
     .local-headline {
         margin-bottom: 4px;
-        gap: 4px;
+        gap: 3px;
     }
     
     .local-inline-tag {
         padding: 3px 6px;
-        font-size: 0.65rem;
-        border-radius: 12px;
+        font-size: 0.62rem;
+        border-radius: 10px;
     }
     
     .local-status {
         padding: 3px 6px;
-        font-size: 0.65rem;
-        border-radius: 12px;
+        font-size: 0.62rem;
+        border-radius: 10px;
     }
     
     .local-meta {
-        font-size: 0.7rem;
+        font-size: 0.68rem;
         margin-bottom: 6px;
         gap: 2px;
     }
@@ -800,17 +799,43 @@ button { cursor: pointer; }
     }
     
     .btn-ver {
-        padding: 7px;
-        font-size: 0.75rem;
-        border-radius: 10px;
-        margin-top: 6px;
+        padding: 6px;
+        font-size: 0.72rem;
+        border-radius: 9px;
+        margin-top: 5px;
     }
     
-    /* PROMO SECTION */
+    /* PROMO SECTION - TÍTULO MÁS PEQUEÑO, IMAGEN MÁS GRANDE */
     .section-promo-final {
-        margin-top: 28px;
-        padding: 18px;
-        border-radius: 22px;
+        margin-top: 24px;
+        padding: 16px;
+        border-radius: 18px;
+    }
+    
+    .promo-copy {
+        margin-bottom: 12px;
+    }
+    
+    .promo-label {
+        padding: 5px 10px;
+        font-size: 0.7rem;
+        margin-bottom: 8px;
+    }
+    
+    .section-promo-final .section-title {
+        font-size: clamp(1.1rem, 6vw, 1.5rem);
+        margin-bottom: 6px;
+    }
+    
+    .section-promo-final .sub-small {
+        font-size: 0.75rem;
+        margin-bottom: 12px;
+    }
+    
+    .img-promo-final {
+        width: 100%;
+        border-radius: 16px;
+        box-shadow: 0 8px 16px rgba(70, 44, 23, 0.1);
     }
     
     /* MODAL MÓVIL */
@@ -843,9 +868,9 @@ button { cursor: pointer; }
     
     /* FOOTER MÓVIL */
     .site-footer {
-        margin-top: 36px;
-        padding: 24px 16px;
-        font-size: 0.8rem;
+        margin-top: 28px;
+        padding: 20px 16px;
+        font-size: 0.75rem;
     }
     
     .section-title { 
@@ -870,20 +895,20 @@ button { cursor: pointer; }
     }
     
     .comm-card {
-        min-width: 82%;
-        flex: 0 0 82%;
+        min-width: 60%;
+        flex: 0 0 60%;
     }
     
     .comm-img-box { 
-        height: 110px;
+        height: 90px;
     }
     
     .comm-info { 
-        padding: 10px;
+        padding: 8px;
     }
     
     .comm-info b { 
-        font-size: 0.9rem;
+        font-size: 0.75rem;
     }
     
     .oval-input {
@@ -897,11 +922,20 @@ button { cursor: pointer; }
     }
     
     .cta-banner {
-        padding: 16px;
+        padding: 12px 14px;
+        margin: 16px auto;
     }
     
     .mega-icon {
-        font-size: 1.8rem;
+        font-size: 1.6rem;
+    }
+    
+    .cta-desc strong {
+        font-size: 0.95rem;
+    }
+    
+    .cta-desc span {
+        font-size: 0.75rem;
     }
     
     /* Grid 2 columnas en pantallas muy pequeñas también */
@@ -919,11 +953,15 @@ button { cursor: pointer; }
     }
     
     .local-body h3 {
-        font-size: 0.8rem;
+        font-size: 0.75rem;
     }
     
     .btn-ver {
-        padding: 6px;
-        font-size: 0.7rem;
+        padding: 5px;
+        font-size: 0.65rem;
+    }
+    
+    .section-promo-final {
+        padding: 12px;
     }
 }
