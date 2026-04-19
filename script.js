@@ -5,6 +5,39 @@ const formUrls = {
 };
 let locales = [];
 let joyitas = [];
+const CATEGORY_STATS_STORAGE_KEY = "llamabarrioTopCategorySearches";
+
+function normalizeCategoryKey(value) {
+    return String(value || "")
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .trim()
+        .toLowerCase();
+}
+
+function getCategorySearchStats() {
+    try {
+        const saved = localStorage.getItem(CATEGORY_STATS_STORAGE_KEY);
+        const parsed = saved ? JSON.parse(saved) : {};
+        return parsed && typeof parsed === "object" ? parsed : {};
+    } catch (error) {
+        return {};
+    }
+}
+
+function setCategorySearchStats(stats) {
+    try {
+        localStorage.setItem(CATEGORY_STATS_STORAGE_KEY, JSON.stringify(stats));
+    } catch (error) {}
+}
+
+function registerCategorySearch(category) {
+    const key = normalizeCategoryKey(category);
+    if (!key || key === "todas") return;
+    const stats = getCategorySearchStats();
+    stats[key] = (stats[key] || 0) + 1;
+    setCategorySearchStats(stats);
+}
 
 document.addEventListener("DOMContentLoaded", () => {
     console.log("🔄 Iniciando carga de datos...");
@@ -111,9 +144,77 @@ document.addEventListener("DOMContentLoaded", () => {
     const loadMoreHint = document.getElementById("load-more-hint");
     const categoryButtons = document.querySelectorAll(".category-pill");
     const openNowFilter = document.getElementById("open-now-filter");
+    const footerTopCategories = document.getElementById("footer-top-categories");
 
     let categoriaActiva = "Todas";
     let soloAbiertos = false;
+
+    function getAvailableCategories() {
+        return Array.from(categoryButtons)
+            .map((button) => button.dataset.category || "")
+            .filter((category) => category && category !== "Todas");
+    }
+
+    function resolveSearchToCategory(term) {
+        const cleanTerm = normalizeCategoryKey(term);
+        if (!cleanTerm) return "";
+        const categories = getAvailableCategories();
+        const normalizedCategories = categories.map((category) => ({
+            value: category,
+            normalized: normalizeCategoryKey(category)
+        }));
+        const exactMatch = normalizedCategories.find((item) => item.normalized === cleanTerm);
+        if (exactMatch) return exactMatch.value;
+        const partialMatch = normalizedCategories.find((item) =>
+            cleanTerm.includes(item.normalized) || item.normalized.includes(cleanTerm)
+        );
+        return partialMatch ? partialMatch.value : "";
+    }
+
+    function getTopCategoriesForFooter(limit = 6) {
+        const available = getAvailableCategories();
+        const availableMap = new Map(
+            available.map((category) => [normalizeCategoryKey(category), category])
+        );
+        const stats = getCategorySearchStats();
+        const ranked = Object.entries(stats)
+            .filter(([key]) => availableMap.has(key))
+            .sort((a, b) => b[1] - a[1])
+            .map(([key]) => availableMap.get(key));
+        const topCategories = [...ranked];
+        available.forEach((category) => {
+            if (topCategories.length >= limit) return;
+            if (!topCategories.includes(category)) topCategories.push(category);
+        });
+        return topCategories.slice(0, limit);
+    }
+
+    function renderFooterTopCategories() {
+        if (!footerTopCategories) return;
+        const categories = getTopCategoriesForFooter();
+        footerTopCategories.innerHTML = categories.map((category) => `
+            <li><a href="#locals-grid" class="footer-top-category-link" data-category="${category}">${category}</a></li>
+        `).join("");
+
+        footerTopCategories.querySelectorAll(".footer-top-category-link").forEach((link) => {
+            link.addEventListener("click", (event) => {
+                event.preventDefault();
+                const selectedCategory = link.dataset.category || "Todas";
+                categoriaActiva = selectedCategory;
+                updateCategoryButtons();
+                filtrarLocales();
+                const localsSection = document.querySelector(".locals-section-wrapper");
+                if (localsSection) localsSection.scrollIntoView({ behavior: "smooth", block: "start" });
+            });
+        });
+    }
+
+    function trackSearchInputCategory() {
+        const matchedCategory = resolveSearchToCategory(searchInput?.value || "");
+        if (!matchedCategory) return;
+        registerCategorySearch(matchedCategory);
+        renderFooterTopCategories();
+    }
 
     function renderLocales() {
         if(!grid) {
@@ -238,14 +339,29 @@ document.addEventListener("DOMContentLoaded", () => {
         if (noResults) noResults.hidden = visibles !== 0;
     }
 
-    if (searchInput) searchInput.addEventListener("input", filtrarLocales);
-    if (searchButton) searchButton.addEventListener("click", filtrarLocales);
+    if (searchInput) {
+        searchInput.addEventListener("input", filtrarLocales);
+        searchInput.addEventListener("keydown", (event) => {
+            if (event.key !== "Enter") return;
+            event.preventDefault();
+            trackSearchInputCategory();
+            filtrarLocales();
+        });
+    }
+    if (searchButton) {
+        searchButton.addEventListener("click", () => {
+            trackSearchInputCategory();
+            filtrarLocales();
+        });
+    }
     if (comunaSelect) comunaSelect.addEventListener("change", filtrarLocales);
     categoryButtons.forEach((button) => {
         button.addEventListener("click", () => {
             categoriaActiva = button.dataset.category || "Todas";
+            registerCategorySearch(categoriaActiva);
             updateCategoryButtons();
             filtrarLocales();
+            renderFooterTopCategories();
         });
     });
     if (openNowFilter) {
@@ -256,6 +372,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
     updateCategoryButtons();
+    renderFooterTopCategories();
 });
 
 function convertirHoraAMinutos(valor) {
