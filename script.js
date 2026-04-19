@@ -56,6 +56,7 @@ document.addEventListener("DOMContentLoaded", () => {
         renderJoyitas();
         renderTrending();
         renderLocales();
+        initTrendingCompact();
     }).catch(err => {
         console.error("❌ Error cargando datos:", err);
     });
@@ -392,44 +393,103 @@ function setupMiniHow() {
 }
 
 function renderTrending() {
-    // Calcular qué LOCAL fue más recomendado (usando el nombre del local)
     const localesConteo = {};
     
-    joyitas.forEach(joyita => {
-        const nombreLocal = joyita.localName;
-        if (nombreLocal && nombreLocal.trim() !== "") {
-            localesConteo[nombreLocal] = (localesConteo[nombreLocal] || 0) + 1;
-        }
-    });
+    if (joyitas && joyitas.length > 0) {
+        joyitas.forEach(joyita => {
+            const nombreLocal = joyita.localName;
+            if (nombreLocal && nombreLocal.trim() !== "") {
+                localesConteo[nombreLocal] = (localesConteo[nombreLocal] || 0) + 1;
+            }
+        });
+    }
     
-    // Ordenar de mayor a menor y sacar TOP 5
     const trending = Object.entries(localesConteo)
         .sort((a, b) => b[1] - a[1])
         .slice(0, 5);
     
-    // Verificar que existe el elemento
     const trendingContainer = document.getElementById('trending-section');
     if (!trendingContainer) {
         console.log("ℹ️ No hay sección de trending configurada");
         return;
     }
     
-    // Si no hay datos, mostrar mensaje
     if (trending.length === 0) {
         trendingContainer.innerHTML = '<p style="text-align:center;color:#999;padding:20px;">Aún no hay recomendaciones</p>';
         return;
     }
+}
+
+function initTrendingCompact() {
+    const trendingCompact = document.getElementById('trending-compact');
+    if (!trendingCompact) return;
     
-    // Crear HTML de trending - NOMBRE DEL LOCAL
-    const trendingHTML = trending.map(([nombre, cantidad], index) => `
-        <div class="trending-item">
-            <div class="trending-rank">#${index + 1}</div>
-            <div class="trending-info">
-                <h4>${nombre}</h4>
-                <p>⭐⭐⭐⭐⭐ ${cantidad} recomendaciones</p>
-            </div>
+    const localesConteo = {};
+    
+    if (joyitas && joyitas.length > 0) {
+        joyitas.forEach(joyita => {
+            const nombreLocal = joyita.localName;
+            if (nombreLocal && nombreLocal.trim() !== "") {
+                localesConteo[nombreLocal] = (localesConteo[nombreLocal] || 0) + 1;
+            }
+        });
+    }
+    
+    const trending = Object.entries(localesConteo)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 3);
+    
+    if (trending.length === 0) {
+        trendingCompact.innerHTML = '<p style="color:#999; text-align: center; padding: 12px;">Sin datos aún</p>';
+        return;
+    }
+    
+    const html = trending.map(([nombre, cantidad], idx) => `
+        <div class="trending-compact-item">
+            <strong>#${idx + 1} ${nombre}</strong><br>
+            ⭐ ${cantidad} recomendaciones
         </div>
     `).join('');
     
-    trendingContainer.innerHTML = trendingHTML;
+    trendingCompact.innerHTML = html;
 }
+// FAQ MODAL
+function abrirFAQ() {
+    const modal = document.getElementById("faq-modal");
+    if (modal) modal.style.display = "flex";
+}
+
+function cerrarFAQ() {
+    const modal = document.getElementById("faq-modal");
+    if (modal) modal.style.display = "none";
+}
+
+function toggleFAQ(button) {
+    const item = button.parentElement;
+    const wasActive = item.classList.contains("active");
+    
+    document.querySelectorAll(".faq-item").forEach(i => i.classList.remove("active"));
+    
+    if (!wasActive) {
+        item.classList.add("active");
+    }
+}
+
+// Cerrar FAQ al hacer clic fuera
+window.addEventListener("click", function(event) {
+    const faqModal = document.getElementById("faq-modal");
+    if (event.target === faqModal) {
+        cerrarFAQ();
+    }
+});
+
+// Agregar evento al enlace de FAQ
+document.addEventListener("DOMContentLoaded", () => {
+    const faqLinks = document.querySelectorAll('a[href="#faq"]');
+    faqLinks.forEach(link => {
+        link.addEventListener("click", (e) => {
+            e.preventDefault();
+            abrirFAQ();
+        });
+    });
+});

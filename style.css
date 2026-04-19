@@ -147,35 +147,6 @@ button { cursor: pointer; }
     line-height: 1.7;
 }
 
-.hero-stats {
-    display: flex;
-    justify-content: center;
-    gap: 28px;
-    margin: 20px 0 24px;
-    flex-wrap: wrap;
-}
-
-.stat-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-}
-
-.stat-number {
-    font-size: 1.4rem;
-    font-weight: 800;
-    color: var(--orange);
-}
-
-.stat-label {
-    font-size: 0.75rem;
-    color: var(--muted);
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
 .search-area {
     margin-top: 28px;
     display: grid;
@@ -235,7 +206,6 @@ button { cursor: pointer; }
     flex-wrap: wrap;
 }
 
-/* ===== MINI CÓMO FUNCIONA - COLAPSABLE EN DESKTOP Y MÓVIL ===== */
 .mini-how-section {
     margin-top: 16px;
     padding: 16px;
@@ -341,7 +311,6 @@ button { cursor: pointer; }
     border-color: #88e59c;
 }
 
-/* ===== JOYITAS - CON BLOQUE Y FONDO (como Locales antes) ===== */
 .community-section {
     padding: 32px;
     border-radius: 28px;
@@ -462,71 +431,6 @@ button { cursor: pointer; }
     -webkit-box-orient: vertical;
 }
 
-/* ===== TRENDING DEL BARRIO ===== */
-.trending-section {
-    background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
-    padding: 28px;
-    border-radius: 32px;
-    border: 2px solid #81c784;
-    box-shadow: 0 4px 16px rgba(76, 175, 80, 0.12);
-}
-
-.trending-section .section-heading .section-title {
-    color: #2e7d32;
-}
-
-.trending-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    margin-top: 16px;
-}
-
-.trending-item {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    padding: 18px;
-    background: linear-gradient(135deg, #ffffff 0%, #f1f8f4 100%);
-    border: 2px solid #81c784;
-    border-radius: 16px;
-    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.15);
-    transition: all 0.3s ease;
-}
-
-.trending-item:hover {
-    box-shadow: 0 8px 20px rgba(76, 175, 80, 0.25);
-    transform: translateX(4px);
-}
-
-.trending-rank {
-    font-size: 2rem;
-    font-weight: 800;
-    color: #2e7d32;
-    min-width: 50px;
-    text-align: center;
-    font-family: Arial, sans-serif;
-}
-
-.trending-info {
-    flex: 1;
-}
-
-.trending-info h4 {
-    margin: 0 0 6px;
-    font-size: 1.15rem;
-    color: var(--text);
-    font-weight: 700;
-}
-
-.trending-info p {
-    margin: 0;
-    color: #f57c00;
-    font-size: 0.9rem;
-    font-weight: 600;
-}
-
-/* SECCIÓN DE LOCALES - SIN BLOQUE ===== */
 .locals-section-wrapper {
     background: transparent;
     padding: 0;
@@ -701,6 +605,73 @@ button { cursor: pointer; }
     box-shadow: var(--shadow);
 }
 
+/* DESTACADOS */
+.destacados-section {
+    margin-top: 42px;
+}
+
+.destacados-title {
+    margin: 0 0 24px 0;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--text);
+}
+
+.destacados-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    align-items: center;
+}
+
+.destacados-oferta {
+    border-radius: 16px;
+    overflow: hidden;
+    height: 240px;
+    background: #f0ebe5;
+}
+
+.destacados-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.destacados-trending {
+    padding: 24px;
+    background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+    border-radius: 16px;
+    border: 2px solid #81c784;
+    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.15);
+}
+
+.trending-title {
+    margin: 0 0 20px 0;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #2e7d32;
+}
+
+.trending-compact {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.trending-compact-item {
+    padding: 12px;
+    background: #fff;
+    border-radius: 8px;
+    border: 2px solid #81c784;
+    font-size: 0.9rem;
+    color: var(--text);
+}
+
+.trending-compact-item strong {
+    color: #2e7d32;
+    font-weight: 700;
+}
+
 /* CTA BANNER */
 .cta-banner {
     max-width: 1120px;
@@ -745,72 +716,69 @@ button { cursor: pointer; }
     line-height: 1.5;
 }
 
-/* PROMO FINAL - SOLO IMAGEN SIN MARCO */
-.section-promo-final {
-    margin-top: 48px;
-    padding: 0;
-    border: none;
-    border-radius: 0;
-    background: transparent;
-    box-shadow: none;
-    position: relative;
-    overflow: visible;
+/* FOOTER EXTENDIDO (3 COLUMNAS) */
+.footer-extended {
+    background: linear-gradient(135deg, #ffffff 0%, #fff9f0 100%);
+    border-top: 2px solid #eadfd4;
+    border-bottom: 2px solid #eadfd4;
+    padding: 48px 20px;
+    margin-top: 54px;
 }
 
-.section-promo-final::before {
-    display: none;
+.footer-extended-container {
+    max-width: 1120px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
 }
 
-.section-promo-final .promo-copy {
-    display: none;
+.footer-column h3 {
+    margin: 0 0 18px 0;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.2;
 }
 
-.promo-label {
-    display: none;
-}
-
-.img-promo-final {
-    width: 100%;
-    border-radius: 0;
-    box-shadow: none;
+.footer-column ul {
+    list-style: none;
     margin: 0;
     padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
 }
 
-/* FOOTER */
+.footer-column a,
+.footer-column p {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    transition: color 0.2s ease;
+}
+
+.footer-column a:hover {
+    color: var(--orange);
+    text-decoration: underline;
+}
+
+.footer-text {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+/* FOOTER NEGRO */
 .site-footer {
-    margin-top: 54px;
+    margin-top: 0;
     padding: 42px 20px 32px;
     text-align: center;
     background: #16120f;
     color: #fff;
     font-size: 0.86rem;
-}
-
-.footer-benefits {
-    max-width: 1120px;
-    margin: 0 auto 32px;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-    padding-bottom: 32px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.benefit-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-}
-
-.benefit-icon {
-    font-size: 1.4rem;
-}
-
-.benefit-text {
-    font-size: 0.9rem;
-    line-height: 1.4;
 }
 
 .footer-links {
@@ -997,469 +965,193 @@ button { cursor: pointer; }
         text-align: center;
         padding: 20px;
     }
-    .footer-benefits { grid-template-columns: repeat(2, 1fr); }
+    .footer-extended-container {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 32px;
+    }
+    .destacados-wrapper {
+        grid-template-columns: 1fr;
+    }
 }
 
-/* ===== MÓVIL (< 760px) ===== */
+/* RESPONSIVE MOBILE */
 @media (max-width: 760px) {
-    .desktop-only { display: none !important; }
-    .floating-cta { display: flex !important; }
+    .hero { padding: 24px; }
+    .search-area { grid-template-columns: 1fr; gap: 10px; }
+    .hero-categories { gap: 8px; }
+    .mobile-swipe-hint { display: block; }
+    .section-title { font-size: 1.4rem; }
+    .community-grid { grid-template-columns: 1fr; }
+    .locals-grid { grid-template-columns: 1fr; }
+    .floating-cta { display: flex; }
+    .nav-right { display: none; }
+    .desktop-only { display: none; }
     
-    body {
-        padding-bottom: 100px;
+    .footer-extended {
+        padding: 24px 10px;
+        margin-top: 24px;
     }
     
-    /* BOTONES FLOTANTES - OCULTAR EN NAVBAR */
-    .nav-right {
-        display: none !important;
-    }
-
-    .btn-recomienda {
-        display: none !important;
-    }
-
-    .btn-negocio-blue {
-        display: none !important;
-    }
-    
-    /* NAVBAR - SOLO LOGO */
-    .navbar {
-        padding: 10px 0;
-        z-index: 900;
-    }
-    
-    .logo-img { height: 40px; }
-    
-    /* HERO */
-    .hero {
-        margin: 8px auto 0;
-        padding: 16px 12px;
-        border-radius: 20px;
-    }
-    
-    .hero h1 { 
-        margin: 8px auto 6px;
-        font-size: clamp(1.2rem, 6vw, 1.8rem);
-        line-height: 1.1;
-    }
-    
-    .hero-badge {
-        padding: 4px 8px;
-        font-size: 0.65rem;
-    }
-    
-    .hero-copy {
-        font-size: 0.8rem;
-        line-height: 1.4;
-        margin-bottom: 8px;
-    }
-    
-    .hero-stats {
-        gap: 12px;
-        margin: 8px 0 10px;
-    }
-    
-    .stat-number {
-        font-size: 0.95rem;
-    }
-    
-    .stat-label {
-        font-size: 0.55rem;
-    }
-    
-    /* MINI CÓMO FUNCIONA - COLAPSABLE MÓVIL */
-    .mini-how-section {
-        margin-top: 10px;
-        padding: 12px;
-        border-radius: 10px;
-    }
-    
-    .mini-how-title {
-        font-size: 0.85rem;
-    }
-    
-    .mini-how-steps {
-        gap: 4px;
-        margin-top: 10px;
-    }
-    
-    .mini-step-number {
-        width: 24px;
-        height: 24px;
-        font-size: 0.75rem;
-    }
-    
-    .mini-step-text {
-        font-size: 0.65rem;
-        max-width: 60px;
-    }
-    
-    .mini-step-arrow {
-        font-size: 1rem;
-        margin: 0 2px;
-    }
-    
-    /* SEARCH AREA */
-    .search-area { 
-        margin-top: 10px;
+    .footer-extended-container {
         grid-template-columns: 1fr;
-        gap: 6px;
+        gap: 20px;
     }
     
-    .oval-input {
-        height: 40px;
-        padding: 0 10px;
+    .footer-column h3 {
+        font-size: 0.95rem;
+        margin-bottom: 10px;
+    }
+    
+    .footer-column a,
+    .footer-column p {
         font-size: 0.8rem;
     }
-    
-    .btn-buscar-main {
-        height: 40px;
-        padding: 0 14px;
-        font-size: 0.8rem;
+
+    .destacados-wrapper {
+        gap: 16px;
     }
-    
-    /* CATEGORÍAS */
-    .hero-categories {
-        margin-top: 8px;
-        gap: 4px;
+
+    .destacados-oferta {
+        height: 200px;
     }
-    
-    .category-pill {
-        padding: 6px 9px;
-        font-size: 0.65rem;
+
+    .destacados-trending {
+        padding: 16px;
     }
-    
-    /* MAIN WRAPPER */
-    .main-wrapper { 
-        padding: 0 10px 20px; 
-    }
-    
-    /* JOYITAS */
-    .community-section {
-        padding: 12px;
-        border-radius: 16px;
-        margin-top: 12px;
-    }
-    
-    .community-section::before {
-        height: 4px;
-    }
-    
-    .community-section .section-heading .section-title {
-        color: #e65100;
-        padding: 0;
-    }
-    
-    .community-section .sub-small {
-        color: var(--muted);
-    }
-    
-    .mobile-swipe-hint { 
-        display: block !important;
-        color: var(--muted);
-    }
-    
-    .community-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 8px;
-        margin-top: 12px;
-    }
-    
-    .comm-card {
-        border-radius: 12px;
-        height: 260px;
-    }
-    
-    .comm-img-box { 
-        height: 100px;
-    }
-    
-    .comm-info { 
-        padding: 8px;
-    }
-    
-    .comm-tag {
-        padding: 2px 5px;
-        font-size: 0.55rem;
-        background: linear-gradient(135deg, #fff3e0, #ffe8d6);
-        color: #e65100;
-        margin-bottom: 4px;
-    }
-    
-    .comm-info b { 
-        margin: 0 0 4px 0;
-        font-size: 0.7rem;
-    }
-    
-    .comm-info p { 
-        font-size: 0.65rem;
-        -webkit-line-clamp: 2;
-    }
-    
-    /* TRENDING MÓVIL */
-    .trending-section {
-        padding: 12px;
-        margin-top: 12px;
-        border-radius: 14px;
-    }
-    
-    .trending-section .section-heading .section-title {
-        font-size: 1.2rem;
-    }
-    
-    .trending-grid {
-        gap: 12px;
-        margin-top: 12px;
-    }
-    
-    .trending-item {
-        padding: 14px;
-        border-radius: 12px;
-        gap: 12px;
-    }
-    
-    .trending-rank {
-        font-size: 1.6rem;
-        min-width: 40px;
-    }
-    
-    .trending-info h4 {
-        font-size: 1rem;
-        margin: 0 0 4px;
-    }
-    
-    .trending-info p {
-        font-size: 0.8rem;
-    }
-    
-    /* LOCALES */
-    .locals-section-wrapper {
-        padding: 0;
-        border-radius: 0;
-        margin-top: 12px;
-    }
-    
-    .locals-section-wrapper .section-heading {
-        padding: 0 10px;
+
+    .trending-title {
+        font-size: 0.95rem;
         margin-bottom: 12px;
     }
-    
-    .locals-section-wrapper .section-heading .section-title {
-        font-size: 1.2rem;
-    }
-    
-    .locals-grid { 
-        grid-template-columns: repeat(2, 1fr);
-        gap: 8px;
-        margin-top: 0;
-        padding: 0 10px;
-    }
-    
-    .local-card {
-        border-radius: 10px;
-    }
-    
-    .local-img-box { 
-        height: 80px;
-    }
-    
-    .local-body { 
-        padding: 6px;
-    }
-    
-    .local-body h3 {
-        font-size: 0.7rem;
-        margin: 1px 0 0;
-    }
-    
-    .local-headline {
-        margin-bottom: 2px;
-        gap: 2px;
-    }
-    
-    .local-inline-tag {
-        padding: 2px 4px;
-        font-size: 0.48rem;
-    }
-    
-    .local-status {
-        padding: 2px 4px;
-        font-size: 0.48rem;
-    }
-    
-    .local-meta {
-        font-size: 0.58rem;
-        margin-bottom: 4px;
-        gap: 1px;
-    }
-    
-    .btn-ver {
-        padding: 4px;
-        font-size: 0.58rem;
-        border-radius: 6px;
-        margin-top: 3px;
-    }
-    
-    .load-more-hint {
-        padding: 12px;
-        font-size: 0.75rem;
-    }
-    
-    /* CTA BANNER */
-    .cta-banner {
-        margin: 12px auto;
-        padding: 12px 10px;
-        gap: 6px;
-        border-radius: 12px;
-    }
-    
-    .mega-icon {
-        font-size: 1.2rem;
-    }
-    
-    .cta-desc strong {
-        font-size: 0.75rem;
-    }
-    
-    .cta-desc span {
-        font-size: 0.65rem;
-    }
-    
-    .btn-contact {
-        padding: 6px 10px;
-        font-size: 0.65rem;
-    }
-    
-    /* PROMO */
-    .section-promo-final {
-        margin-top: 16px;
-        padding: 0;
-    }
-    
-    .img-promo-final {
-        border-radius: 0;
-        box-shadow: none;
-    }
-    
-    /* FOOTER */
-    .site-footer {
-        margin-top: 12px;
-        padding: 12px 10px;
-    }
-    
-    .footer-benefits {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 6px;
-        margin-bottom: 10px;
-        padding-bottom: 10px;
-    }
-    
-    .benefit-icon {
-        font-size: 0.8rem;
-    }
-    
-    .benefit-text {
-        font-size: 0.55rem;
-        line-height: 1.2;
-    }
-    
-    .footer-links p {
-        font-size: 0.55rem;
-        line-height: 1.3;
-    }
-    
-    .footer-links p + p {
-        margin-top: 4px;
-    }
-    
-    /* MODAL */
-    .modal-card { 
-        width: min(95%, 380px);
-        border-radius: 16px;
-    }
-    
-    .modal-header-img { 
-        height: 140px;
-    }
-    
-    .modal-content { 
-        padding: 12px;
-    }
-    
-    .modal-content h2 { 
-        font-size: 1.1rem;
-        margin: 6px 0 4px;
-    }
-    
-    .form-modal-card {
-        height: min(85vh, 550px);
-        border-radius: 14px;
-    }
-    
-    /* FLOATING CTA */
-    .floating-cta {
-        bottom: 20px !important;
-        right: 12px !important;
-        left: auto !important;
-    }
-    
-    .floating-cta-btn {
-        padding: 10px 14px;
-        font-size: 0.7rem;
-    }
-    
-    .section-title { 
-        font-size: clamp(0.95rem, 5.5vw, 1.3rem);
-    }
-    
-    .sub-small {
-        font-size: 0.65rem;
-    }
+}
+/* FAQModalPopup */
+.faq-modal-card {
+    width: min(92%, 600px);
+    max-height: 85vh;
+    overflow-y: auto;
+    background: #fff;
+    border-radius: 24px;
+    padding: 32px;
 }
 
-/* EXTRA PEQUEÑO (< 480px) */
-@media (max-width: 480px) {
-    body {
-        padding-bottom: 100px;
+.faq-content h2 {
+    margin: 0 0 28px 0;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--text);
+}
+
+.faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.faq-item {
+    border: 1px solid #eadfd4;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.faq-item:hover {
+    border-color: var(--orange);
+    box-shadow: 0 4px 12px rgba(242, 101, 34, 0.1);
+}
+
+.faq-question {
+    width: 100%;
+    padding: 16px;
+    border: 0;
+    background: #fff;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text);
+    transition: all 0.3s ease;
+}
+
+.faq-question:hover {
+    background: var(--orange-soft);
+    color: var(--orange-dark);
+}
+
+.faq-icon {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--orange);
+    transition: transform 0.3s ease;
+}
+
+.faq-item.active .faq-icon {
+    transform: rotate(45deg);
+}
+
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    background: var(--orange-soft);
+}
+
+.faq-item.active .faq-answer {
+    max-height: 500px;
+}
+
+.faq-answer p {
+    margin: 0;
+    padding: 16px;
+    color: var(--text);
+    line-height: 1.7;
+    font-size: 0.95rem;
+}
+
+.faq-answer ul {
+    margin: 0;
+    padding: 0 16px 16px 40px;
+    list-style: disc;
+}
+
+.faq-answer li {
+    color: var(--text);
+    line-height: 1.6;
+    margin-bottom: 6px;
+}
+
+.faq-modal-card::-webkit-scrollbar {
+    width: 8px;
+}
+
+.faq-modal-card::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.faq-modal-card::-webkit-scrollbar-thumb {
+    background: var(--orange-soft);
+    border-radius: 4px;
+}
+
+@media (max-width: 760px) {
+    .faq-modal-card {
+        width: min(95%, 100%);
+        padding: 20px;
     }
-    
-    .hero {
-        padding: 12px 10px;
+
+    .faq-content h2 {
+        font-size: 1.4rem;
+        margin-bottom: 20px;
     }
-    
-    .hero h1 {
-        font-size: clamp(1rem, 5vw, 1.6rem);
+
+    .faq-question {
+        font-size: 0.9rem;
+        padding: 12px;
     }
-    
-    .comm-card {
-        min-width: 50%;
-        flex: 0 0 50%;
-        height: 240px;
-    }
-    
-    .comm-img-box {
-        height: 80px;
-    }
-    
-    .cta-banner {
-        padding: 8px;
-        gap: 4px;
-    }
-    
-    .locals-grid {
-        gap: 6px;
-    }
-    
-    .footer-benefits {
-        grid-template-columns: 1fr;
-        gap: 4px;
-    }
-    
-    .mini-how-steps {
-        gap: 2px;
-    }
-    
-    .mini-step-arrow {
-        font-size: 0.8rem;
+
+    .faq-answer p {
+        padding: 12px;
+        font-size: 0.9rem;
     }
 }

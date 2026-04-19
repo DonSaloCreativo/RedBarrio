@@ -25,21 +25,6 @@
         <h1>Descubre picadas reales <span class="highlight-word">de tu barrio</span></h1>
         <p class="hero-copy">Verificadas por vecinos como tú. Sin bots, sin ruido.</p>
 
-        <div class="hero-stats">
-            <div class="stat-item">
-                <span class="stat-number">2.3K+</span>
-                <span class="stat-label">Picadas</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-number">15K+</span>
-                <span class="stat-label">Vecinos</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-number">47</span>
-                <span class="stat-label">Comunas</span>
-            </div>
-        </div>
-
         <div class="search-area">
             <div class="oval-input loc-select">
                 <span class="icon-mark">📍</span>
@@ -109,16 +94,11 @@
         <div class="hero-categories" id="hero-categories">
             <button type="button" class="category-pill is-active" data-category="Todas">Todas</button>
             <button type="button" class="category-pill" data-category="Completos">Completos</button>
-            <button type="button" class="category-pill" data-category="Sushi">Sushi</button>
-            <button type="button" class="category-pill" data-category="Empanadas">Empanadas</button>
-            <button type="button" class="category-pill" data-category="Colaciones">Colaciones</button>
             <button type="button" class="category-pill" data-category="Panadería">Panadería</button>
             <button type="button" class="category-pill" data-category="Pizzas">Pizzas</button>
             <button type="button" class="category-pill" data-category="Botillería">Botillería</button>
-            <button type="button" class="category-pill" data-category="Verdulería">Verdulería</button>
         </div>
 
-        <!-- MINI CÓMO FUNCIONA CON DISEÑO MEJORADO - COLAPSABLE -->
         <div class="mini-how-section">
             <div class="mini-how-header">
                 <h3 class="mini-how-title">¿Cómo funciona?</h3>
@@ -143,7 +123,7 @@
     </header>
 
     <main class="main-wrapper">
-        <!-- JOYITAS - MÁS IMPORTANTES -->
+        <!-- JOYITAS -->
         <section class="section-block community-section">
             <div class="section-heading">
                 <h2 class="section-title">Joyitas de la comunidad</h2>
@@ -153,7 +133,7 @@
             <div class="community-grid" id="joyitas-grid"></div>
         </section>
 
-        <!-- LOCALES - SECCIÓN PRINCIPAL -->
+        <!-- LOCALES -->
         <section class="section-block locals-section-wrapper">
             <div class="section-heading section-heading-split">
                 <div>
@@ -176,16 +156,21 @@
             </div>
         </section>
 
-        <!-- TRENDING DEL BARRIO - DESPUÉS DE LOCALES -->
-        <section class="section-block trending-section">
-            <div class="section-heading">
-                <h2 class="section-title">🔥 Trending del barrio</h2>
-                <p class="sub-small">Lo más recomendado por los vecinos</p>
+        <!-- DESTACADOS (Imagen pequeña + Trending) -->
+        <section class="section-block destacados-section">
+            <h2 class="destacados-title">✨ Destacados</h2>
+            <div class="destacados-wrapper">
+                <div class="destacados-oferta">
+                    <img id="destacados-img" src="images/promocion1.png" alt="Oferta destacada" class="destacados-img">
+                </div>
+                <div class="destacados-trending">
+                    <h3 class="trending-title">🔥 Top del barrio</h3>
+                    <div class="trending-compact" id="trending-compact"></div>
+                </div>
             </div>
-            <div class="trending-grid" id="trending-section"></div>
         </section>
 
-        <!-- CTA RECOMIENDA -->
+        <!-- CTA ÚNICA: ¿TIENES UNA PICADA INCREÍBLE? -->
         <section class="cta-banner">
             <div class="cta-left">
                 <span class="mega-icon">🚩</span>
@@ -196,37 +181,45 @@
             </div>
             <a href="#" class="btn-contact" data-form-modal="tally">Contáctanos →</a>
         </section>
-
-        <!-- PROMO FINAL -->
-        <section class="section-promo-final">
-            <div class="promo-copy">
-                <span class="promo-label">Destacado del barrio</span>
-                <h2 class="section-title">Espacio para ofertas, avisos y publicaciones destacadas</h2>
-                <p class="sub-small">Promociones de temporada, campañas locales o publicidad de negocios de la comunidad.</p>
-            </div>
-            <img src="images/promocion1.png" alt="Bloque promocional de LlamaBarrio" class="img-promo-final">
-        </section>
     </main>
 
-    <footer class="site-footer">
-        <div class="footer-benefits">
-            <div class="benefit-item">
-                <span class="benefit-icon">✅</span>
-                <span class="benefit-text">Datos reales - Sin bots</span>
+    <!-- FOOTER EXTENDIDO (3 COLUMNAS) -->
+    <section class="footer-extended">
+        <div class="footer-extended-container">
+            <!-- COLUMNA 1: TOP CATEGORÍAS -->
+            <div class="footer-column">
+                <h3>🏆 Top Categorías</h3>
+                <ul id="top-categories-list">
+                    <li><a href="#">Completos</a></li>
+                    <li><a href="#">Panadería</a></li>
+                    <li><a href="#">Pizzas</a></li>
+                    <li><a href="#">Botillería</a></li>
+                </ul>
             </div>
-            <div class="benefit-item">
-                <span class="benefit-icon">✅</span>
-                <span class="benefit-text">100% Gratis - Siempre</span>
+
+            <!-- COLUMNA 2: AYUDA -->
+            <div class="footer-column">
+                <h3>❓ Ayuda</h3>
+                <ul>
+                    <li><a href="#faq">Preguntas Frecuentes</a></li>
+                    <li><a href="#como-usar">¿Cómo usar LlamaBarrio?</a></li>
+                    <li><a href="#" data-form-modal="business">Contacto para locales</a></li>
+                </ul>
             </div>
-            <div class="benefit-item">
-                <span class="benefit-icon">✅</span>
-                <span class="benefit-text">Tu comunidad - Tu barrio</span>
-            </div>
-            <div class="benefit-item">
-                <span class="benefit-icon">✅</span>
-                <span class="benefit-text">Seguro - Verificado</span>
+
+            <!-- COLUMNA 3: INFO -->
+            <div class="footer-column">
+                <h3>ℹ️ Información</h3>
+                <ul>
+                    <li><a href="#quienes-somos">¿Quiénes somos?</a></li>
+                    <li><p class="footer-text">LlamaBarrio conecta personas con picadas, pero no operamos ni vendemos en los locales. Cada negocio es independiente y responsable.</p></li>
+                </ul>
             </div>
         </div>
+    </section>
+
+    <!-- FOOTER NEGRO -->
+    <footer class="site-footer">
         <div class="footer-links">
             <p>LlamaBarrio © 2026 · <a href="#">Términos</a> · <a href="#">Privacidad</a></p>
             <p>En LlamaBarrio conectamos personas con picadas, pero no vendemos ni operamos los locales. Cada negocio es independiente y responsable de su servicio.</p>
@@ -261,7 +254,77 @@
         </div>
     </div>
 
-    <!-- CTA FLOTANTE MÓVIL - SOLO APARECE EN MÓVIL -->
+    <!-- MODAL FAQ -->
+    <div id="faq-modal" class="modal-overlay">
+        <div class="faq-modal-card">
+            <button type="button" class="close-btn" onclick="cerrarFAQ()">&times;</button>
+            <div class="faq-content">
+                <h2>Preguntas Frecuentes</h2>
+                <div class="faq-list">
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFAQ(this)">
+                            <span>¿Qué es LlamaBarrio?</span>
+                            <span class="faq-icon">+</span>
+                        </button>
+                        <div class="faq-answer">
+                            <p>LlamaBarrio es una plataforma comunitaria que conecta a vecinos con las mejores picadas, locales y recomendaciones de sus barrios. Funcionamos como una red local donde los datos son reales, verificados por la comunidad y sin intermediarios. Cada recomendación viene de personas como tú que conocen el barrio.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFAQ(this)">
+                            <span>¿Cómo recomiendo una picada?</span>
+                            <span class="faq-icon">+</span>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Es muy simple. Haz clic en el botón "Recomendar picada" que encontrarás en cualquier parte de la web o en la app. Completa el formulario con:</p>
+                            <ul>
+                                <li>Nombre del local o picada</li>
+                                <li>Ubicación exacta</li>
+                                <li>Descripción de qué ofrecen</li>
+                                <li>Tu nombre (opcional)</li>
+                                <li>Una foto (opcional)</li>
+                                <li>WhatsApp del local (opcional)</li>
+                            </ul>
+                            <p>Una vez enviado, nuestro equipo verifica la información y la publica en 24-48 horas.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFAQ(this)">
+                            <span>¿Es gratis?</span>
+                            <span class="faq-icon">+</span>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Completamente gratis. Tanto para usuarios que buscan picadas como para negocios que quieren aparecer. LlamaBarrio no cobra comisiones, no tiene publicidad invasiva y nunca venderemos tus datos. Nuestro objetivo es que la comunidad local prospere.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFAQ(this)">
+                            <span>¿Cómo contacto a un local?</span>
+                            <span class="faq-icon">+</span>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Al ver los detalles de cualquier picada o local, encontrarás un botón "Enviar WhatsApp" que te conecta directamente con ellos. Así te aseguras de disponibilidad, precios actuales y cualquier consulta especial. Todo directo, sin intermediarios.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFAQ(this)">
+                            <span>¿Es seguro?</span>
+                            <span class="faq-icon">+</span>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Sí. Verificamos que las recomendaciones provengan de vecinos reales de la comunidad. No permitimos spam, bots ni información falsa. Además, cada negocio es independiente y responsable de su servicio. Tus recomendaciones nos ayudan a mantener la comunidad limpia y confiable.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CTA FLOTANTE MÓVIL -->
     <div class="floating-cta" id="floating-cta">
         <a href="#" class="floating-cta-btn floating-cta-recomienda" data-form-modal="tally">Recomendar</a>
         <a href="#" class="floating-cta-btn floating-cta-negocio" data-form-modal="business">Soy Negocio</a>
@@ -270,13 +333,13 @@
     <script src="script.js"></script>
     <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const promoImg = document.querySelector('.img-promo-final');
-        if (promoImg) {
+        const destacadosImg = document.querySelector('#destacados-img');
+        if (destacadosImg) {
             const promoImages = ['images/promocion1.png', 'images/promocion2.png'];
             let idx = 0;
             setInterval(() => {
                 idx = (idx + 1) % promoImages.length;
-                promoImg.src = promoImages[idx];
+                destacadosImg.src = promoImages[idx];
             }, 8000);
         }
     });
