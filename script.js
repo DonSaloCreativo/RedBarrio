@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
     console.log("🔄 Iniciando carga de datos...");
     
     setupFormTriggers();
-    setupFloatingCta();
+    setupMobileNav();
     setupMiniHow();
     
     Promise.all([
@@ -351,9 +351,31 @@ function cerrarFormulario() {
     frame.src = "";
 }
 
+function abrirFAQ() {
+    const modal = document.getElementById("faq-modal");
+    if (modal) modal.style.display = "flex";
+}
+
+function cerrarFAQ() {
+    const modal = document.getElementById("faq-modal");
+    if (modal) modal.style.display = "none";
+}
+
+function toggleFAQ(button) {
+    const item = button.parentElement;
+    const wasActive = item.classList.contains("active");
+    
+    document.querySelectorAll(".faq-item").forEach(i => i.classList.remove("active"));
+    
+    if (!wasActive) {
+        item.classList.add("active");
+    }
+}
+
 window.onclick = function (event) {
     if (event.target === document.getElementById("modal-detalle")) cerrarModal();
     if (event.target === document.getElementById("form-modal")) cerrarFormulario();
+    if (event.target === document.getElementById("faq-modal")) cerrarFAQ();
 };
 
 function setupFormTriggers() {
@@ -367,13 +389,43 @@ function setupFormTriggers() {
     });
 }
 
-function setupFloatingCta() {
-    const floatingBtns = document.querySelectorAll(".floating-cta-btn");
-    floatingBtns.forEach((btn) => {
-        btn.addEventListener("click", (e) => {
+function setupMobileNav() {
+    const mobileNavItems = document.querySelectorAll(".mobile-nav-item");
+    const faqLinks = document.querySelectorAll('a[href="#faq"]');
+    
+    mobileNavItems.forEach((item) => {
+        item.addEventListener("click", (e) => {
             e.preventDefault();
-            const formType = btn.getAttribute("data-form-modal");
-            abrirFormulario(formType);
+            const section = item.getAttribute("data-section");
+            const formModal = item.getAttribute("data-form-modal");
+            
+            if (formModal) {
+                abrirFormulario(formModal);
+                return;
+            }
+            
+            // Remover active de todos
+            mobileNavItems.forEach(i => i.classList.remove("active"));
+            
+            // Agregar active al clickeado
+            item.classList.add("active");
+            
+            // Scroll a secciones
+            if (section === "inicio") {
+                window.scrollTo({ top: 0, behavior: "smooth" });
+            } else if (section === "joyitas") {
+                const joyitasSection = document.querySelector(".community-section");
+                if (joyitasSection) {
+                    joyitasSection.scrollIntoView({ behavior: "smooth" });
+                }
+            }
+        });
+    });
+    
+    faqLinks.forEach(link => {
+        link.addEventListener("click", (e) => {
+            e.preventDefault();
+            abrirFAQ();
         });
     });
 }
@@ -453,43 +505,3 @@ function initTrendingCompact() {
     
     trendingCompact.innerHTML = html;
 }
-// FAQ MODAL
-function abrirFAQ() {
-    const modal = document.getElementById("faq-modal");
-    if (modal) modal.style.display = "flex";
-}
-
-function cerrarFAQ() {
-    const modal = document.getElementById("faq-modal");
-    if (modal) modal.style.display = "none";
-}
-
-function toggleFAQ(button) {
-    const item = button.parentElement;
-    const wasActive = item.classList.contains("active");
-    
-    document.querySelectorAll(".faq-item").forEach(i => i.classList.remove("active"));
-    
-    if (!wasActive) {
-        item.classList.add("active");
-    }
-}
-
-// Cerrar FAQ al hacer clic fuera
-window.addEventListener("click", function(event) {
-    const faqModal = document.getElementById("faq-modal");
-    if (event.target === faqModal) {
-        cerrarFAQ();
-    }
-});
-
-// Agregar evento al enlace de FAQ
-document.addEventListener("DOMContentLoaded", () => {
-    const faqLinks = document.querySelectorAll('a[href="#faq"]');
-    faqLinks.forEach(link => {
-        link.addEventListener("click", (e) => {
-            e.preventDefault();
-            abrirFAQ();
-        });
-    });
-});
